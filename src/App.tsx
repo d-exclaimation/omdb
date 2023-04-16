@@ -25,13 +25,34 @@ const router = createBrowserRouter([
         path: "/profile",
         element: (
           <Layout route="Profile" heading="Your profile">
-            <div />
+            Your profile
           </Layout>
         ),
       },
-      { path: "/reviews", element: <div /> },
-      { path: "/films", element: <div /> },
-      { path: "/myfilms", element: <div /> },
+      {
+        path: "/reviews",
+        element: (
+          <Layout route="Reviews" heading="Browse for film reviews">
+            Something
+          </Layout>
+        ),
+      },
+      {
+        path: "/films",
+        element: (
+          <Layout route="Films" heading="Explore all films">
+            Search for films
+          </Layout>
+        ),
+      },
+      {
+        path: "/myfilms",
+        element: (
+          <Layout route="Your films" heading="Your gallery of films">
+            Create new film
+          </Layout>
+        ),
+      },
     ],
   },
 ]);
