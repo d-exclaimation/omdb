@@ -1,20 +1,30 @@
 import { Tab } from "@headlessui/react";
-import { type FC } from "react";
+import { useMemo, type FC } from "react";
 import { useLocation } from "react-router-dom";
+import { useAuth } from "../auth/useAuth";
 import NavTab from "./NavTab";
 
-const PATHS = {
+const PATHS_INDEX = {
   "/": 0,
   "/profile": 1,
-  "/films": 2,
-  "/myfilms": 3,
+  "/login": 1,
+  "/signup": 1,
+  "/explore": 2,
+  "/gallery": 3,
   "/reviews": 4,
 };
 
 const NavBar: FC = () => {
   const { pathname } = useLocation();
+  const { isLoggedIn } = useAuth();
+
+  const pathIndex = useMemo(
+    (): number | undefined => PATHS_INDEX[pathname as keyof typeof PATHS_INDEX],
+    [pathname, isLoggedIn]
+  );
+
   return (
-    <Tab.Group selectedIndex={PATHS[pathname as keyof typeof PATHS]}>
+    <Tab.Group selectedIndex={pathIndex}>
       <Tab.List
         as="nav"
         className="z-50 fixed bottom-4 mx-auto 
@@ -30,22 +40,24 @@ const NavBar: FC = () => {
           }}
         />
         <NavTab
-          href="/profile"
+          href={isLoggedIn ? "/profile" : "/login"}
           icons={{
-            deselected: "/icons/profile.svg",
-            selected: "/icons/profile-selected.svg",
+            deselected: isLoggedIn ? "/icons/profile.svg" : "/icons/auth.svg",
+            selected: isLoggedIn
+              ? "/icons/profile-selected.svg"
+              : "/icons/auth-selected.svg",
           }}
         />
         <div className="h-4 w-[1px] mx-1 bg-black/10"></div>
         <NavTab
-          href="/films"
+          href="/explore"
           icons={{
-            deselected: "/icons/popcorn.svg",
-            selected: "/icons/popcorn-selected.svg",
+            deselected: "/icons/compass.svg",
+            selected: "/icons/compass-selected.svg",
           }}
         />
         <NavTab
-          href="/myfilms"
+          href="/gallery"
           icons={{
             deselected: "/icons/film.svg",
             selected: "/icons/film-selected.svg",

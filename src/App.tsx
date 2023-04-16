@@ -1,7 +1,10 @@
 import { type FC } from "react";
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
+import AuthProvider from "./auth/AuthProvider";
 import NavBar from "./navigation/NavBar";
+import HomePage from "./pages/index";
 import Layout from "./pages/layout";
+import ProfilePage from "./pages/profile";
 
 const router = createBrowserRouter([
   {
@@ -15,19 +18,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: (
-          <Layout route="Home" heading="Openflix">
-            Netflix but better
-          </Layout>
-        ),
+        element: <HomePage />,
       },
       {
         path: "/profile",
-        element: (
-          <Layout route="Profile" heading="Your profile">
-            Your profile
-          </Layout>
-        ),
+        element: <ProfilePage />,
       },
       {
         path: "/reviews",
@@ -38,7 +33,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/films",
+        path: "/explore",
         element: (
           <Layout route="Films" heading="Explore all films">
             Search for films
@@ -46,10 +41,26 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/myfilms",
+        path: "/gallery",
         element: (
-          <Layout route="Your films" heading="Your gallery of films">
+          <Layout route="Gallery" heading="Your gallery of films">
             Create new film
+          </Layout>
+        ),
+      },
+      {
+        path: "/login",
+        element: (
+          <Layout route="Login" heading="Login">
+            Login
+          </Layout>
+        ),
+      },
+      {
+        path: "/signup",
+        element: (
+          <Layout route="Signup" heading="Signup">
+            Signup
           </Layout>
         ),
       },
@@ -58,7 +69,11 @@ const router = createBrowserRouter([
 ]);
 
 const App: FC = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
+  );
 };
 
 export default App;

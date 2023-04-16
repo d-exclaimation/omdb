@@ -16,10 +16,10 @@ const Layout: FC<LayoutProps> = ({ route, heading, children }) => {
         key={`${route}-header`}
         appear
         show
-        enter="transition-all duration-300"
+        enter="transition-all duration-500"
         enterFrom="opacity-0 -translate-y-10"
         enterTo="opacity-100 translate-y-0"
-        leave="transition-all duration-300"
+        leave="transition-all duration-500"
         leaveFrom="opacity-100 translate-y-0"
         leaveTo="opacity-0 -translate-y-10"
       >
@@ -27,15 +27,15 @@ const Layout: FC<LayoutProps> = ({ route, heading, children }) => {
         <h1 className="text-3xl font-medium text-black py-5">{heading}</h1>
       </Transition>
       <Transition
-        as="section"
-        className="flex-1 w-full h-max flex items-center justify-center"
+        as="div"
+        className="flex-1 w-full min-h-full h-max flex"
         key={`${route}-content`}
         appear
         show
-        enter="transition-all duration-300"
+        enter="transition-all duration-500"
         enterFrom="opacity-0 translate-y-10"
         enterTo="opacity-100 translate-y-0"
-        leave="transition-all duration-300"
+        leave="transition-all duration-500"
         leaveFrom="opacity-100 translate-y-0"
         leaveTo="opacity-0 translate-y-10"
       >
@@ -44,5 +44,16 @@ const Layout: FC<LayoutProps> = ({ route, heading, children }) => {
     </div>
   );
 };
+
+export function withLayout<P extends {} = {}>(
+  WrappedComponent: FC<P>,
+  { heading, route }: Omit<LayoutProps, "children">
+) {
+  return (props: P) => (
+    <Layout route={route} heading={heading}>
+      <WrappedComponent {...props} />
+    </Layout>
+  );
+}
 
 export default Layout;
