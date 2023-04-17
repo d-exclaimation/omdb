@@ -1,0 +1,50 @@
+import { type FC } from "react";
+
+type InputFieldProps = {
+  label: string;
+  type?: "text" | "password";
+  placeholder?: string;
+  error?: string;
+  value: string;
+  onChange: (value: string) => void;
+};
+
+const InputField: FC<InputFieldProps> = ({
+  label,
+  error,
+  value,
+  onChange,
+  type,
+  placeholder,
+}) => {
+  return (
+    <div className="flex flex-col items-start justify-center text-zinc-500 w-full">
+      <label className="flex w-full group" data-error={!!error}>
+        <span
+          className="text-sm p-1 font-medium transition-all group-data-[error='true']:translate-y-full 
+          group-data-[error='true']:-z-10 group-data-[error='true']:opacity-0"
+        >
+          {label}
+        </span>
+        <span
+          className="absolute w-full text-sm text-red-700 p-1 font-medium 
+          transition-all translate-y-full -z-10 opacity-0 group-data-[error='true']:translate-y-0 
+          group-data-[error='true']:-z-0 group-data-[error='true']:opacity-100"
+        >
+          {error}
+        </span>
+      </label>
+      <input
+        type={type ?? "text"}
+        placeholder={placeholder}
+        className="w-full py-3 placeholder:text-slate-400 text-sm focus:outline-none disabled:cursor-not-allowed 
+        disabled:opacity-50 rounded-md border border-slate-300 bg-transparent px-3 data-[error='true']:border-red-700 "
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        data-error={!!error}
+      />
+    </div>
+  );
+};
+
+export default InputField;
