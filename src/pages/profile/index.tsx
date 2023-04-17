@@ -8,12 +8,12 @@ const USER = {
   firstName: "John",
   lastName: "Doe",
   email: "john@doe.com",
-} as const;
+};
 
 const ProfilePage: FC = () => {
   return (
     <div className="w-full flex flex-col items-center gap-3 justify-start">
-      <Profile {...USER} filmsDirected={10} reviews={203} />
+      <Profile user={USER} filmsDirected={10} reviews={203} />
       <KnownFor />
     </div>
   );

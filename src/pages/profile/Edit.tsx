@@ -1,19 +1,81 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, type FC } from "react";
+import { Fragment, useCallback, type FC } from "react";
+import { z } from "zod";
 import Button from "../../common/components/Button";
 import InputField from "../../common/components/InputField";
 import Overlay from "../../common/components/Overlay";
+import { useForm } from "../../common/hooks/useForm";
 import EditImage from "./EditImage";
 
+type EditUser = z.infer<typeof EditUser>;
+const EditUser = z
+  .object({
+    firstName: z
+      .string()
+      .min(1, "Must be at least 1 character long")
+      .max(64, "Must be at most 64 characters long"),
+    lastName: z
+      .string()
+      .min(1, "Must be at least 1 character long")
+      .max(64, "Must be at most 64 characters long"),
+    email: z
+      .string()
+      .email("Must include an @ symbol and a top level domain")
+      .min(1, "Must be at least 1 character long")
+      .max(256, "Must be at most 256 characters long"),
+    password: z
+      .string()
+      .min(6, "Must be at least 6 characters long")
+      .max(64, "Must be at most 64 characters long")
+      .optional(),
+    currentPassword: z
+      .string()
+      .min(6, "Must be at least 6 characters long")
+      .max(64, "Must be at most 64 characters long")
+      .optional(),
+  })
+  .refine(
+    ({ password, currentPassword }) =>
+      password !== undefined ? currentPassword !== undefined : true,
+    {
+      message: "Current password is required to change password",
+      path: ["currentPassword"],
+    }
+  );
+
 type EditProps = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
   editing: boolean;
   close: () => void;
+  submit: (values: EditUser) => void;
 };
 
-const Edit: FC<EditProps> = ({ editing, close }) => {
+const Edit: FC<EditProps> = ({ editing, close, submit, ...user }) => {
+  const [{ values, errors, isValid }, update] = useForm({
+    schema: EditUser,
+    initial: {
+      ...user,
+    },
+  });
+
+  const onClose = useCallback(() => {
+    update((_) => user);
+    close();
+  }, [update, close, user]);
+
+  const onSubmit = useCallback(() => {
+    if (!isValid) {
+      return;
+    }
+    submit(values);
+  }, [values, submit, isValid]);
+
   return (
     <Transition appear show={editing} as={Fragment}>
-      <Dialog as="div" className="relative z-40" onClose={close}>
+      <Dialog as="div" className="relative z-40" onClose={onClose}>
         <Overlay.Child />
 
         <div className="fixed inset-0 overflow-y-auto">
@@ -47,34 +109,56 @@ const Edit: FC<EditProps> = ({ editing, close }) => {
                   <div className="flex flex-col items-start justify-center w-full mt-4 gap-1">
                     <InputField
                       label="First name"
-                      value=""
+                      error={errors.firstName}
+                      value={values.firstName}
                       placeholder="Provide a first name"
-                      onChange={() => {}}
+                      onChange={(firstName) =>
+                        update((prev) => ({ ...prev, firstName }))
+                      }
                     />
                     <InputField
                       label="Last name"
-                      value=""
+                      error={errors.lastName}
+                      value={values.lastName}
                       placeholder="Provide a last name"
-                      onChange={() => {}}
+                      onChange={(lastName) =>
+                        update((prev) => ({ ...prev, lastName }))
+                      }
                     />
                     <InputField
                       label="Email"
-                      value=""
+                      value={values.email}
+                      error={errors.email}
                       placeholder="Provide an email"
-                      onChange={() => {}}
+                      onChange={(email) =>
+                        update((prev) => ({ ...prev, email }))
+                      }
                     />
                     <InputField
                       type="password"
                       label="Password"
-                      value=""
+                      value={values.password ?? ""}
+                      error={errors.password}
                       placeholder="New password"
-                      onChange={() => {}}
+                      onChange={(password) =>
+                        update((prev) => ({
+                          ...prev,
+                          password: password || undefined,
+                        }))
+                      }
                     />
                     <InputField
-                      label="Old password"
-                      value=""
+                      label="Current password"
+                      type="password"
+                      error={errors.currentPassword}
+                      value={values.currentPassword ?? ""}
                       placeholder="Provide your old passwword"
-                      onChange={() => {}}
+                      onChange={(currentPassword) =>
+                        update((prev) => ({
+                          ...prev,
+                          currentPassword: currentPassword || undefined,
+                        }))
+                      }
                     />
                   </div>
                 </div>
@@ -88,7 +172,7 @@ const Edit: FC<EditProps> = ({ editing, close }) => {
                       active: "active:bg-zinc-200",
                       border: "focus-visible:ring-zinc-500",
                     }}
-                    onClick={close}
+                    onClick={onClose}
                   >
                     Cancel
                   </Button>
@@ -100,7 +184,8 @@ const Edit: FC<EditProps> = ({ editing, close }) => {
                       active: "active:bg-sky-200",
                       border: "focus-visible:ring-sky-500",
                     }}
-                    onClick={close}
+                    onClick={onSubmit}
+                    disabled={!isValid}
                   >
                     Save
                   </Button>

@@ -27,7 +27,7 @@ const InputField: FC<InputFieldProps> = ({
           {label}
         </span>
         <span
-          className="absolute w-full text-sm text-red-700 p-1 font-medium 
+          className="absolute w-full text-red-700 p-1 font-medium text-xs
           transition-all translate-y-full -z-10 opacity-0 group-data-[error='true']:translate-y-0 
           group-data-[error='true']:-z-0 group-data-[error='true']:opacity-100"
         >

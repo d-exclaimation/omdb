@@ -11,20 +11,28 @@ type ButtonProps = {
     border: `focus-visible:${Palette["ring"]}`;
   };
   onClick: () => void;
+  disabled?: boolean;
   children: ReactNode;
 };
 
-const Button: FC<ButtonProps> = ({ className, color, onClick, children }) => {
+const Button: FC<ButtonProps> = ({
+  className,
+  color,
+  onClick,
+  disabled,
+  children,
+}) => {
   return (
     <button
       type="button"
       className={`inline-flex justify-center rounded-md border border-transparent 
       ${color.bg} px-4 py-2 text-sm font-medium ${color.text} 
-      ${color.hover} ${color.active}
+      ${color.hover} ${color.active} disabled:cursor-not-allowed
       focus:outline-none focus-visible:ring-2 
       ${color.border} focus-visible:ring-offset-2
       ${className ?? ""}`}
       onClick={onClick}
+      disabled={disabled}
     >
       {children}
     </button>

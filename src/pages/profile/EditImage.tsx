@@ -4,7 +4,10 @@ import { Fragment, type FC } from "react";
 const EditImage: FC = () => {
   return (
     <Menu as="div" className="-translate-x-10 min-w-max">
-      <Menu.Button className="bg-white ring-2 ring-zinc-400/50 rounded-md px-3 py-1 text-sm">
+      <Menu.Button
+        className="bg-white ring-1 ring-zinc-400/50 hover:bg-zinc-100
+      active:bg-zinc-100 rounded-md px-3 py-1 text-sm"
+      >
         Edit
       </Menu.Button>
       <Transition
