@@ -1,4 +1,5 @@
 import { type FC } from "react";
+import { useAuth } from "../../auth/useAuth";
 import { withLayout } from "../layout";
 import KnownFor from "./KnownFor";
 import Profile from "./Profile";
@@ -11,9 +12,10 @@ const USER = {
 };
 
 const ProfilePage: FC = () => {
+  const { user } = useAuth();
   return (
     <div className="w-full flex flex-col items-center gap-3 justify-start">
-      <Profile user={USER} filmsDirected={10} reviews={203} />
+      <Profile user={user ?? USER} filmsDirected={10} reviews={203} />
       <KnownFor />
     </div>
   );

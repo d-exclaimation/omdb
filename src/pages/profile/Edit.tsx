@@ -103,7 +103,7 @@ const Edit: FC<EditProps> = ({ editing, close, submit, ...user }) => {
                       src="https://api.dicebear.com/6.x/shapes/svg?seed=Cookie"
                       alt="avatar"
                     />
-                    <EditImage />
+                    <EditImage onUpload={console.log} onRemove={console.log} />
                   </div>
 
                   <div className="flex flex-col items-start justify-center w-full mt-4 gap-1">

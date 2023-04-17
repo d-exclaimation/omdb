@@ -6,7 +6,12 @@ type AuthProviderProps = {
 };
 
 const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
-  const [user] = useState<AuthContextValue["user"]>({});
+  const [user] = useState<AuthContextValue["user"]>({
+    id: "1",
+    firstName: "John",
+    lastName: "Doe",
+    email: "john@doe.com",
+  });
   return (
     <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
   );
