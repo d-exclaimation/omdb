@@ -1,7 +1,13 @@
 import { Menu, Transition } from "@headlessui/react";
-import { Fragment, type FC } from "react";
+import { Fragment, useRef, type FC } from "react";
 
-const EditImage: FC = () => {
+type EditImageProps = {
+  onUpload: (src: string, file: File) => void;
+  onRemove: () => void;
+};
+
+const EditImage: FC<EditImageProps> = ({ onUpload, onRemove }) => {
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   return (
     <Menu as="div" className="-translate-x-10 min-w-max">
       <Menu.Button
@@ -9,6 +15,26 @@ const EditImage: FC = () => {
       active:bg-zinc-100 rounded-md px-3 py-1 text-sm"
       >
         Edit
+        <input
+          type="file"
+          className="hidden"
+          accept="image/*"
+          ref={fileInputRef}
+          onChange={(e) => {
+            if (!e.target.files) {
+              return;
+            }
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = (ev) => {
+              if (typeof ev.target?.result !== "string") {
+                return;
+              }
+              onUpload(ev.target.result, file);
+            };
+          }}
+        />
       </Menu.Button>
       <Transition
         as={Fragment}
@@ -22,20 +48,14 @@ const EditImage: FC = () => {
         <Menu.Items className="absolute p-1 rounded-md mt-2 w-36 bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <Menu.Item>
             {({ active }) => (
-              <button className="w-full flex">
-                <label
-                  className="flex w-full items-center rounded-md px-2 py-2 text-sm data-selected:bg-zinc-800 data-selected:text-white"
-                  data-selected={active}
-                  htmlFor="file-upload"
-                >
-                  Upload a photo
-                </label>
-                <input
-                  id="file-upload"
-                  type="file"
-                  className="hidden"
-                  accept="image/*"
-                />
+              <button
+                className="flex w-full items-center rounded-md px-2 py-2 text-sm data-selected:bg-zinc-800 data-selected:text-white"
+                data-selected={active}
+                onClick={() => {
+                  fileInputRef.current?.click();
+                }}
+              >
+                Upload a photo
               </button>
             )}
           </Menu.Item>
