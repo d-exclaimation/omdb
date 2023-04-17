@@ -9,7 +9,7 @@ type LayoutProps = {
 
 const Layout: FC<LayoutProps> = ({ route, heading, children }) => {
   return (
-    <div className="min-h-screen w-full max-w-3xl px-5 h-max flex flex-col items-center gap-4 justify-center pb-20">
+    <div className="min-h-screen w-full max-w-3xl px-5 h-max flex flex-col items-center gap-4 justify-center pt-2 pb-20">
       <Transition
         as="div"
         className="w-full flex flex-col"
