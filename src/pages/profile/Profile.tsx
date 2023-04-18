@@ -11,19 +11,13 @@ type ProfileProps = {
     email: string;
   };
   filmsDirected: number;
-  reviews: number;
 };
 
-const Profile: FC<ProfileProps> = ({ filmsDirected, reviews, user }) => {
+const Profile: FC<ProfileProps> = ({ filmsDirected, user }) => {
   const [editing, { open, close }] = useToggle();
   return (
     <div className="w-full max-w-2xl max-h-80 bg-white flex flex-row items-start overflow-x-hidden rounded-lg p-6 md:p-8">
-      <Account
-        {...user}
-        filmsDirected={filmsDirected}
-        reviews={reviews}
-        onEdit={open}
-      />
+      <Account {...user} filmsDirected={filmsDirected} onEdit={open} />
       <Edit {...user} editing={editing} close={close} submit={close} />
     </div>
   );

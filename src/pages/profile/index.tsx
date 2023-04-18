@@ -1,5 +1,7 @@
+import { useQuery } from "@tanstack/react-query";
 import { type FC } from "react";
 import { Navigate } from "react-router-dom";
+import { topFilms } from "../../api/queries/film";
 import { useAuth } from "../../auth/useAuth";
 import LoadingIndicator from "../../common/components/LoadingIndicator";
 import { withLayout } from "../layout";
@@ -15,6 +17,12 @@ const USER = {
 
 const ProfilePage: FC = () => {
   const { user, isLoading } = useAuth();
+  const { data } = useQuery({
+    queryFn: topFilms,
+    queryKey: ["topFilms"],
+    retry: 1,
+    enabled: isLoading,
+  });
 
   if (isLoading) {
     return <LoadingIndicator />;
@@ -26,7 +34,7 @@ const ProfilePage: FC = () => {
 
   return (
     <div className="w-full flex flex-col items-center gap-3 justify-start">
-      <Profile user={user ?? USER} filmsDirected={10} reviews={203} />
+      <Profile user={user ?? USER} filmsDirected={data?.count ?? 0} />
       <KnownFor />
     </div>
   );
