@@ -1,4 +1,5 @@
 import { type FC } from "react";
+import { Navigate } from "react-router-dom";
 import { useAuth } from "../../auth/useAuth";
 import { withLayout } from "../layout";
 import KnownFor from "./KnownFor";
@@ -13,6 +14,11 @@ const USER = {
 
 const ProfilePage: FC = () => {
   const { user } = useAuth();
+
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
+
   return (
     <div className="w-full flex flex-col items-center gap-3 justify-start">
       <Profile user={user ?? USER} filmsDirected={10} reviews={203} />
