@@ -44,6 +44,7 @@ const InputField: FC<InputFieldProps> = ({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         data-error={!!error}
+        autoCapitalize="none"
       />
       {children}
     </div>
