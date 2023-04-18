@@ -9,6 +9,7 @@ type ProfileProps = {
     firstName: string;
     lastName: string;
     email: string;
+    image: string;
   };
   filmsDirected: number;
 };
@@ -18,7 +19,7 @@ const Profile: FC<ProfileProps> = ({ filmsDirected, user }) => {
   return (
     <div className="w-full max-w-2xl max-h-80 bg-white flex flex-row items-start overflow-x-hidden rounded-lg p-6 md:p-8">
       <Account {...user} filmsDirected={filmsDirected} onEdit={open} />
-      <Edit {...user} editing={editing} close={close} submit={close} />
+      <Edit {...user} editing={editing} close={close} />
     </div>
   );
 };

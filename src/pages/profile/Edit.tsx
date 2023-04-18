@@ -1,7 +1,11 @@
+import { match } from "@d-exclaimation/common/union";
 import { Dialog, Transition } from "@headlessui/react";
+import { useMutation } from "@tanstack/react-query";
 import { Fragment, useCallback, useState, type FC } from "react";
 import { z } from "zod";
+import { edit } from "../../api/queries/user";
 import { __API_URL__ } from "../../api/url";
+import { useAuth } from "../../auth/useAuth";
 import Button from "../../common/components/Button";
 import InputField from "../../common/components/InputField";
 import Overlay from "../../common/components/Overlay";
@@ -51,6 +55,14 @@ const EditUser = z
       message: "Current password is required to change password",
       path: ["currentPassword"],
     }
+  )
+  .refine(
+    ({ password, currentPassword }) =>
+      password && currentPassword ? password !== currentPassword : true,
+    {
+      message: "New password is identical to current",
+      path: ["password"],
+    }
   );
 
 type EditProps = {
@@ -60,18 +72,41 @@ type EditProps = {
   email: string;
   editing: boolean;
   close: () => void;
-  submit: (values: EditUser) => void;
 };
 
-const Edit: FC<EditProps> = ({ editing, close, submit, ...user }) => {
+const Edit: FC<EditProps> = ({ editing, close, ...user }) => {
+  const { invalidate } = useAuth();
   const [preview, setPreview] = useState(
     `${__API_URL__}/users/${user.id}/image`
   );
+  const [emailError, setEmailError] = useState<string>();
+  const [passwordError, setPasswordError] = useState<string>();
   const [file, setFile] = useState<File | null>(null);
   const [{ values, errors, isValid }, update] = useForm({
     schema: EditUser,
     initial: {
       ...user,
+    },
+  });
+  const { mutate } = useMutation({
+    mutationFn: edit,
+    onSuccess: (res) => {
+      match(res, {
+        Ok: () => {
+          close();
+          invalidate();
+        },
+        Fordidden: () => {
+          setEmailError("Email already in use");
+        },
+        Unauthorized: () => {
+          setPasswordError("Incorrect password");
+        },
+        "*": (e) => {
+          console.log(e);
+          setEmailError("An unknown error occurred");
+        },
+      });
     },
   });
 
@@ -84,8 +119,8 @@ const Edit: FC<EditProps> = ({ editing, close, submit, ...user }) => {
     if (!isValid) {
       return;
     }
-    submit(values);
-  }, [values, submit, isValid]);
+    mutate({ ...values, file: file ?? undefined });
+  }, [values, isValid, mutate, file]);
 
   return (
     <Transition appear show={editing} as={Fragment}>
@@ -159,11 +194,12 @@ const Edit: FC<EditProps> = ({ editing, close, submit, ...user }) => {
                     <InputField
                       label="Email"
                       value={values.email}
-                      error={errors.email}
+                      error={emailError ?? errors.email}
                       placeholder="Provide an email"
-                      onChange={(email) =>
-                        update((prev) => ({ ...prev, email }))
-                      }
+                      onChange={(email) => {
+                        setEmailError(undefined);
+                        update((prev) => ({ ...prev, email }));
+                      }}
                     />
                     <InputField
                       type="password"
@@ -181,15 +217,16 @@ const Edit: FC<EditProps> = ({ editing, close, submit, ...user }) => {
                     <InputField
                       label="Current password"
                       type="password"
-                      error={errors.currentPassword}
+                      error={passwordError ?? errors.currentPassword}
                       value={values.currentPassword ?? ""}
                       placeholder="Provide your old passwword"
-                      onChange={(currentPassword) =>
+                      onChange={(currentPassword) => {
+                        setPasswordError(undefined);
                         update((prev) => ({
                           ...prev,
                           currentPassword: currentPassword || undefined,
-                        }))
-                      }
+                        }));
+                      }}
                     />
                   </div>
                 </div>

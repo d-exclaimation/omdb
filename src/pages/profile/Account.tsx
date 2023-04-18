@@ -1,7 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { type FC } from "react";
 import { logout } from "../../api/queries/user";
-import { __API_URL__ } from "../../api/url";
 import { useAuth } from "../../auth/useAuth";
 import Settings from "./Settings";
 
@@ -10,6 +9,7 @@ type AccountProps = {
   firstName: string;
   lastName: string;
   email: string;
+  image: string;
   filmsDirected: number;
   onEdit: () => void;
 };
@@ -19,6 +19,7 @@ const Account: FC<AccountProps> = ({
   firstName,
   lastName,
   email,
+  image,
   filmsDirected,
   onEdit,
 }) => {
@@ -34,7 +35,7 @@ const Account: FC<AccountProps> = ({
       <section className="w-full flex items-start justify-between">
         <img
           className="w-16 md:w-20 h-16 md:h-20 object-cover rounded-full"
-          src={`${__API_URL__}/users/${id}/image`}
+          src={image}
           onError={(e) => {
             e.currentTarget.src =
               "https://api.dicebear.com/6.x/shapes/svg?seed=Cookie";

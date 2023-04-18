@@ -47,6 +47,7 @@ export async function me() {
     return {
       id,
       ...maybeUser.data,
+      timestamp: new Date().toISOString(),
     };
   } catch (_) {
     return null;
@@ -174,6 +175,87 @@ export async function logout() {
     });
     clearSession();
   } catch (_) {}
+}
+
+type EditResponse = Union<{
+  Ok: {};
+  BadInput: { message: string };
+  Unauthorized: {};
+  Fordidden: {};
+  Error: { message: string };
+}>;
+
+export async function edit({
+  file,
+  ...info
+}: {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  password?: string;
+  currentPassword?: string;
+  file?: File;
+}): Promise<EditResponse> {
+  const id = userId();
+  if (!id) {
+    return {
+      kind: "Unauthorized",
+    };
+  }
+  try {
+    const res1 = await fetch(`${__API_URL__}/users/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Authorization": session() ?? "",
+      },
+      body: JSON.stringify(info),
+    });
+    if (res1.status !== 200 && res1.status !== 201) {
+      switch (res1.status) {
+        case 400:
+          return { kind: "BadInput", message: res1.statusText };
+        case 401:
+          return { kind: "Unauthorized" };
+        case 403:
+          return { kind: "Fordidden" };
+        default:
+          return { kind: "Error", message: res1.statusText };
+      }
+    }
+
+    if (file) {
+      const res2 = await fetch(`${__API_URL__}/users/${id}/image`, {
+        method: "PUT",
+        headers: {
+          "X-Authorization": session() ?? "",
+          "Content-Type": file.type,
+        },
+        body: file,
+      });
+
+      if (res2.status !== 200 && res2.status !== 201) {
+        switch (res2.status) {
+          case 400:
+            return { kind: "BadInput", message: res2.statusText };
+          case 401:
+            return { kind: "Unauthorized" };
+          case 403:
+            return { kind: "Fordidden" };
+          default:
+            return { kind: "Error", message: res2.statusText };
+        }
+      }
+    }
+    return {
+      kind: "Ok",
+    };
+  } catch (e) {
+    return {
+      kind: "Error",
+      message: `Unknown error, ${e}`,
+    };
+  }
 }
 
 export async function setAvayar(avatar: string) {

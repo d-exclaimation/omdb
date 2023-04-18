@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { type FC } from "react";
+import { useMemo, type FC } from "react";
 import { me } from "../api/queries/user";
+import { __API_URL__ } from "../api/url";
 import { AuthContext } from "./AuthContext";
 
 type AuthProviderProps = {
@@ -14,10 +15,20 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     retry: 1,
   });
 
+  const user = useMemo(() => {
+    if (!data) {
+      return undefined;
+    }
+    return {
+      ...data,
+      image: `${__API_URL__}/users/${data.id}/image?${data.timestamp}`,
+    };
+  }, [data]);
+
   return (
     <AuthContext.Provider
       value={{
-        user: data ?? undefined,
+        user,
         isLoading,
       }}
     >

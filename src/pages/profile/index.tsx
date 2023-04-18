@@ -34,7 +34,7 @@ const ProfilePage: FC = () => {
 
   return (
     <div className="w-full flex flex-col items-center gap-3 justify-start">
-      <Profile user={user ?? USER} filmsDirected={data?.count ?? 0} />
+      <Profile user={user} filmsDirected={data?.count ?? 0} />
       <KnownFor />
     </div>
   );
