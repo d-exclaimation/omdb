@@ -17,16 +17,16 @@ const NavTab: FC<NavTabProps> = ({ href, icons }) => {
         <Link
           to={href}
           data-selected={selected}
-          className="group p-3 flex rounded-full bg-white transition-all duration-400 
+          className="group p-3 flex rounded-full items-center bg-white transition-all duration-400 
           hover:bg-slate-200 data-selected:bg-black select-none outline-none"
         >
           <img
-            className="w-5 h-5 overflow-hidden opacity-100 group-data-selected:opacity-0 transition-all duration-400"
+            className="w-5 h-5 md:w-6 md:h-6 overflow-hidden opacity-100 group-data-selected:opacity-0 transition-all duration-400"
             src={icons.deselected}
           />
 
           <img
-            className="w-5 h-5 absolute overflow-hidden opacity-0 group-data-selected:opacity-100 transition-all duration-400"
+            className="w-5 h-5 md:w-6 md:h-6 absolute overflow-hidden opacity-0 group-data-selected:opacity-100 transition-all duration-400"
             src={icons.selected}
           />
         </Link>

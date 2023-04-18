@@ -48,7 +48,7 @@ const NavBar: FC = () => {
               : "/icons/auth-selected.svg",
           }}
         />
-        <div className="h-4 w-[1px] mx-1 bg-black/10"></div>
+        <div className="h-4 w-[1px] mx-1 md:mx-2 bg-black/10"></div>
         <NavTab
           href="/explore"
           icons={{
