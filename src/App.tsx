@@ -4,7 +4,9 @@ import AuthProvider from "./auth/AuthProvider";
 import NavBar from "./navigation/NavBar";
 import HomePage from "./pages/index";
 import Layout from "./pages/layout";
+import LoginPage from "./pages/login";
 import ProfilePage from "./pages/profile";
+import SignupPage from "./pages/signup";
 
 const router = createBrowserRouter([
   {
@@ -50,19 +52,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: (
-          <Layout route="Login" heading="Login">
-            Login
-          </Layout>
-        ),
+        element: <LoginPage />,
       },
       {
         path: "/signup",
-        element: (
-          <Layout route="Signup" heading="Signup">
-            Signup
-          </Layout>
-        ),
+        element: <SignupPage />,
       },
     ],
   },

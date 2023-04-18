@@ -84,9 +84,8 @@ const Edit: FC<EditProps> = ({ editing, close, submit, ...user }) => {
 
   return (
     <Transition appear show={editing} as={Fragment}>
-      <Dialog as="div" className="relative z-40" onClose={onClose}>
+      <Dialog as="div" className="fixed z-[100]" onClose={onClose}>
         <Overlay.Child />
-
         <div className="fixed inset-0 overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4 text-center">
             <Transition.Child
@@ -172,7 +171,7 @@ const Edit: FC<EditProps> = ({ editing, close, submit, ...user }) => {
                   </div>
                 </div>
 
-                <div className="mt-4 flex justify-between">
+                <div className="mt-4 flex justify-between z-60">
                   <Button
                     color={{
                       bg: "bg-zinc-100",

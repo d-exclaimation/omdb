@@ -1,4 +1,4 @@
-import { useState, type FC } from "react";
+import { useEffect, useState, type FC } from "react";
 import { AuthContext, AuthContextValue } from "./AuthContext";
 
 type AuthProviderProps = {
@@ -6,14 +6,27 @@ type AuthProviderProps = {
 };
 
 const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
-  const [user] = useState<AuthContextValue["user"]>({
-    id: "1",
-    firstName: "John",
-    lastName: "Doe",
-    email: "john@doe.com",
-  });
+  const [user, setUser] = useState<AuthContextValue["user"]>();
+
+  useEffect(() => {
+    const res = localStorage.getItem("user");
+    if (res) {
+      setUser(JSON.parse(res));
+    }
+  }, [setUser]);
+
   return (
-    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider
+      value={{
+        user,
+        updateUser: (user) => {
+          localStorage.setItem("user", JSON.stringify(user));
+          setUser(user);
+        },
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
   );
 };
 

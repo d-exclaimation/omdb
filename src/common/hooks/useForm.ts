@@ -53,7 +53,10 @@ export function useForm<T extends ZodTypeAny>({
     errors: {},
   });
 
-  const isValid = useMemo(() => keys(state.errors).length === 0, []);
+  const isValid = useMemo(
+    () => keys(state.errors).length === 0,
+    [state.errors]
+  );
 
   return [{ ...state, isValid }, update] as const;
 }

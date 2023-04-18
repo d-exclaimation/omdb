@@ -1,14 +1,17 @@
 import { createContext } from "react";
+type User = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+};
 
 export type AuthContextValue = {
-  user?: {
-    id: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-  };
+  user?: User;
+  updateUser: (user: User) => void;
 };
 
 export const AuthContext = createContext<AuthContextValue>({
   user: undefined,
+  updateUser: () => {},
 });
