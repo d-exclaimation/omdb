@@ -1,28 +1,23 @@
-import { useEffect, useState, type FC } from "react";
-import { AuthContext, AuthContextValue } from "./AuthContext";
+import { useQuery } from "@tanstack/react-query";
+import { type FC } from "react";
+import { me } from "../api/queries/user";
+import { AuthContext } from "./AuthContext";
 
 type AuthProviderProps = {
   children: React.ReactNode;
 };
 
 const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<AuthContextValue["user"]>();
-
-  useEffect(() => {
-    const res = localStorage.getItem("user");
-    if (res) {
-      setUser(JSON.parse(res));
-    }
-  }, [setUser]);
+  const { data } = useQuery({
+    queryFn: me,
+    queryKey: ["me"],
+    retry: 1,
+  });
 
   return (
     <AuthContext.Provider
       value={{
-        user,
-        updateUser: (user) => {
-          localStorage.setItem("user", JSON.stringify(user));
-          setUser(user);
-        },
+        user: data ?? undefined,
       }}
     >
       {children}

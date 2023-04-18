@@ -1,14 +1,20 @@
-import { useContext, useMemo } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { useCallback, useContext, useMemo } from "react";
 import { AuthContext } from "./AuthContext";
 
 export function useAuth() {
-  const { user, updateUser } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
+  const queryClient = useQueryClient();
 
   const isLoggedIn = useMemo(() => !!user, [user]);
+
+  const invalidate = useCallback(() => {
+    queryClient.invalidateQueries(["me"]);
+  }, []);
 
   return {
     isLoggedIn,
     user,
-    updateUser,
+    invalidate,
   };
 }
