@@ -1,7 +1,10 @@
+import { match } from "@d-exclaimation/common/union";
 import { Transition } from "@headlessui/react";
-import { type FC } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { useState, type FC } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { z } from "zod";
+import { login } from "../api/queries/user";
 import { useAuth } from "../auth/useAuth";
 import Button from "../common/components/Button";
 import InputField from "../common/components/InputField";
@@ -13,12 +16,29 @@ const LoginUser = z.object({
 });
 
 const LoginPage: FC = () => {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, invalidate } = useAuth();
+  const [serverError, setServerError] = useState<string>();
   const [{ values, errors }, update] = useForm({
     schema: LoginUser,
     initial: {
       email: "",
       password: "",
+    },
+  });
+  const { mutate } = useMutation({
+    mutationFn: login,
+    onSuccess: (res) => {
+      match(res, {
+        Ok: () => {
+          invalidate();
+        },
+        BadEmail: () => {
+          setServerError("Invalid email or password");
+        },
+        "*": (e) => {
+          console.log(e);
+        },
+      });
     },
   });
 
@@ -53,8 +73,11 @@ const LoginPage: FC = () => {
             label="Email"
             placeholder="Enter your email"
             value={values.email}
-            error={errors.email}
-            onChange={(email) => update((prev) => ({ ...prev, email }))}
+            error={serverError ?? errors.email}
+            onChange={(email) => {
+              setServerError(undefined);
+              update((prev) => ({ ...prev, email }));
+            }}
           />
           <InputField
             label="Password"
@@ -73,7 +96,9 @@ const LoginPage: FC = () => {
               active: "active:bg-zinc-300",
               border: "focus-visible:ring-zinc-800",
             }}
-            onClick={() => {}}
+            onClick={() => {
+              mutate(values);
+            }}
           >
             Continue with email
           </Button>
