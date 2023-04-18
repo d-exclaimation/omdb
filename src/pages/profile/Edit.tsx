@@ -5,6 +5,7 @@ import Button from "../../common/components/Button";
 import InputField from "../../common/components/InputField";
 import Overlay from "../../common/components/Overlay";
 import { useForm } from "../../common/hooks/useForm";
+import { sensiblespaces } from "../../common/utils/refinements";
 import EditImage from "./EditImage";
 
 type EditUser = z.infer<typeof EditUser>;
@@ -13,11 +14,19 @@ const EditUser = z
     firstName: z
       .string()
       .min(1, "Must be at least 1 character long")
-      .max(64, "Must be at most 64 characters long"),
+      .max(64, "Must be at most 64 characters long")
+      .refine(
+        sensiblespaces,
+        "Must contain leading, trailing or consecutive spaces"
+      ),
     lastName: z
       .string()
       .min(1, "Must be at least 1 character long")
-      .max(64, "Must be at most 64 characters long"),
+      .max(64, "Must be at most 64 characters long")
+      .refine(
+        sensiblespaces,
+        "Must contain leading, trailing or consecutive spaces"
+      ),
     email: z
       .string()
       .email("Must include an @ symbol and a top level domain")
