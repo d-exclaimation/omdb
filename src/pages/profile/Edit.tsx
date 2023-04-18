@@ -1,5 +1,5 @@
 import { match } from "@d-exclaimation/common/union";
-import { Dialog, Transition } from "@headlessui/react";
+import { Dialog, Disclosure, Transition } from "@headlessui/react";
 import { useMutation } from "@tanstack/react-query";
 import { Fragment, useCallback, useState, type FC } from "react";
 import { z } from "zod";
@@ -201,33 +201,73 @@ const Edit: FC<EditProps> = ({ editing, close, ...user }) => {
                         update((prev) => ({ ...prev, email }));
                       }}
                     />
-                    <InputField
-                      type="password"
-                      label="Password"
-                      value={values.password ?? ""}
-                      error={errors.password}
-                      placeholder="New password"
-                      onChange={(password) =>
-                        update((prev) => ({
-                          ...prev,
-                          password: password || undefined,
-                        }))
-                      }
-                    />
-                    <InputField
-                      label="Current password"
-                      type="password"
-                      error={passwordError ?? errors.currentPassword}
-                      value={values.currentPassword ?? ""}
-                      placeholder="Provide your old passwword"
-                      onChange={(currentPassword) => {
-                        setPasswordError(undefined);
-                        update((prev) => ({
-                          ...prev,
-                          currentPassword: currentPassword || undefined,
-                        }));
-                      }}
-                    />
+
+                    <Disclosure>
+                      {({ open }) => (
+                        <>
+                          <Disclosure.Button
+                            className="mt-1 flex w-full justify-between rounded-lg bg-zinc-100 
+                            px-4 py-2 text-left text-sm font-medium text-zinc-900 
+                           hover:bg-zinc-200 focus:outline-none focus-visible:ring 
+                           focus-visible:ring-zinc-500 focus-visible:ring-opacity-75"
+                          >
+                            <span>Update password</span>
+                          </Disclosure.Button>
+                          <Transition
+                            show={open}
+                            className="w-full"
+                            enter="transition-all ease-out duration-300"
+                            enterFrom="opacity-0 -translate-y-10"
+                            enterTo="opacity-100 translate-y-0"
+                            leave="transition ease-out duration-100"
+                            leaveFrom="opacity-100 translate-y-0"
+                            leaveTo="opacity-0 -translate-y-5"
+                            afterLeave={() => {
+                              setPasswordError(undefined);
+                              update((prev) => ({
+                                ...prev,
+                                password: undefined,
+                                currentPassword: undefined,
+                              }));
+                            }}
+                          >
+                            <Disclosure.Panel
+                              unmount={false}
+                              className="w-full flex flex-col gap-1"
+                            >
+                              <InputField
+                                type="password"
+                                label="Password"
+                                value={values.password ?? ""}
+                                error={errors.password}
+                                placeholder="New password"
+                                onChange={(password) =>
+                                  update((prev) => ({
+                                    ...prev,
+                                    password: password || undefined,
+                                  }))
+                                }
+                              />
+                              <InputField
+                                label="Current password"
+                                type="password"
+                                error={passwordError ?? errors.currentPassword}
+                                value={values.currentPassword ?? ""}
+                                placeholder="Provide your old passwword"
+                                onChange={(currentPassword) => {
+                                  setPasswordError(undefined);
+                                  update((prev) => ({
+                                    ...prev,
+                                    currentPassword:
+                                      currentPassword || undefined,
+                                  }));
+                                }}
+                              />
+                            </Disclosure.Panel>
+                          </Transition>
+                        </>
+                      )}
+                    </Disclosure>
                   </div>
                 </div>
 
