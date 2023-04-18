@@ -1,6 +1,7 @@
 import { type Union } from "@d-exclaimation/common/union";
 import { z } from "zod";
 import {
+  clearSession,
   session,
   setSession,
   setUserId,
@@ -161,6 +162,18 @@ export async function login(info: {
   } catch (e: unknown) {
     return { kind: "Error", message: `Unknown error, ${e}` };
   }
+}
+
+export async function logout() {
+  try {
+    await fetch(`${__API_URL__}/users/logout`, {
+      method: "POST",
+      headers: {
+        "X-Authorization": session() ?? "",
+      },
+    });
+    clearSession();
+  } catch (_) {}
 }
 
 export async function setAvayar(avatar: string) {

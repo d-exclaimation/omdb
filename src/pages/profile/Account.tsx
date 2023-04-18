@@ -1,7 +1,8 @@
+import { useMutation } from "@tanstack/react-query";
 import { type FC } from "react";
+import { logout } from "../../api/queries/user";
 import { __API_URL__ } from "../../api/url";
 import { useAuth } from "../../auth/useAuth";
-import { clearSession } from "../../common/utils/storage";
 import Settings from "./Settings";
 
 type AccountProps = {
@@ -22,7 +23,12 @@ const Account: FC<AccountProps> = ({
   onEdit,
 }) => {
   const { invalidate } = useAuth();
-
+  const { mutate } = useMutation({
+    mutationFn: logout,
+    onSuccess: () => {
+      invalidate();
+    },
+  });
   return (
     <div className="w-full h-full flex-shrink-0 flex flex-col">
       <section className="w-full flex items-start justify-between">
@@ -35,13 +41,7 @@ const Account: FC<AccountProps> = ({
           }}
           alt="avatar"
         />
-        <Settings
-          onEdit={onEdit}
-          onLogout={() => {
-            clearSession();
-            invalidate();
-          }}
-        />
+        <Settings onEdit={onEdit} onLogout={mutate} />
       </section>
       <section className="flex flex-col items-start justify-center w-full my-2">
         <h2 className="font-semibold text-lg md:text-xl max-w-full truncate">
