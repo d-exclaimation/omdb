@@ -84,7 +84,7 @@ const Edit: FC<EditProps> = ({ editing, close, submit, ...user }) => {
 
   return (
     <Transition appear show={editing} as={Fragment}>
-      <Dialog as="div" className="fixed z-[100]" onClose={onClose}>
+      <Dialog as="div" className="fixed z-40" onClose={onClose}>
         <Overlay.Child />
         <div className="fixed inset-0 overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4 text-center">
@@ -97,7 +97,7 @@ const Edit: FC<EditProps> = ({ editing, close, submit, ...user }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full max-w-md z-40 transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                 <Dialog.Title
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"

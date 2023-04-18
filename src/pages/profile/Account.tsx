@@ -1,5 +1,7 @@
 import { type FC } from "react";
-import Button from "../../common/components/Button";
+import { useAuth } from "../../auth/useAuth";
+import { clearSession } from "../../common/utils/storage";
+import Settings from "./Settings";
 
 type AccountProps = {
   id: string;
@@ -20,6 +22,7 @@ const Account: FC<AccountProps> = ({
   reviews,
   onEdit,
 }) => {
+  const { invalidate } = useAuth();
   return (
     <div className="w-full h-full flex-shrink-0 flex flex-col">
       <section className="w-full flex items-start justify-between">
@@ -28,18 +31,13 @@ const Account: FC<AccountProps> = ({
           src="https://api.dicebear.com/6.x/shapes/svg?seed=Cookie"
           alt="avatar"
         />
-        <Button
-          color={{
-            bg: "bg-zinc-100",
-            text: "text-zinc-900",
-            active: "active:bg-zinc-200",
-            hover: "hover:bg-zinc-200",
-            border: "focus-visible:ring-zinc-500",
+        <Settings
+          onEdit={onEdit}
+          onLogout={() => {
+            clearSession();
+            invalidate();
           }}
-          onClick={onEdit}
-        >
-          Edit
-        </Button>
+        />
       </section>
       <section className="flex flex-col items-start justify-center w-full my-2">
         <h2 className="font-semibold text-lg md:text-xl max-w-full truncate">

@@ -27,7 +27,7 @@ const NavBar: FC = () => {
     <Tab.Group selectedIndex={pathIndex}>
       <Tab.List
         as="nav"
-        className="z-50 fixed bottom-4 mx-auto 
+        className="z-30 fixed bottom-4 mx-auto 
         flex flex-row items-center justify-center
         w-max p-1 rounded-full backdrop-blur-sm 
       bg-white gap-1 shadow-lg overflow-hidden"
