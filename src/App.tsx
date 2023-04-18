@@ -67,7 +67,8 @@ const App: FC = () => {
   return (
     <SWRConfig
       value={{
-        errorRetryCount: 2,
+        errorRetryCount: 3,
+        revalidateOnFocus: false,
       }}
     >
       <AuthProvider>
