@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo, useState, type FC } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { z } from "zod";
-import { register } from "../../api/queries/user";
+import { register, setAvatar } from "../../api/queries/user";
 import { useAuth } from "../../auth/useAuth";
 import Button from "../../common/components/Button";
 import InputField from "../../common/components/InputField";
@@ -65,6 +65,13 @@ const SignupPage: FC = () => {
       });
     },
   });
+  const { mutate: uploadAvatar } = useMutation({
+    mutationFn: setAvatar,
+    onSuccess: () => {
+      invalidate();
+      close();
+    },
+  });
 
   const [{ values, errors: e, isValid }, updateForm] = useForm({
     schema: RegisterUser,
@@ -113,7 +120,7 @@ const SignupPage: FC = () => {
       <AvatarDialog
         show={isSubmitting && !isLoading && isValid}
         onClose={close}
-        onSubmit={() => close()}
+        onSubmit={uploadAvatar}
       />
       <Transition
         as="div"

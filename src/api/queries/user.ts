@@ -7,7 +7,7 @@ import {
   setUserId,
   userId,
 } from "../../common/utils/storage";
-import { __API_URL__ } from "../url";
+import { api } from "../url";
 
 const User = z.object({
   firstName: z.string(),
@@ -18,6 +18,7 @@ const UserEmail = z.object({
   email: z.string(),
 });
 
+export type UserInfo = z.infer<typeof UserInfo>;
 const UserInfo = z.intersection(User, UserEmail);
 
 const LoginResponse = z.object({
@@ -31,7 +32,7 @@ export async function me() {
     return null;
   }
   try {
-    const res = await fetch(`${__API_URL__}/users/${id}`, {
+    const res = await fetch(`${api}/users/${id}`, {
       headers: {
         "X-Authorization": session() ?? "",
       },
@@ -68,7 +69,7 @@ export async function register(user: {
   password: string;
 }): Promise<AuthResponse> {
   try {
-    const res1 = await fetch(`${__API_URL__}/users/register`, {
+    const res1 = await fetch(`${api}/users/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -87,7 +88,7 @@ export async function register(user: {
       }
     }
 
-    const res2 = await fetch(`${__API_URL__}/users/login`, {
+    const res2 = await fetch(`${api}/users/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -127,7 +128,7 @@ export async function login(info: {
   password: string;
 }): Promise<AuthResponse> {
   try {
-    const res = await fetch(`${__API_URL__}/users/login`, {
+    const res = await fetch(`${api}/users/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -167,7 +168,7 @@ export async function login(info: {
 
 export async function logout() {
   try {
-    await fetch(`${__API_URL__}/users/logout`, {
+    await fetch(`${api}/users/logout`, {
       method: "POST",
       headers: {
         "X-Authorization": session() ?? "",
@@ -203,7 +204,7 @@ export async function edit({
     };
   }
   try {
-    const res1 = await fetch(`${__API_URL__}/users/${id}`, {
+    const res1 = await fetch(`${api}/users/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -225,7 +226,7 @@ export async function edit({
     }
 
     if (file) {
-      const res2 = await fetch(`${__API_URL__}/users/${id}/image`, {
+      const res2 = await fetch(`${api}/users/${id}/image`, {
         method: "PUT",
         headers: {
           "X-Authorization": session() ?? "",
@@ -258,24 +259,21 @@ export async function edit({
   }
 }
 
-export async function setAvayar(avatar: string) {
+export async function setAvatar(file: File) {
   const id = userId();
   if (!id) {
-    return null;
+    return;
   }
   try {
-    const res = await fetch(`${__API_URL__}/users/${id}/image`, {
-      method: "POST",
+    await fetch(`${api}/users/${id}/image`, {
+      method: "PUT",
       headers: {
-        "Content-Type": "application/json",
         "X-Authorization": session() ?? "",
+        "Content-Type": file.type,
       },
-      body: avatar,
+      body: file,
     });
-    if (res.status !== 200) {
-      return null;
-    }
   } catch (_) {
-    return null;
+    return;
   }
 }

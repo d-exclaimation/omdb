@@ -7,7 +7,7 @@ import Overlay from "../../common/components/Overlay";
 type AvatarDialogProps = {
   show: boolean;
   onClose: () => void;
-  onSubmit: (avatar: string, file: File) => void;
+  onSubmit: (file: File) => void;
 };
 
 const AvatarDialog: FC<AvatarDialogProps> = ({ show, onClose, onSubmit }) => {
@@ -37,11 +37,29 @@ const AvatarDialog: FC<AvatarDialogProps> = ({ show, onClose, onSubmit }) => {
                   Add a profile profile
                 </Dialog.Title>
                 <div className="mt-4 flex flex-col w-full min-h-max">
-                  <img
-                    className="w-full aspect-square rounded-lg hover:opacity-80 cursor-pointer active:opacity-80"
-                    src="https://api.dicebear.com/6.x/shapes/svg?seed=Cookie"
-                    onClick={() => fileInputRef.current?.click()}
-                  />
+                  <div className="flex items-center justify-center w-full">
+                    <img
+                      className="w-72 md:w-96 aspect-square object-cover rounded-lg hover:opacity-80 cursor-pointer active:opacity-80"
+                      src={
+                        avatar?.src ??
+                        "https://api.dicebear.com/6.x/shapes/svg?seed=Cookie"
+                      }
+                      onError={(e) => {
+                        e.currentTarget.src =
+                          "https://api.dicebear.com/6.x/shapes/svg?seed=Cookie";
+                      }}
+                    />
+                    <div
+                      className="absolute flex items-center justify-center max-w-full w-72 md:w-96 aspect-square
+                      rounded-lg bg-black/25 hover:bg-black/40 cursor-pointer active:bg-black/40"
+                      onClick={() => fileInputRef.current?.click()}
+                    >
+                      <img
+                        className="w-24 h-24 md:w-28 md:h-28 hover:brightness-110 active:brightness-110"
+                        src="/icons/camera-selected.svg"
+                      />
+                    </div>
+                  </div>
                   <input
                     type="file"
                     className="hidden"
@@ -52,17 +70,10 @@ const AvatarDialog: FC<AvatarDialogProps> = ({ show, onClose, onSubmit }) => {
                         return;
                       }
                       const file = e.target.files[0];
-                      const reader = new FileReader();
-                      reader.readAsDataURL(file);
-                      reader.onload = (ev) => {
-                        if (typeof ev.target?.result !== "string") {
-                          return;
-                        }
-                        setAvatar({
-                          src: ev.target.result,
-                          file,
-                        });
-                      };
+                      setAvatar({
+                        src: URL.createObjectURL(file),
+                        file,
+                      });
                     }}
                   />
                   <Button
@@ -74,7 +85,12 @@ const AvatarDialog: FC<AvatarDialogProps> = ({ show, onClose, onSubmit }) => {
                       active: "active:bg-zinc-300",
                       border: "focus-visible:ring-zinc-800",
                     }}
-                    onClick={() => fileInputRef.current?.click()}
+                    onClick={() => {
+                      if (!avatar) {
+                        return;
+                      }
+                      onSubmit(avatar.file);
+                    }}
                     disabled={!avatar}
                   >
                     Upload profile picture

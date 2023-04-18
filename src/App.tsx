@@ -63,7 +63,14 @@ const router = createBrowserRouter([
   },
 ]);
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // 2d in ms
+      staleTime: 1000 * 60 * 60 * 24 * 2,
+    },
+  },
+});
 
 const App: FC = () => {
   return (

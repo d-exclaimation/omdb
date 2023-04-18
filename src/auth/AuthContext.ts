@@ -1,11 +1,9 @@
 import { createContext } from "react";
+import { UserInfo } from "../api/queries/user";
 type User = {
   id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
   image: string;
-};
+} & UserInfo;
 
 export type AuthContextValue = {
   user?: User;

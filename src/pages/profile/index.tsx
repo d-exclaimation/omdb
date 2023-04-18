@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { type FC } from "react";
 import { Navigate } from "react-router-dom";
+import { queryKeys } from "../../api/keys";
 import { topFilms } from "../../api/queries/film";
 import { useAuth } from "../../auth/useAuth";
 import LoadingIndicator from "../../common/components/LoadingIndicator";
@@ -8,18 +9,11 @@ import { withLayout } from "../layout";
 import KnownFor from "./KnownFor";
 import Profile from "./Profile";
 
-const USER = {
-  id: "1",
-  firstName: "John",
-  lastName: "Doe",
-  email: "john@doe.com",
-};
-
 const ProfilePage: FC = () => {
   const { user, isAuthenticating } = useAuth();
   const { data } = useQuery({
     queryFn: topFilms,
-    queryKey: ["topFilms"],
+    queryKey: queryKeys.user.topFilms,
     retry: 1,
     enabled: isAuthenticating,
   });
@@ -35,7 +29,7 @@ const ProfilePage: FC = () => {
   return (
     <div className="w-full flex flex-col items-center gap-3 justify-start">
       <Profile user={user} filmsDirected={data?.count ?? 0} />
-      <KnownFor />
+      <KnownFor films={data?.films ?? []} />
     </div>
   );
 };

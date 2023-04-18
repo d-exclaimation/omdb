@@ -1,5 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useCallback, useContext, useMemo } from "react";
+import { queryKeys } from "../api/keys";
 import { AuthContext } from "./AuthContext";
 
 export function useAuth() {
@@ -9,7 +10,11 @@ export function useAuth() {
   const isLoggedIn = useMemo(() => !!user, [user]);
 
   const invalidate = useCallback(() => {
-    queryClient.invalidateQueries(["me"]);
+    queryClient.invalidateQueries({
+      predicate: ({ queryKey }) => {
+        return queryKey[0] === queryKeys.user.prefix;
+      },
+    });
   }, []);
 
   return {

@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, type FC } from "react";
+import { queryKeys } from "../api/keys";
 import { me } from "../api/queries/user";
-import { __API_URL__ } from "../api/url";
+import { api } from "../api/url";
 import { AuthContext } from "./AuthContext";
 
 type AuthProviderProps = {
@@ -11,7 +12,7 @@ type AuthProviderProps = {
 const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const { data, isFetching } = useQuery({
     queryFn: me,
-    queryKey: ["me"],
+    queryKey: queryKeys.user.me,
     retry: 1,
   });
 
@@ -21,7 +22,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     }
     return {
       ...data,
-      image: `${__API_URL__}/users/${data.id}/image?${data.timestamp}`,
+      image: `${api}/users/${data.id}/image?${data.timestamp}`,
     };
   }, [data]);
 
