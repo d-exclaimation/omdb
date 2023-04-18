@@ -1,6 +1,6 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { type FC } from "react";
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
+import { SWRConfig } from "swr";
 import AuthProvider from "./auth/AuthProvider";
 import NavBar from "./navigation/NavBar";
 import HomePage from "./pages/index";
@@ -63,22 +63,17 @@ const router = createBrowserRouter([
   },
 ]);
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      // 2d in ms
-      staleTime: 1000 * 60 * 60 * 24 * 2,
-    },
-  },
-});
-
 const App: FC = () => {
   return (
-    <QueryClientProvider client={queryClient}>
+    <SWRConfig
+      value={{
+        errorRetryCount: 2,
+      }}
+    >
       <AuthProvider>
         <RouterProvider router={router} />
       </AuthProvider>
-    </QueryClientProvider>
+    </SWRConfig>
   );
 };
 

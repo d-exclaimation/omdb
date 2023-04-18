@@ -1,10 +1,10 @@
 import { match } from "@d-exclaimation/common/union";
 import { Transition } from "@headlessui/react";
-import { useMutation } from "@tanstack/react-query";
 import { useState, type FC } from "react";
 import { Link, Navigate } from "react-router-dom";
+import useMutation from "swr/mutation";
 import { z } from "zod";
-import { login } from "../api/queries/user";
+import { login } from "../api/user";
 import { useAuth } from "../auth/useAuth";
 import Button from "../common/components/Button";
 import InputField from "../common/components/InputField";
@@ -26,8 +26,7 @@ const LoginPage: FC = () => {
       password: "",
     },
   });
-  const { mutate } = useMutation({
-    mutationFn: login,
+  const { trigger } = useMutation("/login", login, {
     onSuccess: (res) => {
       match(res, {
         Ok: () => {
@@ -102,7 +101,7 @@ const LoginPage: FC = () => {
               border: "focus-visible:ring-zinc-800",
             }}
             onClick={() => {
-              mutate(values);
+              trigger(values);
             }}
           >
             Continue with email

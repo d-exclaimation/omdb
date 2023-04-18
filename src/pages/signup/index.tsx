@@ -1,10 +1,10 @@
 import { match } from "@d-exclaimation/common/lib/union";
 import { Transition } from "@headlessui/react";
-import { useMutation } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo, useState, type FC } from "react";
 import { Link, Navigate } from "react-router-dom";
+import useMutation from "swr/mutation";
 import { z } from "zod";
-import { register, setAvatar } from "../../api/queries/user";
+import { register, setAvatar } from "../../api/user";
 import { useAuth } from "../../auth/useAuth";
 import Button from "../../common/components/Button";
 import InputField from "../../common/components/InputField";
@@ -47,8 +47,7 @@ const SignupPage: FC = () => {
   const { isLoggedIn, invalidate, isAuthenticating } = useAuth();
   const [isSubmitting, { open, close }] = useToggle();
   const [showPassword, { toggle }] = useToggle();
-  const { mutate, isLoading } = useMutation({
-    mutationFn: register,
+  const { trigger, isMutating } = useMutation("/register", register, {
     onSuccess: (res) => {
       match(res, {
         Ok: () => {
@@ -65,13 +64,16 @@ const SignupPage: FC = () => {
       });
     },
   });
-  const { mutate: uploadAvatar } = useMutation({
-    mutationFn: setAvatar,
-    onSuccess: () => {
-      invalidate();
-      close();
-    },
-  });
+  const { trigger: uploadAvatar } = useMutation(
+    ["/register", "image"],
+    setAvatar,
+    {
+      onSuccess: () => {
+        invalidate();
+        close();
+      },
+    }
+  );
 
   const [{ values, errors: e, isValid }, updateForm] = useForm({
     schema: RegisterUser,
@@ -118,7 +120,7 @@ const SignupPage: FC = () => {
   return (
     <div className="min-h-screen w-full max-w-3xl px-5 h-max flex flex-col overflow-x-hidden items-center gap-4 justify-center pt-2 pb-20">
       <AvatarDialog
-        show={isSubmitting && !isLoading && isValid}
+        show={isSubmitting && !isMutating && isValid}
         onClose={close}
         onSubmit={uploadAvatar}
       />
@@ -196,10 +198,10 @@ const SignupPage: FC = () => {
               active: "active:bg-zinc-300",
               border: "focus-visible:ring-zinc-800",
             }}
-            onClick={() => {
+            onClick={async () => {
               open();
               if (isValid) {
-                mutate({
+                trigger({
                   firstName: values.firstName,
                   lastName: values.lastName,
                   email: values.email,

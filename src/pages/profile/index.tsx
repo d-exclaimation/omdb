@@ -1,8 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
 import { type FC } from "react";
 import { Navigate } from "react-router-dom";
-import { queryKeys } from "../../api/keys";
-import { topFilms } from "../../api/queries/film";
+import useQuery from "swr";
+import { topFilms } from "../../api/film";
+import { when } from "../../api/keys";
 import { useAuth } from "../../auth/useAuth";
 import LoadingIndicator from "../../common/components/LoadingIndicator";
 import { withLayout } from "../layout";
@@ -11,12 +11,10 @@ import Profile from "./Profile";
 
 const ProfilePage: FC = () => {
   const { user, isAuthenticating } = useAuth();
-  const { data } = useQuery({
-    queryFn: topFilms,
-    queryKey: queryKeys.user.topFilms,
-    retry: 1,
-    enabled: isAuthenticating,
-  });
+  const { data, isLoading } = useQuery(
+    when(!isAuthenticating, ["/me", "top-films"]),
+    topFilms
+  );
 
   if (isAuthenticating) {
     return <LoadingIndicator />;
@@ -29,7 +27,7 @@ const ProfilePage: FC = () => {
   return (
     <div className="w-full flex flex-col items-center gap-3 justify-start">
       <Profile user={user} filmsDirected={data?.count ?? 0} />
-      <KnownFor films={data?.films ?? []} />
+      <KnownFor isLoading={isLoading} films={data?.films ?? []} />
     </div>
   );
 };

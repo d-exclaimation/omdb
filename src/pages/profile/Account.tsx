@@ -1,6 +1,6 @@
-import { useMutation } from "@tanstack/react-query";
 import { type FC } from "react";
-import { logout } from "../../api/queries/user";
+import useMutation from "swr/mutation";
+import { logout } from "../../api/user";
 import { useAuth } from "../../auth/useAuth";
 import Settings from "./Settings";
 
@@ -24,8 +24,7 @@ const Account: FC<AccountProps> = ({
   onEdit,
 }) => {
   const { invalidate } = useAuth();
-  const { mutate } = useMutation({
-    mutationFn: logout,
+  const { trigger } = useMutation("/logout", logout, {
     onSuccess: () => {
       invalidate();
     },
@@ -42,7 +41,7 @@ const Account: FC<AccountProps> = ({
           }}
           alt="avatar"
         />
-        <Settings onEdit={onEdit} onLogout={mutate} />
+        <Settings onEdit={onEdit} onLogout={trigger} />
       </section>
       <section className="flex flex-col items-start justify-center w-full my-2">
         <h2 className="font-semibold text-lg md:text-xl max-w-full truncate">

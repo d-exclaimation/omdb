@@ -1,12 +1,14 @@
 import { type FC } from "react";
-import { FilmSearch } from "../../api/queries/film";
+import { FilmSearch } from "../../api/film";
 import { api } from "../../api/url";
+import LoadingIndicator from "../../common/components/LoadingIndicator";
 
 type KnownForProps = {
+  isLoading: boolean;
   films: FilmSearch["films"];
 };
 
-const KnownFor: FC<KnownForProps> = ({ films }) => {
+const KnownFor: FC<KnownForProps> = ({ films, isLoading }) => {
   return (
     <div className="w-full max-w-2xl max-h-96 bg-white flex flex-col rounded-lg p-6 md:p-8">
       <section className="w-full flex items-center justify-start">
@@ -42,6 +44,7 @@ const KnownFor: FC<KnownForProps> = ({ films }) => {
             There's no films you have directed yet
           </div>
         )}
+        {isLoading ? <LoadingIndicator /> : null}
       </section>
     </div>
   );

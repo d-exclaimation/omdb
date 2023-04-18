@@ -1,8 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
 import { useMemo, type FC } from "react";
-import { queryKeys } from "../api/keys";
-import { me } from "../api/queries/user";
+import useQuery from "swr";
 import { api } from "../api/url";
+import { me } from "../api/user";
 import { AuthContext } from "./AuthContext";
 
 type AuthProviderProps = {
@@ -10,11 +9,7 @@ type AuthProviderProps = {
 };
 
 const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
-  const { data, isFetching } = useQuery({
-    queryFn: me,
-    queryKey: queryKeys.user.me,
-    retry: 1,
-  });
+  const { data, isValidating } = useQuery("/me", me);
 
   const user = useMemo(() => {
     if (!data) {
@@ -30,7 +25,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     <AuthContext.Provider
       value={{
         user,
-        isAuthenticating: isFetching,
+        isAuthenticating: isValidating,
       }}
     >
       {children}

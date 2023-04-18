@@ -1,10 +1,10 @@
 import { match } from "@d-exclaimation/common/union";
 import { Dialog, Disclosure, Transition } from "@headlessui/react";
-import { useMutation } from "@tanstack/react-query";
 import { Fragment, useCallback, useState, type FC } from "react";
+import useMutation from "swr/mutation";
 import { z } from "zod";
-import { edit } from "../../api/queries/user";
 import { api } from "../../api/url";
+import { edit } from "../../api/user";
 import { useAuth } from "../../auth/useAuth";
 import Button from "../../common/components/Button";
 import InputField from "../../common/components/InputField";
@@ -86,8 +86,7 @@ const Edit: FC<EditProps> = ({ editing, close, ...user }) => {
       ...user,
     },
   });
-  const { mutate } = useMutation({
-    mutationFn: edit,
+  const { trigger } = useMutation("/edit", edit, {
     onSuccess: (res) => {
       match(res, {
         Ok: () => {
@@ -117,8 +116,8 @@ const Edit: FC<EditProps> = ({ editing, close, ...user }) => {
     if (!isValid) {
       return;
     }
-    mutate({ ...values, file: file ?? undefined });
-  }, [values, isValid, mutate, file]);
+    trigger({ ...values, file: file ?? undefined });
+  }, [values, isValid, trigger, file]);
 
   return (
     <Transition appear show={editing} as={Fragment}>

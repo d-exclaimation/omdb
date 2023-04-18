@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { userId } from "../../common/utils/storage";
-import { api } from "../url";
+import { userId } from "../common/utils/storage";
+import { api } from "./url";
 
 export type FilmSearch = z.infer<typeof FilmSearch>;
 const FilmSearch = z.object({
