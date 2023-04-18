@@ -8,8 +8,10 @@ type User = {
 
 export type AuthContextValue = {
   user?: User;
+  isLoading: boolean;
 };
 
 export const AuthContext = createContext<AuthContextValue>({
   user: undefined,
+  isLoading: false,
 });

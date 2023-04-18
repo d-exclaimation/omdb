@@ -1,4 +1,5 @@
 import { type FC } from "react";
+import { __API_URL__ } from "../../api/url";
 import { useAuth } from "../../auth/useAuth";
 import { clearSession } from "../../common/utils/storage";
 import Settings from "./Settings";
@@ -28,7 +29,11 @@ const Account: FC<AccountProps> = ({
       <section className="w-full flex items-start justify-between">
         <img
           className="w-16 md:w-20 h-16 md:h-20 object-cover rounded-full"
-          src="https://api.dicebear.com/6.x/shapes/svg?seed=Cookie"
+          src={`${__API_URL__}/users/${id}/image`}
+          onError={(e) => {
+            e.currentTarget.src =
+              "https://api.dicebear.com/6.x/shapes/svg?seed=Cookie";
+          }}
           alt="avatar"
         />
         <Settings

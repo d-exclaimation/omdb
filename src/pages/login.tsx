@@ -8,6 +8,7 @@ import { login } from "../api/queries/user";
 import { useAuth } from "../auth/useAuth";
 import Button from "../common/components/Button";
 import InputField from "../common/components/InputField";
+import LoadingIndicator from "../common/components/LoadingIndicator";
 import { useForm } from "../common/hooks/useForm";
 
 const LoginUser = z.object({
@@ -16,7 +17,7 @@ const LoginUser = z.object({
 });
 
 const LoginPage: FC = () => {
-  const { isLoggedIn, invalidate } = useAuth();
+  const { isLoggedIn, invalidate, isLoading } = useAuth();
   const [serverError, setServerError] = useState<string>();
   const [{ values, errors }, update] = useForm({
     schema: LoginUser,
@@ -41,6 +42,10 @@ const LoginPage: FC = () => {
       });
     },
   });
+
+  if (isLoading) {
+    return <LoadingIndicator />;
+  }
 
   if (isLoggedIn) {
     return <Navigate to="/profile" />;

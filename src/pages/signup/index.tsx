@@ -8,6 +8,7 @@ import { register } from "../../api/queries/user";
 import { useAuth } from "../../auth/useAuth";
 import Button from "../../common/components/Button";
 import InputField from "../../common/components/InputField";
+import LoadingIndicator from "../../common/components/LoadingIndicator";
 import { useForm } from "../../common/hooks/useForm";
 import { useToggle } from "../../common/hooks/useToggle";
 import { sensiblespaces } from "../../common/utils/refinements";
@@ -43,7 +44,7 @@ const RegisterUser = z.object({
 
 const SignupPage: FC = () => {
   const [serverError, setServerError] = useState<string>();
-  const { isLoggedIn, invalidate } = useAuth();
+  const { isLoggedIn, invalidate, isLoading: isLoadingUser } = useAuth();
   const [isSubmitting, { open, close }] = useToggle();
   const [showPassword, { toggle }] = useToggle();
   const { mutate, isLoading } = useMutation({
@@ -98,6 +99,10 @@ const SignupPage: FC = () => {
   useEffect(() => {
     update((prev) => prev);
   }, [update]);
+
+  if (isLoadingUser) {
+    return <LoadingIndicator />;
+  }
 
   if (isLoggedIn && !isSubmitting) {
     return <Navigate to="/profile" />;

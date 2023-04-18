@@ -162,3 +162,25 @@ export async function login(info: {
     return { kind: "Error", message: `Unknown error, ${e}` };
   }
 }
+
+export async function setAvayar(avatar: string) {
+  const id = userId();
+  if (!id) {
+    return null;
+  }
+  try {
+    const res = await fetch(`${__API_URL__}/users/${id}/image`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Authorization": session() ?? "",
+      },
+      body: avatar,
+    });
+    if (res.status !== 200) {
+      return null;
+    }
+  } catch (_) {
+    return null;
+  }
+}

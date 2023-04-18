@@ -20,15 +20,15 @@ export default {
       },
       animation: {
         "handdrawn": "2s ease-in-out 0.5s 1 normal forwards running handdrawn",
-      }
-    },
-    keyframes: {
-      "handdrawn": {
-        to: {
-          strokeDashoffset: 0,
+      },
+      keyframes: {
+        "handdrawn": {
+          to: {
+            strokeDashoffset: 0,
+          }
         }
       }
-    }
+    },
   },
   plugins: [],
 }

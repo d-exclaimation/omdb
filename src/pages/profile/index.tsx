@@ -1,6 +1,7 @@
 import { type FC } from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../../auth/useAuth";
+import LoadingIndicator from "../../common/components/LoadingIndicator";
 import { withLayout } from "../layout";
 import KnownFor from "./KnownFor";
 import Profile from "./Profile";
@@ -13,7 +14,11 @@ const USER = {
 };
 
 const ProfilePage: FC = () => {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
+
+  if (isLoading) {
+    return <LoadingIndicator />;
+  }
 
   if (!user) {
     return <Navigate to="/login" />;
