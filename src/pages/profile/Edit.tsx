@@ -137,14 +137,17 @@ const Edit: FC<EditProps> = ({ editing, close, ...user }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md z-40 transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel
+                className="w-full max-w-md z-40 transform overflow-hidden rounded-2xl bg-white 
+                p-6 text-left align-middle shadow-xl transition-all"
+              >
                 <Dialog.Title
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
                 >
                   Edit profile
                 </Dialog.Title>
-                <div className="mt-4 flex flex-col w-full min-h-max">
+                <div className="mt-4 flex flex-col w-full min-h-max transition-all">
                   <div className="flex w-full items-end justify-start">
                     <img
                       className="w-20 md:w-24 h-20 md:h-24 object-cover rounded-full"
@@ -211,7 +214,7 @@ const Edit: FC<EditProps> = ({ editing, close, ...user }) => {
                            hover:bg-zinc-200 focus:outline-none focus-visible:ring 
                            focus-visible:ring-zinc-500 focus-visible:ring-opacity-75"
                           >
-                            <span>Update password</span>
+                            {open ? "Hide" : "Update password"}
                           </Disclosure.Button>
                           <Transition
                             show={open}

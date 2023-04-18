@@ -9,10 +9,10 @@ type User = {
 
 export type AuthContextValue = {
   user?: User;
-  isLoading: boolean;
+  isAuthenticating: boolean;
 };
 
 export const AuthContext = createContext<AuthContextValue>({
   user: undefined,
-  isLoading: false,
+  isAuthenticating: false,
 });

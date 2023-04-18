@@ -12,12 +12,12 @@ import LoadingIndicator from "../common/components/LoadingIndicator";
 import { useForm } from "../common/hooks/useForm";
 
 const LoginUser = z.object({
-  email: z.string().email("Must include an @ symbol and a top level domain"),
+  email: z.string().email("Must be a valid email"),
   password: z.string(),
 });
 
 const LoginPage: FC = () => {
-  const { isLoggedIn, invalidate, isLoading } = useAuth();
+  const { isLoggedIn, invalidate, isAuthenticating } = useAuth();
   const [serverError, setServerError] = useState<string>();
   const [{ values, errors }, update] = useForm({
     schema: LoginUser,
@@ -43,7 +43,7 @@ const LoginPage: FC = () => {
     },
   });
 
-  if (isLoading) {
+  if (isAuthenticating) {
     return <LoadingIndicator />;
   }
 

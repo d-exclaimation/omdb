@@ -9,7 +9,7 @@ type AuthProviderProps = {
 };
 
 const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
-  const { data, isLoading } = useQuery({
+  const { data, isFetching } = useQuery({
     queryFn: me,
     queryKey: ["me"],
     retry: 1,
@@ -29,7 +29,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     <AuthContext.Provider
       value={{
         user,
-        isLoading,
+        isAuthenticating: isFetching,
       }}
     >
       {children}

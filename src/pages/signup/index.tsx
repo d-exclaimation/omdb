@@ -33,7 +33,7 @@ const RegisterUser = z.object({
     ),
   email: z
     .string()
-    .email("Must include an @ symbol and a top level domain")
+    .email("Must be a valid email")
     .min(1, "Must be at least 1 character long")
     .max(256, "Must be at most 256 characters long"),
   password: z
@@ -44,7 +44,7 @@ const RegisterUser = z.object({
 
 const SignupPage: FC = () => {
   const [serverError, setServerError] = useState<string>();
-  const { isLoggedIn, invalidate, isLoading: isLoadingUser } = useAuth();
+  const { isLoggedIn, invalidate, isAuthenticating } = useAuth();
   const [isSubmitting, { open, close }] = useToggle();
   const [showPassword, { toggle }] = useToggle();
   const { mutate, isLoading } = useMutation({
@@ -100,7 +100,7 @@ const SignupPage: FC = () => {
     update((prev) => prev);
   }, [update]);
 
-  if (isLoadingUser) {
+  if (isAuthenticating) {
     return <LoadingIndicator />;
   }
 

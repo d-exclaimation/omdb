@@ -16,15 +16,15 @@ const USER = {
 };
 
 const ProfilePage: FC = () => {
-  const { user, isLoading } = useAuth();
+  const { user, isAuthenticating } = useAuth();
   const { data } = useQuery({
     queryFn: topFilms,
     queryKey: ["topFilms"],
     retry: 1,
-    enabled: isLoading,
+    enabled: isAuthenticating,
   });
 
-  if (isLoading) {
+  if (isAuthenticating) {
     return <LoadingIndicator />;
   }
 
