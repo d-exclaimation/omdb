@@ -2,7 +2,7 @@ import { Menu, Transition } from "@headlessui/react";
 import { Fragment, useRef, type FC } from "react";
 
 type EditImageProps = {
-  onUpload: (src: string, file: File) => void;
+  onUpload: (file: File) => void;
   onRemove: () => void;
 };
 
@@ -26,14 +26,7 @@ const EditImage: FC<EditImageProps> = ({ onUpload, onRemove }) => {
               return;
             }
             const file = e.target.files[0];
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = (ev) => {
-              if (typeof ev.target?.result !== "string") {
-                return;
-              }
-              onUpload(ev.target.result, file);
-            };
+            onUpload(file);
           }}
         />
       </Menu.Button>

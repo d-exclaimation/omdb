@@ -1,6 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useCallback, type FC } from "react";
+import { Fragment, useCallback, useState, type FC } from "react";
 import { z } from "zod";
+import { __API_URL__ } from "../../api/url";
 import Button from "../../common/components/Button";
 import InputField from "../../common/components/InputField";
 import Overlay from "../../common/components/Overlay";
@@ -63,6 +64,10 @@ type EditProps = {
 };
 
 const Edit: FC<EditProps> = ({ editing, close, submit, ...user }) => {
+  const [preview, setPreview] = useState(
+    `${__API_URL__}/users/${user.id}/image`
+  );
+  const [file, setFile] = useState<File | null>(null);
   const [{ values, errors, isValid }, update] = useForm({
     schema: EditUser,
     initial: {
@@ -108,10 +113,28 @@ const Edit: FC<EditProps> = ({ editing, close, submit, ...user }) => {
                   <div className="flex w-full items-end justify-start">
                     <img
                       className="w-20 md:w-24 h-20 md:h-24 object-cover rounded-full"
-                      src="https://api.dicebear.com/6.x/shapes/svg?seed=Cookie"
+                      src={preview}
+                      onError={(e) => {
+                        e.currentTarget.src =
+                          "https://api.dicebear.com/6.x/shapes/svg?seed=Cookie";
+                      }}
                       alt="avatar"
                     />
-                    <EditImage onUpload={console.log} onRemove={console.log} />
+                    <EditImage
+                      onUpload={(file) => {
+                        const allowedTypes = [
+                          "image/png",
+                          "image/jpeg",
+                          "image/gif",
+                        ];
+                        if (!allowedTypes.includes(file.type)) {
+                          return;
+                        }
+                        setPreview(URL.createObjectURL(file));
+                        setFile(file);
+                      }}
+                      onRemove={console.log}
+                    />
                   </div>
 
                   <div className="flex flex-col items-start justify-center w-full mt-4 gap-1">
