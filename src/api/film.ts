@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { userId } from "../common/utils/storage";
 import { api } from "./url";
+import { query } from "./utils";
 
 export type FilmSearch = z.infer<typeof FilmSearch>;
 const FilmSearch = z.object({
@@ -14,7 +15,7 @@ const FilmSearch = z.object({
   count: z.number().int(),
 });
 
-export async function topFilms() {
+export const topFilms = query(async () => {
   const id = userId();
   if (!id) {
     return {
@@ -46,4 +47,4 @@ export async function topFilms() {
     };
   }
   return maybeFilms.data;
-}
+});

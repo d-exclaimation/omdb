@@ -68,7 +68,7 @@ const App: FC = () => {
     <SWRConfig
       value={{
         errorRetryCount: 3,
-        revalidateOnFocus: false,
+        focusThrottleInterval: 60 * 60 * 1000,
       }}
     >
       <AuthProvider>
