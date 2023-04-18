@@ -1,4 +1,4 @@
-import { type FC } from "react";
+import { type FC, type ReactNode } from "react";
 
 type InputFieldProps = {
   label: string;
@@ -7,6 +7,7 @@ type InputFieldProps = {
   error?: string;
   value: string;
   onChange: (value: string) => void;
+  children?: ReactNode;
 };
 
 const InputField: FC<InputFieldProps> = ({
@@ -16,9 +17,10 @@ const InputField: FC<InputFieldProps> = ({
   onChange,
   type,
   placeholder,
+  children,
 }) => {
   return (
-    <div className="flex flex-col items-start justify-center text-zinc-500 w-full">
+    <div className="flex relative flex-col items-start justify-center text-zinc-500 w-full">
       <label className="flex w-full group" data-error={!!error}>
         <span
           className="text-sm p-1 font-medium transition-all group-data-[error='true']:translate-y-full 
@@ -43,6 +45,7 @@ const InputField: FC<InputFieldProps> = ({
         onChange={(e) => onChange(e.target.value)}
         data-error={!!error}
       />
+      {children}
     </div>
   );
 };
