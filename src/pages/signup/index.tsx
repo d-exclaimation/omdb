@@ -1,14 +1,17 @@
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useCallback, useEffect, useMemo, type FC } from "react";
+import { match } from "@d-exclaimation/common/lib/union";
+import { Transition } from "@headlessui/react";
+import { useMutation } from "@tanstack/react-query";
+import { useCallback, useEffect, useMemo, useState, type FC } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { z } from "zod";
-import { useAuth } from "../auth/useAuth";
-import Button from "../common/components/Button";
-import InputField from "../common/components/InputField";
-import Overlay from "../common/components/Overlay";
-import { useForm } from "../common/hooks/useForm";
-import { useToggle } from "../common/hooks/useToggle";
-import { sensiblespaces } from "../common/utils/refinements";
+import { register } from "../../api/queries/user";
+import { useAuth } from "../../auth/useAuth";
+import Button from "../../common/components/Button";
+import InputField from "../../common/components/InputField";
+import { useForm } from "../../common/hooks/useForm";
+import { useToggle } from "../../common/hooks/useToggle";
+import { sensiblespaces } from "../../common/utils/refinements";
+import AvatarDialog from "./AvatarDialog";
 
 const RegisterUser = z.object({
   firstName: z
@@ -39,8 +42,29 @@ const RegisterUser = z.object({
 });
 
 const SignupPage: FC = () => {
-  const { isLoggedIn, updateUser } = useAuth();
+  const [serverError, setServerError] = useState<string>();
+  const { isLoggedIn, invalidate } = useAuth();
   const [isSubmitting, { open, close }] = useToggle();
+  const [showPassword, { toggle }] = useToggle();
+  const { mutate, isLoading } = useMutation({
+    mutationFn: register,
+    onSuccess: (res) => {
+      match(res, {
+        Ok: () => {
+          invalidate();
+        },
+        BadEmail: () => {
+          close();
+          setServerError("Email is already in use");
+        },
+        "*": (e) => {
+          close();
+          console.log(e);
+        },
+      });
+    },
+  });
+
   const [{ values, errors: e, isValid }, updateForm] = useForm({
     schema: RegisterUser,
     initial: {
@@ -81,61 +105,11 @@ const SignupPage: FC = () => {
 
   return (
     <div className="min-h-screen w-full max-w-3xl px-5 h-max flex flex-col overflow-x-hidden items-center gap-4 justify-center pt-2 pb-20">
-      <Transition appear show={isSubmitting && isValid} as={Fragment}>
-        <Dialog as="div" className="fixed z-[100]" onClose={close}>
-          <Overlay.Child />
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900"
-                  >
-                    Add a profile profile
-                  </Dialog.Title>
-                  <div className="mt-4 flex flex-col w-full min-h-max">
-                    <img
-                      className="w-full aspect-square rounded-lg"
-                      src="https://api.dicebear.com/6.x/shapes/svg?seed=Cookie"
-                    />
-                    <Button
-                      className="w-full my-2"
-                      color={{
-                        bg: "bg-zinc-200",
-                        text: "text-zinc-900",
-                        hover: "hover:bg-zinc-300",
-                        active: "active:bg-zinc-300",
-                        border: "focus-visible:ring-zinc-800",
-                      }}
-                      onClick={() => {}}
-                    >
-                      Upload profile picture
-                    </Button>
-
-                    <div className="w-full text-center text-xs py-2 mt-1">
-                      <Link
-                        className="text-zinc-500 hover:underline active:underline decoration-zinc-500"
-                        to="/profile"
-                      >
-                        Skip this step
-                      </Link>
-                    </div>
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
+      <AvatarDialog
+        show={isSubmitting && !isLoading && isValid}
+        onClose={close}
+        onSubmit={() => close()}
+      />
       <Transition
         as="div"
         className="flex-1 w-full min-h-full h-max flex justify-center items-center"
@@ -177,17 +151,30 @@ const SignupPage: FC = () => {
             label="Email"
             placeholder="Enter your email"
             value={values.email}
-            error={errors.email}
-            onChange={(email) => update((prev) => ({ ...prev, email }))}
+            error={serverError ?? errors.email}
+            onChange={(email) => {
+              setServerError(undefined);
+              update((prev) => ({ ...prev, email }));
+            }}
           />
           <InputField
             label="Password"
-            type="password"
+            type={showPassword && !isSubmitting ? "text" : "password"}
             placeholder="Enter your password"
             value={values.password}
             error={errors.password}
             onChange={(password) => update((prev) => ({ ...prev, password }))}
-          />
+          >
+            <button
+              className="absolute right-1 bottom-2 text-sm px-2 py-1 
+             bg-zinc-200 rounded-md z-10 active:bg-zinc-300 hover:bg-zinc-300
+              disabled:opacity-50 disabled:cursor-not-allowed"
+              onClick={toggle}
+              disabled={isSubmitting}
+            >
+              {showPassword ? "Hide" : "Show"}
+            </button>
+          </InputField>
           <Button
             className="w-full"
             color={{
@@ -200,11 +187,11 @@ const SignupPage: FC = () => {
             onClick={() => {
               open();
               if (isValid) {
-                updateUser({
-                  id: "1",
+                mutate({
                   firstName: values.firstName,
                   lastName: values.lastName,
                   email: values.email,
+                  password: values.password,
                 });
               }
             }}
