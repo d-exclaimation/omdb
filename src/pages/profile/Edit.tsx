@@ -7,6 +7,7 @@ import { api } from "../../api/url";
 import { edit } from "../../api/user";
 import { useAuth } from "../../auth/useAuth";
 import Button from "../../common/components/Button";
+import Img from "../../common/components/Image";
 import InputField from "../../common/components/InputField";
 import Overlay from "../../common/components/Overlay";
 import { useForm } from "../../common/hooks/useForm";
@@ -146,13 +147,10 @@ const Edit: FC<EditProps> = ({ editing, close, ...user }) => {
                 </Dialog.Title>
                 <div className="mt-4 flex flex-col w-full min-h-max transition-all">
                   <div className="flex w-full items-end justify-start">
-                    <img
+                    <Img
                       className="w-20 md:w-24 h-20 md:h-24 object-cover rounded-full"
                       src={preview}
-                      onError={(e) => {
-                        e.currentTarget.src =
-                          "https://api.dicebear.com/6.x/shapes/svg?seed=Cookie";
-                      }}
+                      fallback="Cookie"
                       alt="avatar"
                     />
                     <EditImage

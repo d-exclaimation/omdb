@@ -2,6 +2,7 @@ import { type FC } from "react";
 import useMutation from "swr/mutation";
 import { logout } from "../../api/user";
 import { useAuth } from "../../auth/useAuth";
+import Img from "../../common/components/Image";
 import Settings from "./Settings";
 
 type AccountProps = {
@@ -32,13 +33,10 @@ const Account: FC<AccountProps> = ({
   return (
     <div className="w-full h-full flex-shrink-0 flex flex-col">
       <section className="w-full flex items-start justify-between">
-        <img
+        <Img
           className="w-16 md:w-20 h-16 md:h-20 object-cover rounded-full"
           src={image}
-          onError={(e) => {
-            e.currentTarget.src =
-              "https://api.dicebear.com/6.x/shapes/svg?seed=Cookie";
-          }}
+          fallback={email}
           alt="avatar"
         />
         <Settings onEdit={onEdit} onLogout={trigger} />

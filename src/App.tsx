@@ -2,7 +2,9 @@ import { type FC } from "react";
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { SWRConfig } from "swr";
 import AuthProvider from "./auth/AuthProvider";
+import GenreProvider from "./common/context/genre/GenreProvider";
 import NavBar from "./navigation/NavBar";
+import GalleryPage from "./pages/gallery";
 import HomePage from "./pages/index";
 import Layout from "./pages/layout";
 import LoginPage from "./pages/login";
@@ -45,11 +47,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/gallery",
-        element: (
-          <Layout route="Gallery" heading="Your gallery of films">
-            Create new film
-          </Layout>
-        ),
+        element: <GalleryPage />,
       },
       {
         path: "/login",
@@ -72,7 +70,9 @@ const App: FC = () => {
       }}
     >
       <AuthProvider>
-        <RouterProvider router={router} />
+        <GenreProvider>
+          <RouterProvider router={router} />
+        </GenreProvider>
       </AuthProvider>
     </SWRConfig>
   );
