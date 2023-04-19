@@ -1,8 +1,8 @@
 import { type FC } from "react";
 import { type FilmSearch } from "../../api/film";
 import { api } from "../../api/url";
-import { useGenres } from "../context/genre/useGenres";
-import Img from "./Image";
+import Img from "../../common/components/Image";
+import { useGenres } from "../../common/context/genre/useGenres";
 
 type FilmPreviewProps = FilmSearch["films"][number] & {
   cachestamp?: string;
@@ -16,6 +16,8 @@ const FilmPreview: FC<FilmPreviewProps> = ({
   rating,
   releaseDate,
   cachestamp,
+  directorFirstName,
+  directorLastName,
 }) => {
   const genres = useGenres();
   return (
@@ -34,7 +36,9 @@ const FilmPreview: FC<FilmPreviewProps> = ({
       <div className="flex flex-col w-full gap-1 py-2">
         <h3 className="max-w-4xl font-semibold text-sm">{title}</h3>
         <div className="flex flex-row justify-between gap-3 text-zinc-500 text-xs">
-          <span className="max-w-[32rem] truncate">First name Last Name</span>
+          <span className="max-w-[32rem] truncate">
+            {directorFirstName} {directorLastName}
+          </span>
         </div>
         <div className="flex flex-row justify-between text-zinc-400 h-max gap-3 pr-1 text-xs">
           <span className="px-1 rounded bg-red-200 text-red-900">

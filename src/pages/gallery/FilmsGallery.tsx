@@ -1,7 +1,7 @@
 import { type FC } from "react";
 import { FilmSearch } from "../../api/film";
-import FilmPreview from "../../common/components/FilmPreview";
 import LoadingIndicator from "../../common/components/LoadingIndicator";
+import FilmPreview from "./FilmPreview";
 
 type FilmCaraouselProps = {
   title: string;
