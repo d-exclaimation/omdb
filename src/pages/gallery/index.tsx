@@ -1,13 +1,29 @@
 import { type FC } from "react";
+import { Navigate } from "react-router-dom";
 import useQuery from "swr";
 import { filmGallery } from "../../api/film";
-import { useGenres } from "../../common/context/genre/useGenres";
+import { when } from "../../api/keys";
+import { useAuth } from "../../auth/useAuth";
+import LoadingIndicator from "../../common/components/LoadingIndicator";
 import { withLayout } from "../layout";
 import FilmsCaraousel from "./FilmsGallery";
 
 const GalleryPage: FC = () => {
-  const genres = useGenres();
-  const { data, isLoading } = useQuery(["/gallery"], filmGallery);
+  const { user, isAuthenticating } = useAuth();
+  const { data, isLoading } = useQuery(
+    when(!isAuthenticating, ["/gallery"]),
+    filmGallery
+  );
+
+  if (isAuthenticating) {
+    return <LoadingIndicator />;
+  }
+
+  // TODO: Show the page but make it disabled under a blur with a login button
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
+
   return (
     <div className="w-full flex flex-col justify-start items-center gap-3">
       <FilmsCaraousel
