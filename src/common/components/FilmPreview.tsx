@@ -4,13 +4,18 @@ import { api } from "../../api/url";
 import { useGenres } from "../context/genre/useGenres";
 import Img from "./Image";
 
-const FilmPreview: FC<FilmSearch["films"][number]> = ({
+type FilmPreviewProps = FilmSearch["films"][number] & {
+  cachestamp?: string;
+};
+
+const FilmPreview: FC<FilmPreviewProps> = ({
   filmId,
   title,
   genreId,
   ageRating,
   rating,
   releaseDate,
+  cachestamp,
 }) => {
   const genres = useGenres();
   return (
@@ -21,7 +26,7 @@ const FilmPreview: FC<FilmSearch["films"][number]> = ({
       <div className="object-cover w-64 h-48 rounded overflow-hidden">
         <Img
           className="object-cover w-64 h-48 rounded transition-all hover:scale-110"
-          src={`${api}/films/${filmId}/image`}
+          src={`${api}/films/${filmId}/image?${cachestamp ?? ""}`}
           fallback={title}
           alt={title}
         />

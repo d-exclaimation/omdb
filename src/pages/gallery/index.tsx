@@ -30,6 +30,7 @@ const GalleryPage: FC = () => {
         title="Films you have directed"
         emptyMessage="There's no films you have directed yet"
         films={data?.films ?? []}
+        cachestamp={data?.cachestamp}
         isLoading={isLoading}
       />
       <div className="w-full max-w-2xl max-h-80 bg-white flex flex-row items-start overflow-x-hidden rounded-lg p-6 md:p-8"></div>

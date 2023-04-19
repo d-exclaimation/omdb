@@ -7,6 +7,7 @@ type FilmCaraouselProps = {
   title: string;
   isLoading: boolean;
   films: FilmSearch["films"];
+  cachestamp?: string;
   emptyMessage: string;
 };
 
@@ -15,6 +16,7 @@ const FilmsCaraousel: FC<FilmCaraouselProps> = ({
   emptyMessage,
   films,
   isLoading,
+  cachestamp,
 }) => {
   return (
     <div className="w-full max-w-2xl max-h-max bg-white flex flex-col rounded-lg p-6 md:p-8">
@@ -23,7 +25,9 @@ const FilmsCaraousel: FC<FilmCaraouselProps> = ({
       </section>
       <section className="w-full flex items-center justify-start gap-3 my-2 p-1 overflow-x-auto">
         {films.length ? (
-          films.map((film) => <FilmPreview {...film} key={film.filmId} />)
+          films.map((film) => (
+            <FilmPreview {...film} key={film.filmId} cachestamp={cachestamp} />
+          ))
         ) : (
           <div className="w-full h-full flex items-center justify-center pt-6 pb-4 text-zinc-500">
             {emptyMessage}

@@ -17,7 +17,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     }
     return {
       ...data,
-      image: `${api}/users/${data.id}/image?${data.timestamp}`,
+      image: `${api}/users/${data.id}/image?${data.cachestamp}`,
     };
   }, [data]);
 
