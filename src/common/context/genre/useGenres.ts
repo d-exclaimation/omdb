@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { GenreContext } from "./GenreContext";
+import { GlobalContext } from "../global/GlobalContext";
 
 export function useGenres() {
-  const { genres, get } = useContext(GenreContext);
-  return { genres, get };
+  const { genres } = useContext(GlobalContext);
+  return genres;
 }

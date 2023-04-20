@@ -8,7 +8,7 @@ import {
   userId,
 } from "../common/utils/storage";
 import { api } from "./url";
-import { cachestamp, mutation, query } from "./utils";
+import { mutation, query } from "./utils";
 
 const User = z.object({
   firstName: z.string(),
@@ -49,7 +49,6 @@ export const me = query(async () => {
     return {
       id,
       ...maybeUser.data,
-      cachestamp: cachestamp(),
     };
   } catch (_) {
     return null;

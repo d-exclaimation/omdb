@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { userId } from "../common/utils/storage";
 import { api } from "./url";
-import { cachestamp, query } from "./utils";
+import { query } from "./utils";
 
 export type FilmSearch = z.infer<typeof FilmSearch>;
 const FilmSearch = z.object({
@@ -27,7 +27,6 @@ export const topFilms = query(async () => {
     return {
       films: [],
       count: 0,
-      cachestamp: cachestamp(),
     };
   }
   const res = await fetch(
@@ -43,7 +42,6 @@ export const topFilms = query(async () => {
     return {
       films: [],
       count: 0,
-      cachestamp: cachestamp(),
     };
   }
   const raw = await res.json();
@@ -52,12 +50,10 @@ export const topFilms = query(async () => {
     return {
       films: [],
       count: 0,
-      cachestamp: cachestamp(),
     };
   }
   return {
     ...maybeFilms.data,
-    cachestamp: cachestamp(),
   };
 });
 
@@ -67,7 +63,6 @@ export const filmGallery = query(async () => {
     return {
       films: [],
       count: 0,
-      cachestamp: cachestamp(),
     };
   }
   const res = await fetch(
@@ -83,7 +78,6 @@ export const filmGallery = query(async () => {
     return {
       films: [],
       count: 0,
-      cachestamp: cachestamp(),
     };
   }
   const raw = await res.json();
@@ -91,12 +85,8 @@ export const filmGallery = query(async () => {
   if (!maybeFilms.success) {
     return {
       films: [],
-      cachestamp: cachestamp(),
       count: 0,
     };
   }
-  return {
-    ...maybeFilms.data,
-    cachestamp: cachestamp(),
-  };
+  return maybeFilms.data;
 });

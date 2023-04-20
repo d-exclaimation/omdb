@@ -13,11 +13,3 @@ export function mutation<Arg = void, Returned = any>(
     return fn(opts.arg);
   };
 }
-
-/**
- * Get a cache timestamp of the current date
- * @returns The current date in ISO format
- */
-export function cachestamp() {
-  return new Date().toISOString();
-}

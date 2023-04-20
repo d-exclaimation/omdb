@@ -2,7 +2,7 @@ import { type FC } from "react";
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { SWRConfig } from "swr";
 import AuthProvider from "./auth/AuthProvider";
-import GenreProvider from "./common/context/genre/GenreProvider";
+import GlobalProvider from "./common/context/global/GlobalProvider";
 import NavBar from "./navigation/NavBar";
 import GalleryPage from "./pages/gallery";
 import HomePage from "./pages/index";
@@ -69,11 +69,11 @@ const App: FC = () => {
         focusThrottleInterval: 60 * 60 * 1000,
       }}
     >
-      <AuthProvider>
-        <GenreProvider>
+      <GlobalProvider>
+        <AuthProvider>
           <RouterProvider router={router} />
-        </GenreProvider>
-      </AuthProvider>
+        </AuthProvider>
+      </GlobalProvider>
     </SWRConfig>
   );
 };

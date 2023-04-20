@@ -2,11 +2,10 @@ import { type FC } from "react";
 import { type FilmSearch } from "../../api/film";
 import { api } from "../../api/url";
 import Img from "../../common/components/Image";
+import { useCacheControl } from "../../common/context/cache/useCacheControl";
 import { useGenres } from "../../common/context/genre/useGenres";
 
-type FilmPreviewProps = FilmSearch["films"][number] & {
-  cachestamp?: string;
-};
+type FilmPreviewProps = FilmSearch["films"][number];
 
 const FilmPreview: FC<FilmPreviewProps> = ({
   filmId,
@@ -15,11 +14,11 @@ const FilmPreview: FC<FilmPreviewProps> = ({
   ageRating,
   rating,
   releaseDate,
-  cachestamp,
   directorFirstName,
   directorLastName,
 }) => {
   const genres = useGenres();
+  const { film: cachestamp } = useCacheControl();
   return (
     <div
       key={filmId}

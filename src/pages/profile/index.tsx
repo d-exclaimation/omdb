@@ -27,11 +27,7 @@ const ProfilePage: FC = () => {
   return (
     <div className="w-full flex flex-col items-center gap-3 justify-start">
       <Profile user={user} filmsDirected={data?.count ?? 0} />
-      <KnownFor
-        isLoading={isLoading}
-        films={data?.films ?? []}
-        cachestamp={data?.cachestamp}
-      />
+      <KnownFor isLoading={isLoading} films={data?.films ?? []} />
     </div>
   );
 };
