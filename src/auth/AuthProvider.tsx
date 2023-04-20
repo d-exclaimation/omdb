@@ -1,8 +1,6 @@
 import { useMemo, type FC } from "react";
 import useQuery from "swr";
-import { api } from "../api/url";
 import { me } from "../api/user";
-import { useCacheControl } from "../common/context/cache/useCacheControl";
 import { AuthContext } from "./AuthContext";
 
 type AuthProviderProps = {
@@ -10,17 +8,13 @@ type AuthProviderProps = {
 };
 
 const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
-  const { data, isValidating } = useQuery(["/me"], me);
-  const { user: cachestamp } = useCacheControl();
+  const { data, isValidating } = useQuery(["me"], me);
 
   const user = useMemo(() => {
     if (!data) {
       return undefined;
     }
-    return {
-      ...data,
-      image: `${api}/users/${data.id}/image?${cachestamp}`,
-    };
+    return data;
   }, [data]);
 
   return (

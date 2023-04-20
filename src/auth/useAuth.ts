@@ -1,6 +1,6 @@
 import { useCallback, useContext, useMemo } from "react";
 import { useSWRConfig } from "swr";
-import { prefixed } from "../api/keys";
+import { included } from "../api/keys";
 import { useCacheControl } from "../common/context/cache/useCacheControl";
 import { AuthContext } from "./AuthContext";
 
@@ -13,7 +13,7 @@ export function useAuth() {
 
   const invalidate = useCallback(() => {
     cacheControl.invalidate("user");
-    mutate(prefixed("/me"));
+    mutate(included("me"));
   }, []);
 
   return {

@@ -63,39 +63,6 @@ export const topFilms = query(async () => {
   };
 });
 
-export const reviewedCount = query(async () => {
-  const id = userId();
-  if (!id) {
-    return {
-      count: 0,
-    };
-  }
-  const res = await fetch(
-    `${api}/films?count=0reviewerId=${id}&sortBy=RELEASED_DESC`,
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-
-  if (res.status !== 200) {
-    return {
-      count: 0,
-    };
-  }
-  const raw = await res.json();
-  const maybeFilms = await FilmSearch.safeParseAsync(raw);
-  if (!maybeFilms.success) {
-    return {
-      count: 0,
-    };
-  }
-  return {
-    count: maybeFilms.data.count,
-  };
-});
-
 export const filmGallery = query(async () => {
   const id = userId();
   if (!id) {
