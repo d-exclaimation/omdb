@@ -1,7 +1,7 @@
 import { type FC } from "react";
 import { Navigate } from "react-router-dom";
 import useQuery from "swr";
-import { filmGallery } from "../../api/film";
+import { filmGallery, reviewedFilms } from "../../api/film";
 import { when } from "../../api/keys";
 import { useAuth } from "../../auth/useAuth";
 import LoadingIndicator from "../../common/components/LoadingIndicator";
@@ -14,9 +14,13 @@ import RecentOverview from "./RecentOverview";
 const GalleryPage: FC = () => {
   const [creating, { close, open }] = useToggle();
   const { user, isAuthenticating } = useAuth();
-  const { data, isLoading } = useQuery(
-    when(!isAuthenticating, ["/gallery"]),
+  const { data: gallery, isLoading: isGalleryLoading } = useQuery(
+    when(!isAuthenticating, ["/gallery", "films"]),
     filmGallery
+  );
+  const { data: reviewed, isLoading: isReviewedLoading } = useQuery(
+    when(!isAuthenticating, ["/reviewed", "films"]),
+    reviewedFilms
   );
 
   if (isAuthenticating) {
@@ -31,16 +35,22 @@ const GalleryPage: FC = () => {
   return (
     <div className="w-full flex flex-col justify-start items-center gap-3">
       <FilmsCaraousel
-        title="Your films"
+        title="Films you made"
         emptyMessage="There's no films you have directed yet"
-        films={data?.films ?? []}
-        isLoading={isLoading}
+        films={gallery?.films ?? []}
+        isLoading={isGalleryLoading}
         action={{
           label: "New",
           onClick: open,
         }}
       />
-      <RecentOverview data={data} />
+      <FilmsCaraousel
+        title="Films you reviewed"
+        emptyMessage="There's no films you have reviewed yet"
+        films={reviewed?.films ?? []}
+        isLoading={isReviewedLoading}
+      />
+      <RecentOverview data={gallery} />
       <CreateFilmDialog creating={creating} onClose={close} />
     </div>
   );

@@ -1,6 +1,7 @@
 import { useMemo, type FC } from "react";
 import { type filmGallery } from "../../api/film";
 import { useGenres } from "../../common/context/genre/useGenres";
+import { ageRatingToColor } from "../../common/utils/ageRating";
 
 type RecentOverviewProps = {
   data?: Awaited<ReturnType<typeof filmGallery>>;
@@ -72,15 +73,15 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
         <div className="rounded-lg border h-[6.5rem] w-full md:w-48  flex-shrink-0 bg-card text-card-foreground shadow-sm">
           <div className="p-4 flex flex-row items-center justify-between space-y-0 pb-1">
             <h3 className="tracking-tight text-sm font-medium">
-              Highest rated film
+              Most recent release
             </h3>
           </div>
           <div className="p-4 pt-0">
             <div className="text-xl max-w-full truncate font-bold">
-              {highestRated?.title}
+              {mostRecent?.title}
             </div>
             <p className="text-xs text-muted-foreground">
-              {highestRated?.rating} out of 10
+              Released {mostRecent?.releaseDate.toLocaleDateString()}
             </p>
           </div>
         </div>
@@ -92,7 +93,11 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
             </h3>
           </div>
           <div className="p-4 pt-0">
-            <div className="text-xl max-w-full truncate font-bold">
+            <div
+              className={`text-xl max-w-full truncate font-bold ${
+                ageRatingToColor(mostAgeRating.name).text
+              }`}
+            >
               {mostAgeRating.name}
             </div>
             <p className="text-xs text-muted-foreground">
@@ -106,15 +111,15 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
         <div className="rounded-lg border h-[6.5rem] w-full md:w-[24.75rem] flex-shrink-0 bg-card text-card-foreground shadow-sm">
           <div className="p-4 flex flex-row items-center justify-between space-y-0 pb-1">
             <h3 className="tracking-tight text-sm font-medium">
-              Most recent film
+              Highest rated film
             </h3>
           </div>
           <div className="p-4 pt-0">
-            <div className="text-xl max-w-full truncate font-bold">
-              {mostRecent?.title}
+            <div className="text-xl max-w-full truncate font-bold bg-gradient-to-l from-red-600 via-red-600 to-blue-600 text-transparent bg-clip-text">
+              {highestRated?.title}
             </div>
             <p className="text-xs text-muted-foreground">
-              Released {mostRecent?.releaseDate.toLocaleDateString()}
+              Rated {highestRated?.rating} out of 10
             </p>
           </div>
         </div>

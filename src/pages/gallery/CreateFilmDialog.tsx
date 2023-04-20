@@ -2,9 +2,11 @@ import { entries } from "@d-exclaimation/common";
 import { match } from "@d-exclaimation/common/union";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState, type FC } from "react";
+import { useSWRConfig } from "swr";
 import useMutation from "swr/mutation";
 import { z } from "zod";
 import { createFilm } from "../../api/film";
+import { included } from "../../api/keys";
 import Button from "../../common/components/Button";
 import DateInputField from "../../common/components/DateInputField";
 import Img from "../../common/components/Image";
@@ -18,13 +20,13 @@ import { maybeInt } from "../../common/utils/coerce";
 import EditImage from "../profile/EditImage";
 
 const ageRatings = {
+  TBC: "To Be Confirmed",
   G: "General Audience",
   PG: "Parental Guidance Suggested",
   M: "Mature Content",
   R13: "Restricted (13 years and over)",
   R16: "Restricted (16 years and over)",
   R18: "Restricted (18 years and over)",
-  TBC: "To Be Confirmed",
 };
 
 const CreateFilm = z.object({
@@ -72,10 +74,12 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
       ageRating: "TBC",
     },
   });
+  const { mutate } = useSWRConfig();
   const { trigger } = useMutation(["/films"], createFilm, {
     onSuccess: (res) => {
       match(res, {
         Ok: () => {
+          mutate(included("films"));
           onClose();
         },
         BadTitle: () => {

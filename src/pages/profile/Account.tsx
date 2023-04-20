@@ -12,6 +12,7 @@ type AccountProps = {
   email: string;
   image: string;
   filmsDirected: number;
+  filmsReviewed: number;
   onEdit: () => void;
 };
 
@@ -22,6 +23,7 @@ const Account: FC<AccountProps> = ({
   email,
   image,
   filmsDirected,
+  filmsReviewed,
   onEdit,
 }) => {
   const { invalidate } = useAuth();
@@ -59,7 +61,7 @@ const Account: FC<AccountProps> = ({
             {email}
           </a>
         </div>
-        <div className="flex w-full items-center gap-5 flex-wrap">
+        <div className="flex flex-col md:flex-row w-full md:items-center gap-1 md:gap-5 flex-wrap">
           <div className="flex items-center text-zinc-500">
             <img
               className="w-5 h-5 mr-2"
@@ -68,7 +70,15 @@ const Account: FC<AccountProps> = ({
             />
             <span>
               <span className="text-black font-semibold">{filmsDirected}</span>{" "}
-              films directed by you
+              films directed
+            </span>
+          </div>
+
+          <div className="flex items-center text-zinc-500">
+            <img className="w-5 h-5 mr-2" src="/icons/review.svg" alt="films" />
+            <span>
+              <span className="text-black font-semibold">{filmsReviewed}</span>{" "}
+              films reviewed
             </span>
           </div>
         </div>

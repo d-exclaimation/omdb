@@ -10,7 +10,7 @@ type KnownForProps = {
 const KnownFor: FC<KnownForProps> = ({ films, isLoading }) => {
   return (
     <FilmsCaraousel
-      title="Known for"
+      title="Top 5 films you made"
       emptyMessage="There's no films you have directed yet"
       films={films}
       isLoading={isLoading}

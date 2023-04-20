@@ -12,13 +12,19 @@ type ProfileProps = {
     image: string;
   };
   filmsDirected: number;
+  filmsReviewed: number;
 };
 
-const Profile: FC<ProfileProps> = ({ filmsDirected, user }) => {
+const Profile: FC<ProfileProps> = ({ filmsDirected, filmsReviewed, user }) => {
   const [editing, { open, close }] = useToggle();
   return (
     <div className="w-full max-w-2xl max-h-80 bg-white flex flex-row items-start overflow-x-hidden rounded-lg p-6 md:p-8">
-      <Account {...user} filmsDirected={filmsDirected} onEdit={open} />
+      <Account
+        {...user}
+        filmsDirected={filmsDirected}
+        filmsReviewed={filmsReviewed}
+        onEdit={open}
+      />
       <Edit {...user} editing={editing} close={close} />
     </div>
   );

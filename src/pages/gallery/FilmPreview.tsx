@@ -4,6 +4,7 @@ import { api } from "../../api/url";
 import Img from "../../common/components/Image";
 import { useCacheControl } from "../../common/context/cache/useCacheControl";
 import { useGenres } from "../../common/context/genre/useGenres";
+import { ageRatingToColor } from "../../common/utils/ageRating";
 
 type FilmPreviewProps = FilmSearch["films"][number];
 
@@ -42,10 +43,14 @@ const FilmPreview: FC<FilmPreviewProps> = ({
           </span>
         </div>
         <div className="flex flex-row justify-between text-zinc-400 h-max gap-3 pr-1 text-xs">
-          <span className="px-1 rounded bg-red-200 text-red-900">
+          <span className="px-1 rounded bg-zinc-200 text-zinc-900">
             {genres.get(genreId)?.name ?? "Unknown"}
           </span>
-          <span className="px-1 rounded bg-blue-200 text-blue-900">
+          <span
+            className={`px-1 rounded 
+            ${ageRatingToColor(ageRating).bg} 
+            ${ageRatingToColor(ageRating).text}`}
+          >
             {ageRating}
           </span>
         </div>
