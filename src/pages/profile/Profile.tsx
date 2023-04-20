@@ -9,7 +9,6 @@ type ProfileProps = {
     firstName: string;
     lastName: string;
     email: string;
-    image: string;
   };
   filmsDirected: number;
   filmsReviewed: number;

@@ -1,26 +1,31 @@
 import { type FC } from "react";
 import { Navigate } from "react-router-dom";
 import useQuery from "swr";
-import { filmGallery, reviewedFilms } from "../../api/film";
+import { filmGallery, reviewedFilms, topFilms } from "../../api/film";
 import { when } from "../../api/keys";
 import { useAuth } from "../../auth/useAuth";
+import Button from "../../common/components/Button";
 import LoadingIndicator from "../../common/components/LoadingIndicator";
 import { useToggle } from "../../common/hooks/useToggle";
 import { withLayout } from "../layout";
 import CreateFilmDialog from "./CreateFilmDialog";
 import FilmsCaraousel from "./FilmsCaraousel";
-import RecentOverview from "./RecentOverview";
 
 const GalleryPage: FC = () => {
   const [creating, { close, open }] = useToggle();
   const { user, isAuthenticating } = useAuth();
   const { data: gallery, isLoading: isGalleryLoading } = useQuery(
-    when(!isAuthenticating, ["/gallery", "films"]),
+    when(!isAuthenticating, ["me", "films", "gallery"]),
     filmGallery
   );
   const { data: reviewed, isLoading: isReviewedLoading } = useQuery(
-    when(!isAuthenticating, ["/reviewed", "films"]),
+    when(!isAuthenticating, ["me", "films", "review"]),
     reviewedFilms
+  );
+
+  const { data: top5, isLoading: isTop5Loading } = useQuery(
+    when(!isAuthenticating, ["me", "films", "top-5"]),
+    topFilms
   );
 
   if (isAuthenticating) {
@@ -34,23 +39,37 @@ const GalleryPage: FC = () => {
 
   return (
     <div className="w-full flex flex-col justify-start items-center gap-3">
+      <Button
+        className="absolute -top-[4.5rem] right-2"
+        color={{
+          bg: "bg-zinc-200",
+          text: "text-zinc-900",
+          hover: "hover:bg-zinc-300",
+          active: "active:bg-zinc-300",
+          border: "focus-visible:ring-zinc-200",
+        }}
+        onClick={open}
+      >
+        New film
+      </Button>
       <FilmsCaraousel
-        title="Films you made"
+        title="Known for"
+        emptyMessage="There's no films you have directed yet"
+        films={top5?.films ?? []}
+        isLoading={isTop5Loading}
+      />
+      <FilmsCaraousel
+        title="Directed"
         emptyMessage="There's no films you have directed yet"
         films={gallery?.films ?? []}
         isLoading={isGalleryLoading}
-        action={{
-          label: "New",
-          onClick: open,
-        }}
       />
       <FilmsCaraousel
-        title="Films you reviewed"
+        title="Reviewed"
         emptyMessage="There's no films you have reviewed yet"
         films={reviewed?.films ?? []}
         isLoading={isReviewedLoading}
       />
-      <RecentOverview data={gallery} />
       <CreateFilmDialog creating={creating} onClose={close} />
     </div>
   );

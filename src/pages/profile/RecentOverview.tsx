@@ -51,7 +51,7 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
   return (
     <div className="w-full max-w-2xl min-h-max gap-2 bg-white flex flex-col items-start overflow-x-hidden rounded-lg p-6 md:p-8">
       <div className="flex flex-row items-center justify-start w-full mb-2">
-        <h3 className="font-semibold text-xl">Overview of your recent films</h3>
+        <h3 className="font-semibold text-xl">Dashboard</h3>
       </div>
       <div className="w-full flex flex-col md:flex-row justify-center md:justify-start md:items-center overflow-x-auto md:h-28 gap-3">
         <div className="rounded-lg border h-[6.5rem] w-full md:w-48 flex-shrink-0 bg-card text-card-foreground shadow-sm">
@@ -77,12 +77,25 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
             </h3>
           </div>
           <div className="p-4 pt-0">
-            <div className="text-xl max-w-full truncate font-bold">
-              {mostRecent?.title}
-            </div>
-            <p className="text-xs text-muted-foreground">
-              Released {mostRecent?.releaseDate.toLocaleDateString()}
-            </p>
+            {mostRecent ? (
+              <>
+                <div className="text-xl max-w-full truncate font-bold bg-gradient-to-l from-yellow-500 via-yellow-500 to-lime-500 text-transparent bg-clip-text">
+                  {mostRecent.title}
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Released {mostRecent.releaseDate.toLocaleDateString()}
+                </p>
+              </>
+            ) : (
+              <>
+                <div className="text-xl max-w-full truncate font-bold">
+                  None
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  No film directed yet
+                </p>
+              </>
+            )}
           </div>
         </div>
 
@@ -115,12 +128,25 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
             </h3>
           </div>
           <div className="p-4 pt-0">
-            <div className="text-xl max-w-full truncate font-bold bg-gradient-to-l from-red-600 via-red-600 to-blue-600 text-transparent bg-clip-text">
-              {highestRated?.title}
-            </div>
-            <p className="text-xs text-muted-foreground">
-              Rated {highestRated?.rating} out of 10
-            </p>
+            {highestRated ? (
+              <>
+                <div className="text-xl max-w-full truncate font-bold bg-gradient-to-l from-red-600 via-red-600 to-blue-600 text-transparent bg-clip-text">
+                  {highestRated.title}
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Rated {highestRated.rating} out of 10
+                </p>
+              </>
+            ) : (
+              <>
+                <div className="text-xl max-w-full truncate font-bold">
+                  None
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  No film directed yet
+                </p>
+              </>
+            )}
           </div>
         </div>
 

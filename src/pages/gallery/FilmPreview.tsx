@@ -19,22 +19,22 @@ const FilmPreview: FC<FilmPreviewProps> = ({
   directorLastName,
 }) => {
   const genres = useGenres();
-  const { film: cachestamp } = useCacheControl();
+  const { film: stamp } = useCacheControl();
   return (
     <div
       key={filmId}
-      className="flex flex-col w-64 flex-shrink-0 overflow-hidden bg-white rounded group"
+      className="flex flex-col w-64 flex-shrink-0 h-full overflow-hidden bg-white rounded group"
     >
       <div className="object-cover w-64 h-48 rounded overflow-hidden">
         <Img
           className="object-cover w-64 h-48 rounded transition-all group-hover:scale-110"
-          src={`${api}/films/${filmId}/image?${cachestamp ?? ""}`}
+          src={`${api}/films/${filmId}/image?${stamp}`}
           fallback={title}
           alt={title}
         />
       </div>
       <div className="flex flex-col w-full gap-1 py-2">
-        <h3 className="max-w-4xl font-semibold group-hover:text-zinc-500 group-hover:underline text-sm">
+        <h3 className="max-w-4xl font-semibold group-hover:text-zinc-500 group-hover:underline truncate text-sm">
           {title}
         </h3>
         <div className="flex flex-row justify-between gap-3 text-zinc-500 text-xs">
@@ -56,7 +56,10 @@ const FilmPreview: FC<FilmPreviewProps> = ({
         </div>
         <div className="flex flex-row justify-between text-zinc-400 gap-3 pr-1 text-xs">
           <span>{releaseDate.toLocaleDateString()}</span>
-          <span>⭐️ {rating.toFixed(2)} </span>
+          <span className="flex items-center">
+            <img className="w-3 h-3 mr-[.125rem]" src="/icons/star.svg" />
+            {rating.toFixed(2)}
+          </span>
         </div>
       </div>
     </div>
