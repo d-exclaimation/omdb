@@ -80,6 +80,12 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
       match(res, {
         Ok: () => {
           mutate(included("films"));
+          update(() => ({
+            title: "",
+            description: "",
+            genreId: 1,
+            ageRating: "TBC",
+          }));
           onClose();
         },
         BadTitle: () => {

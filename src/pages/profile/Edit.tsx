@@ -216,13 +216,13 @@ const Edit: FC<EditProps> = ({ editing, close, ...user }) => {
                           </Disclosure.Button>
                           <Transition
                             show={open}
-                            className="w-full"
+                            className="w-full overflow-hidden"
                             enter="transition-all ease-out duration-300"
-                            enterFrom="opacity-0 -translate-y-10"
-                            enterTo="opacity-100 translate-y-0"
-                            leave="transition ease-out duration-100"
-                            leaveFrom="opacity-100 translate-y-0"
-                            leaveTo="opacity-0 -translate-y-5"
+                            enterFrom="opacity-0 h-0"
+                            enterTo="opacity-100 h-[9.75rem]"
+                            leave="transition-all ease-out duration-300"
+                            leaveFrom="opacity-100 h-[9.75rem]"
+                            leaveTo="opacity-0 h-0"
                             afterLeave={() => {
                               setPasswordError(undefined);
                               update((prev) => ({
@@ -232,10 +232,7 @@ const Edit: FC<EditProps> = ({ editing, close, ...user }) => {
                               }));
                             }}
                           >
-                            <Disclosure.Panel
-                              unmount={false}
-                              className="w-full flex flex-col gap-1"
-                            >
+                            <Disclosure.Panel className="w-full flex flex-col gap-1">
                               <InputField
                                 type="password"
                                 label="Password"
