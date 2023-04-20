@@ -22,18 +22,20 @@ const FilmPreview: FC<FilmPreviewProps> = ({
   return (
     <div
       key={filmId}
-      className="flex flex-col w-64 flex-shrink-0 overflow-hidden bg-white rounded"
+      className="flex flex-col w-64 flex-shrink-0 overflow-hidden bg-white rounded group"
     >
       <div className="object-cover w-64 h-48 rounded overflow-hidden">
         <Img
-          className="object-cover w-64 h-48 rounded transition-all hover:scale-110"
+          className="object-cover w-64 h-48 rounded transition-all group-hover:scale-110"
           src={`${api}/films/${filmId}/image?${cachestamp ?? ""}`}
           fallback={title}
           alt={title}
         />
       </div>
       <div className="flex flex-col w-full gap-1 py-2">
-        <h3 className="max-w-4xl font-semibold text-sm">{title}</h3>
+        <h3 className="max-w-4xl font-semibold group-hover:text-zinc-500 group-hover:underline text-sm">
+          {title}
+        </h3>
         <div className="flex flex-row justify-between gap-3 text-zinc-500 text-xs">
           <span className="max-w-[32rem] truncate">
             {directorFirstName} {directorLastName}

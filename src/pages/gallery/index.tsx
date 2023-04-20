@@ -8,10 +8,11 @@ import LoadingIndicator from "../../common/components/LoadingIndicator";
 import { useToggle } from "../../common/hooks/useToggle";
 import { withLayout } from "../layout";
 import CreateFilmDialog from "./CreateFilmDialog";
-import FilmsCaraousel from "./FilmsGallery";
+import FilmsCaraousel from "./FilmsCaraousel";
+import RecentOverview from "./RecentOverview";
 
 const GalleryPage: FC = () => {
-  const [creating, { close }] = useToggle(true);
+  const [creating, { close, open }] = useToggle();
   const { user, isAuthenticating } = useAuth();
   const { data, isLoading } = useQuery(
     when(!isAuthenticating, ["/gallery"]),
@@ -30,19 +31,22 @@ const GalleryPage: FC = () => {
   return (
     <div className="w-full flex flex-col justify-start items-center gap-3">
       <FilmsCaraousel
-        title="Films you have directed"
+        title="Your films"
         emptyMessage="There's no films you have directed yet"
         films={data?.films ?? []}
         isLoading={isLoading}
+        action={{
+          label: "New",
+          onClick: open,
+        }}
       />
-      <div className="w-full max-w-2xl max-h-80 bg-white flex flex-row items-start overflow-x-hidden rounded-lg p-6 md:p-8">
-        <CreateFilmDialog creating={creating} onClose={close} />
-      </div>
+      <RecentOverview data={data} />
+      <CreateFilmDialog creating={creating} onClose={close} />
     </div>
   );
 };
 
 export default withLayout(GalleryPage, {
-  heading: "Your films and reviews",
+  heading: "Your film gallery",
   route: "Gallery",
 });

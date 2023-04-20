@@ -1,6 +1,6 @@
 import { type FC } from "react";
 import { FilmSearch } from "../../api/film";
-import FilmsCaraousel from "../gallery/FilmsGallery";
+import FilmsCaraousel from "../gallery/FilmsCaraousel";
 
 type KnownForProps = {
   isLoading: boolean;
