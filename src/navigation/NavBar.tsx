@@ -6,12 +6,11 @@ import NavTab from "./NavTab";
 
 const PATHS_INDEX = {
   "/": 0,
-  "/profile": 1,
-  "/login": 1,
-  "/signup": 1,
-  "/explore": 2,
-  "/gallery": 3,
-  "/reviews": 4,
+  "/explore": 1,
+  "/gallery": 2,
+  "/profile": 3,
+  "/login": 3,
+  "/signup": 3,
 };
 
 const NavBar: FC = () => {
@@ -40,16 +39,8 @@ const NavBar: FC = () => {
             selected: "/icons/home-selected.svg",
           }}
         />
-        <NavTab
-          href={isLoggedIn ? "/profile" : "/login"}
-          icons={{
-            deselected: isLoggedIn ? "/icons/profile.svg" : "/icons/auth.svg",
-            selected: isLoggedIn
-              ? "/icons/profile-selected.svg"
-              : "/icons/auth-selected.svg",
-          }}
-        />
         <div className="h-4 w-[1px] mx-1 md:mx-2 bg-black/10"></div>
+
         <NavTab
           href="/explore"
           icons={{
@@ -60,15 +51,18 @@ const NavBar: FC = () => {
         <NavTab
           href="/gallery"
           icons={{
-            deselected: "/icons/film.svg",
-            selected: "/icons/film-selected.svg",
+            deselected: "/icons/popcorn.svg",
+            selected: "/icons/popcorn-selected.svg",
           }}
         />
+
         <NavTab
-          href="/reviews"
+          href={isLoggedIn ? "/profile" : "/login"}
           icons={{
-            deselected: "/icons/review.svg",
-            selected: "/icons/review-selected.svg",
+            deselected: isLoggedIn ? "/icons/profile.svg" : "/icons/auth.svg",
+            selected: isLoggedIn
+              ? "/icons/profile-selected.svg"
+              : "/icons/auth-selected.svg",
           }}
         />
       </Tab.List>
