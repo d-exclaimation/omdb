@@ -247,6 +247,13 @@ export const edit = mutation(
               return { kind: "Error", message: res2.statusText };
           }
         }
+      } else {
+        await fetch(`${api}/users/${id}/image`, {
+          method: "DELETE",
+          headers: {
+            "X-Authorization": session() ?? "",
+          },
+        });
       }
       return {
         kind: "Ok",

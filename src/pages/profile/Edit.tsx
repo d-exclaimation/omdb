@@ -166,7 +166,10 @@ const Edit: FC<EditProps> = ({ editing, close, ...user }) => {
                         setPreview(URL.createObjectURL(file));
                         setFile(file);
                       }}
-                      onRemove={console.log}
+                      onRemove={() => {
+                        setPreview(`https://avatar.vercel.sh/${user.email}`);
+                        setFile(null);
+                      }}
                     />
                   </div>
 

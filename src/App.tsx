@@ -66,7 +66,7 @@ const App: FC = () => {
     <SWRConfig
       value={{
         errorRetryCount: 3,
-        focusThrottleInterval: 60 * 60 * 1000,
+        revalidateOnFocus: false,
       }}
     >
       <GlobalProvider>

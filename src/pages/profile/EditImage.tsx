@@ -60,6 +60,7 @@ const EditImage: FC<EditImageProps> = ({ onUpload, onRemove }) => {
                 text-red-700 md:text-black text-sm 
                 md:data-selected:bg-red-500 md:data-selected:text-white"
                 data-selected={active}
+                onClick={onRemove}
               >
                 Remove
               </button>

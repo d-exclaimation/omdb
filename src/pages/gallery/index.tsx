@@ -5,10 +5,13 @@ import { filmGallery } from "../../api/film";
 import { when } from "../../api/keys";
 import { useAuth } from "../../auth/useAuth";
 import LoadingIndicator from "../../common/components/LoadingIndicator";
+import { useToggle } from "../../common/hooks/useToggle";
 import { withLayout } from "../layout";
+import CreateFilmDialog from "./CreateFilmDialog";
 import FilmsCaraousel from "./FilmsGallery";
 
 const GalleryPage: FC = () => {
+  const [creating, { close }] = useToggle(true);
   const { user, isAuthenticating } = useAuth();
   const { data, isLoading } = useQuery(
     when(!isAuthenticating, ["/gallery"]),
@@ -30,10 +33,11 @@ const GalleryPage: FC = () => {
         title="Films you have directed"
         emptyMessage="There's no films you have directed yet"
         films={data?.films ?? []}
-        cachestamp={data?.cachestamp}
         isLoading={isLoading}
       />
-      <div className="w-full max-w-2xl max-h-80 bg-white flex flex-row items-start overflow-x-hidden rounded-lg p-6 md:p-8"></div>
+      <div className="w-full max-w-2xl max-h-80 bg-white flex flex-row items-start overflow-x-hidden rounded-lg p-6 md:p-8">
+        <CreateFilmDialog creating={creating} onClose={close} />
+      </div>
     </div>
   );
 };

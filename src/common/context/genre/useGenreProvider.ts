@@ -13,10 +13,10 @@ export function useGenreProvider() {
       }
     }
     return {
-      genres: data ?? [],
+      values: data ?? [],
       get: (id: number) => genresCache.get(id),
     };
-  }, [data?.length]);
+  }, [data]);
 
   return proxy;
 }

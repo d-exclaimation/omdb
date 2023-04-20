@@ -40,13 +40,9 @@ const AvatarDialog: FC<AvatarDialogProps> = ({ show, onClose, onSubmit }) => {
                   <div className="flex items-center justify-center w-full">
                     <img
                       className="w-72 md:w-96 aspect-square object-cover rounded-lg hover:opacity-80 cursor-pointer active:opacity-80"
-                      src={
-                        avatar?.src ??
-                        "https://api.dicebear.com/6.x/shapes/svg?seed=Cookie"
-                      }
+                      src={avatar?.src ?? "https://avatar.vercel.sh/cookie"}
                       onError={(e) => {
-                        e.currentTarget.src =
-                          "https://api.dicebear.com/6.x/shapes/svg?seed=Cookie";
+                        e.currentTarget.src = "https://avatar.vercel.sh/cookie";
                       }}
                     />
                     <div

@@ -13,7 +13,7 @@ const Img: FC<ImageProps> = ({ src, fallback, alt, className }) => {
       className={className}
       src={src}
       onError={(e) => {
-        e.currentTarget.src = `https://api.dicebear.com/6.x/shapes/svg?seed=${fallback}`;
+        e.currentTarget.src = `https://avatar.vercel.sh/${fallback}`;
       }}
       alt={alt}
     />
