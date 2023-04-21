@@ -1,4 +1,5 @@
-import { type FC } from "react";
+import { type Base } from "@d-exclaimation/common/lib/tailwind";
+import { useMemo, type FC } from "react";
 
 type ChartBarProps = {
   percentage: number;
@@ -6,9 +7,16 @@ type ChartBarProps = {
 };
 
 const ChartBar: FC<ChartBarProps> = ({ percentage, inactive }) => {
+  const color = useMemo((): `fill-${Base}` => {
+    if (percentage < 0.25) return "fill-red-200";
+    if (percentage < 0.5) return "fill-orange-200";
+    if (percentage < 0.75) return "fill-yellow-200";
+    return "fill-lime-200";
+  }, [percentage]);
+
   return (
     <svg
-      className="rotate-180 data-[inactive='true']:blur fill-lime-200"
+      className={`rotate-180 data-[inactive='true']:blur ${color}`}
       data-inactive={inactive}
       width="32"
       height="80"

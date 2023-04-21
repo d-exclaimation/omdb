@@ -30,32 +30,34 @@ const FilmDirector: FC<FilmDirectorProps> = ({
           Directed by{isYou ? " (You)" : ""}
         </h3>
       </div>
-      <div className="flex flex-row items-center justify-start">
+      <div className="flex my-2 flex-row items-center justify-start">
         <Img
-          className="w-20 md:w-24 h-20 md:h-24 object-cover rounded-full"
+          className="w-12 md:w-16 h-12 md:h-16 object-cover rounded-full"
           src={`${api}/users/${id}/image?${stamp}`}
           fallback="Cookie"
           alt="avatar"
         />
-        {isYou ? (
-          <Link
-            to="/profile"
-            className="flex flex-row justify-center gap-2 mx-2
+        <div className="flex flex-col text-start mx-2">
+          {isYou ? (
+            <Link
+              to="/profile"
+              className="flex flex-row justify-start gap-1
             text-zinc-900 hover:underline active:underline"
-          >
-            <span className="font-medium">{firstName}</span>
-            <span className="font-medium">{lastName}</span>
-          </Link>
-        ) : (
-          <div className="flex flex-row justify-center gap-2 mx-2">
-            <span className="font-medium">{firstName}</span>
-            <span className="font-medium">{lastName}</span>
-          </div>
-        )}
+            >
+              <span className="font-medium">{firstName}</span>
+              <span className="font-medium">{lastName}</span>
+            </Link>
+          ) : (
+            <div className="flex flex-row justify-start gap-1">
+              <span className="font-medium">{firstName}</span>
+              <span className="font-medium">{lastName}</span>
+            </div>
+          )}
 
-        <span className="text-sm font-light mx-2">
-          on {releaseDate.toLocaleDateString()}
-        </span>
+          <span className="text-sm font-light">
+            on {releaseDate.toLocaleDateString()}
+          </span>
+        </div>
       </div>
     </div>
   );

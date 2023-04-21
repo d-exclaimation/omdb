@@ -64,9 +64,11 @@ const FilmReviews: FC<FilmReviewsProps> = ({ id, rating, reviews }) => {
               </>
             )}
           </div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-sm font-medium">
-            No reviews yet
-          </div>
+          {reviews <= 0 ? (
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-sm font-medium">
+              No reviews yet
+            </div>
+          ) : null}
         </div>
       </div>
 
