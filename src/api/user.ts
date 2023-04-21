@@ -194,7 +194,7 @@ export const edit = mutation(
     email?: string;
     password?: string;
     currentPassword?: string;
-    file?: File;
+    file?: File | null;
   }): Promise<EditResponse> => {
     const { file, ...info } = arg;
     const id = userId();
@@ -247,7 +247,8 @@ export const edit = mutation(
               return { kind: "Error", message: res2.statusText };
           }
         }
-      } else {
+      }
+      if (file === null) {
         await fetch(`${api}/users/${id}/image`, {
           method: "DELETE",
           headers: {

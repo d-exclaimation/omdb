@@ -5,27 +5,48 @@ import { session, userId } from "../common/utils/storage";
 import { api } from "./url";
 import { mutation, query } from "./utils";
 
+const FilmOverview = z.object({
+  filmId: z.number().int(),
+  title: z.string(),
+  genreId: z.number().int(),
+  directorId: z.number().int(),
+  directorFirstName: z.string(),
+  directorLastName: z.string(),
+  releaseDate: z.coerce.date(),
+  ageRating: z
+    .enum(["G", "PG", "M", "R13", "R16", "R18", "TBC"])
+    .default("TBC"),
+  rating: z.number(),
+});
+
+export type FilmDetail = z.infer<typeof FilmDetail>;
+const FilmDetail = FilmOverview.extend({
+  description: z.string(),
+  runtime: z.number().int().nullish().optional(),
+  numReviews: z.number().int(),
+});
+
 export type FilmSearch = z.infer<typeof FilmSearch>;
 const FilmSearch = z.object({
-  films: z.array(
-    z.object({
-      filmId: z.number().int(),
-      title: z.string(),
-      genreId: z.number().int(),
-      directorId: z.number().int(),
-      directorFirstName: z.string(),
-      directorLastName: z.string(),
-      releaseDate: z.coerce.date(),
-      ageRating: z.string(),
-      rating: z.number(),
-    })
-  ),
+  films: z.array(FilmOverview),
   count: z.number().int(),
 });
 
 const FilmId = z.object({
   filmId: z.number().int(),
 });
+
+export type FilmReviews = z.infer<typeof FilmReviews>;
+const FilmReviews = z.array(
+  z.object({
+    reviewerId: z.number().int(),
+    rating: z.number(),
+    reviewContent: z.string().nullish().optional(),
+    reviewerFirstName: z.string(),
+    reviewerLastName: z.string(),
+    timestamp: z.coerce.date(),
+  })
+);
 
 export const topFilms = query(async () => {
   const id = userId();
@@ -131,7 +152,7 @@ export const reviewedFilms = query(async () => {
   return maybeFilms.data;
 });
 
-type CreateFilmResponse = Union<{
+type MutateFilmResponse = Union<{
   Ok: {};
   BadTitle: {};
   BadInput: { message: string };
@@ -148,7 +169,7 @@ export const createFilm = mutation(
     ageRating?: string;
     runtime?: number | null;
     file?: File;
-  }): Promise<CreateFilmResponse> => {
+  }): Promise<MutateFilmResponse> => {
     const id = userId();
     if (!id) {
       return {
@@ -228,3 +249,114 @@ export const createFilm = mutation(
     }
   }
 );
+
+export const editFilm = mutation(
+  async (arg: {
+    filmId: string;
+    title: string;
+    description: string;
+    genreId: number;
+    releaseDate?: Date | null;
+    ageRating?: string;
+    runtime?: number | null;
+  }): Promise<MutateFilmResponse> => {
+    const id = userId();
+    if (!id) {
+      return {
+        kind: "Unauthorized",
+      };
+    }
+    try {
+      const res = await fetch(`${api}/films/${arg.filmId}`, {
+        method: "PATCH",
+        headers: {
+          "X-Authorization": session() ?? "",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: arg.title,
+          description: arg.description,
+          genreId: arg.genreId,
+          releaseDate: arg.releaseDate ? datestring(arg.releaseDate) : null,
+          ageRating: arg.ageRating,
+          runtime: arg.runtime,
+        }),
+      });
+      if (res.status !== 200 && res.status !== 201) {
+        switch (res.status) {
+          case 400:
+            return {
+              kind: "BadInput",
+              message: res.statusText,
+            };
+          case 401:
+            return {
+              kind: "Unauthorized",
+            };
+          case 403:
+            return {
+              kind: "BadTitle",
+            };
+          default:
+            return {
+              kind: "Error",
+              message: "Unknown error",
+            };
+        }
+      }
+      return {
+        kind: "Ok",
+      };
+    } catch (e) {
+      return {
+        kind: "Error",
+        message: `Unknown error: ${e}`,
+      };
+    }
+  }
+);
+
+export const film = query(
+  async ([id]: [string]): Promise<FilmDetail | undefined> => {
+    try {
+      const res = await fetch(`${api}/films/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.status !== 200) {
+        return undefined;
+      }
+      const raw = await res.json();
+      const maybeFilm = await FilmDetail.safeParseAsync(raw);
+      if (!maybeFilm.success) {
+        return undefined;
+      }
+      return maybeFilm.data;
+    } catch (_) {
+      return undefined;
+    }
+  }
+);
+
+export const filmReviews = query(async ([_, id]: [string, string]) => {
+  try {
+    const res = await fetch(`${api}/films/${id}/reviews`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (res.status !== 200) {
+      return [];
+    }
+    const raw = await res.json();
+    const maybeReviews = await FilmReviews.safeParseAsync(raw);
+    if (!maybeReviews.success) {
+      console.log(maybeReviews.error);
+      return [];
+    }
+    return maybeReviews.data;
+  } catch (_) {
+    return [];
+  }
+});

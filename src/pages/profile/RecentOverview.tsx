@@ -1,7 +1,7 @@
 import { useMemo, type FC } from "react";
 import { type filmGallery } from "../../api/film";
 import { useGenres } from "../../common/context/genre/useGenres";
-import { ageRatingToColor } from "../../common/utils/ageRating";
+import { ageRatingToColor } from "../../common/utils/color";
 
 type RecentOverviewProps = {
   data?: Awaited<ReturnType<typeof filmGallery>>;
@@ -54,7 +54,7 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
         <h3 className="font-semibold text-xl">Dashboard</h3>
       </div>
       <div className="w-full flex flex-col md:flex-row justify-center md:justify-start md:items-center overflow-x-auto md:h-28 gap-3">
-        <div className="rounded-lg border h-[6.5rem] w-full md:w-48 flex-shrink-0 bg-card text-card-foreground shadow-sm">
+        <div className="rounded-lg border h-[6.5rem] w-full md:w-48 flex-shrink-0 shadow-sm">
           <div className="p-4 flex flex-row items-center justify-between space-y-0 pb-1">
             <h3 className="tracking-tight text-sm font-medium">
               Most popular genre
@@ -70,7 +70,7 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
           </div>
         </div>
 
-        <div className="rounded-lg border h-[6.5rem] w-full md:w-48  flex-shrink-0 bg-card text-card-foreground shadow-sm">
+        <div className="rounded-lg border h-[6.5rem] w-full md:w-48  flex-shrink-0 shadow-sm">
           <div className="p-4 flex flex-row items-center justify-between space-y-0 pb-1">
             <h3 className="tracking-tight text-sm font-medium">
               Most recent release
@@ -99,7 +99,7 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
           </div>
         </div>
 
-        <div className="rounded-lg border h-[6.5rem]w-full md:w-48 flex-shrink-0 bg-card text-card-foreground shadow-sm">
+        <div className="rounded-lg border h-[6.5rem]w-full md:w-48 flex-shrink-0 shadow-sm">
           <div className="p-4 flex flex-row items-center justify-between space-y-0 pb-1">
             <h3 className="tracking-tight text-sm font-medium">
               Most popular age rating
@@ -121,7 +121,7 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
       </div>
 
       <div className="w-full flex flex-col md:flex-row justify-center md:justify-start md:items-center overflow-x-auto md:h-28 gap-3">
-        <div className="rounded-lg border h-[6.5rem] w-full md:w-[24.75rem] flex-shrink-0 bg-card text-card-foreground shadow-sm">
+        <div className="rounded-lg border h-[6.5rem] w-full md:w-[24.75rem] flex-shrink-0 shadow-sm">
           <div className="p-4 flex flex-row items-center justify-between space-y-0 pb-1">
             <h3 className="tracking-tight text-sm font-medium">
               Highest rated film
@@ -150,7 +150,7 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
           </div>
         </div>
 
-        <div className="rounded-lg border h-[6.5rem] w-full md:w-48  flex-shrink-0 bg-card text-card-foreground shadow-sm">
+        <div className="rounded-lg border h-[6.5rem] w-full md:w-48  flex-shrink-0 shadow-sm">
           <div className="p-4 flex flex-row items-center justify-between space-y-0 pb-1">
             <h3 className="tracking-tight text-sm font-medium">
               Total films directed

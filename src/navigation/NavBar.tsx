@@ -5,22 +5,23 @@ import { useAuth } from "../auth/useAuth";
 import NavTab from "./NavTab";
 
 const PATHS_INDEX = {
-  "/": 0,
-  "/explore": 1,
-  "/gallery": 2,
-  "/profile": 3,
-  "/login": 3,
-  "/signup": 3,
+  "": 0,
+  explore: 1,
+  gallery: 2,
+  film: 2,
+  profile: 3,
+  login: 3,
+  signup: 3,
 };
 
 const NavBar: FC = () => {
   const { pathname } = useLocation();
   const { isLoggedIn } = useAuth();
 
-  const pathIndex = useMemo(
-    (): number | undefined => PATHS_INDEX[pathname as keyof typeof PATHS_INDEX],
-    [pathname, isLoggedIn]
-  );
+  const pathIndex = useMemo((): number | undefined => {
+    const mainpath = pathname.split("/").at(1) ?? "";
+    return PATHS_INDEX[mainpath as keyof typeof PATHS_INDEX];
+  }, [pathname, isLoggedIn]);
 
   return (
     <Tab.Group selectedIndex={pathIndex}>

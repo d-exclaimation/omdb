@@ -80,7 +80,7 @@ const Edit: FC<EditProps> = ({ editing, close, ...user }) => {
   const [preview, setPreview] = useState(`${api}/users/${user.id}/image`);
   const [emailError, setEmailError] = useState<string>();
   const [passwordError, setPasswordError] = useState<string>();
-  const [file, setFile] = useState<File | null>(null);
+  const [file, setFile] = useState<File | undefined | null>(undefined);
   const [{ values, errors, isValid }, update] = useForm({
     schema: EditUser,
     initial: {
@@ -117,7 +117,7 @@ const Edit: FC<EditProps> = ({ editing, close, ...user }) => {
     if (!isValid) {
       return;
     }
-    trigger({ ...values, file: file ?? undefined });
+    trigger({ ...values, file: file });
   }, [values, isValid, trigger, file]);
 
   return (
@@ -154,6 +154,7 @@ const Edit: FC<EditProps> = ({ editing, close, ...user }) => {
                       alt="avatar"
                     />
                     <EditImage
+                      className="-translate-x-10 "
                       onUpload={(file) => {
                         const allowedTypes = [
                           "image/png",

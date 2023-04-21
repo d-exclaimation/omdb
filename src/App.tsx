@@ -4,6 +4,7 @@ import { SWRConfig } from "swr";
 import AuthProvider from "./auth/AuthProvider";
 import GlobalProvider from "./common/context/global/GlobalProvider";
 import NavBar from "./navigation/NavBar";
+import FilmPage from "./pages/film";
 import GalleryPage from "./pages/gallery";
 import HomePage from "./pages/index";
 import Layout from "./pages/layout";
@@ -30,14 +31,6 @@ const router = createBrowserRouter([
         element: <ProfilePage />,
       },
       {
-        path: "/reviews",
-        element: (
-          <Layout route="Reviews" heading="Browse for film reviews">
-            Something
-          </Layout>
-        ),
-      },
-      {
         path: "/explore",
         element: (
           <Layout route="Films" heading="Explore all films">
@@ -48,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "/gallery",
         element: <GalleryPage />,
+      },
+      {
+        path: "/film",
+        element: <FilmPage />,
       },
       {
         path: "/login",

@@ -1,10 +1,11 @@
 import { type FC } from "react";
+import { Link } from "react-router-dom";
 import { type FilmSearch } from "../../api/film";
 import { api } from "../../api/url";
 import Img from "../../common/components/Image";
 import { useCacheControl } from "../../common/context/cache/useCacheControl";
 import { useGenres } from "../../common/context/genre/useGenres";
-import { ageRatingToColor } from "../../common/utils/ageRating";
+import { ageRatingToColor } from "../../common/utils/color";
 
 type FilmPreviewProps = FilmSearch["films"][number];
 
@@ -21,8 +22,9 @@ const FilmPreview: FC<FilmPreviewProps> = ({
   const genres = useGenres();
   const { film: stamp } = useCacheControl();
   return (
-    <div
+    <Link
       key={filmId}
+      to={`/film?id=${filmId}`}
       className="flex flex-col w-64 flex-shrink-0 h-full overflow-hidden bg-white rounded group"
     >
       <div className="object-cover w-64 h-48 rounded overflow-hidden">
@@ -62,7 +64,7 @@ const FilmPreview: FC<FilmPreviewProps> = ({
           </span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

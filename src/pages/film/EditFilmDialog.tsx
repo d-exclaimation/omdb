@@ -1,12 +1,13 @@
 import { entries } from "@d-exclaimation/common";
 import { match } from "@d-exclaimation/common/union";
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useEffect, useState, type FC } from "react";
+import { Fragment, useState, type FC } from "react";
 import { useSWRConfig } from "swr";
 import useMutation from "swr/mutation";
 import { z } from "zod";
-import { createFilm } from "../../api/film";
+import { editFilm } from "../../api/film";
 import { included } from "../../api/keys";
+import { api } from "../../api/url";
 import Button from "../../common/components/Button";
 import DateInputField from "../../common/components/DateInputField";
 import Img from "../../common/components/Image";
@@ -18,9 +19,9 @@ import { useGenres } from "../../common/context/genre/useGenres";
 import { useForm } from "../../common/hooks/useForm";
 import { ageRatings } from "../../common/utils/ageRatings";
 import { maybeInt } from "../../common/utils/coerce";
-import EditImage from "../profile/EditImage";
 
-const CreateFilm = z.object({
+type EditFilm = z.infer<typeof EditFilm>;
+const EditFilm = z.object({
   title: z
     .string()
     .min(1, "Must be at least 1 character long")
@@ -46,37 +47,32 @@ const CreateFilm = z.object({
     .default("TBC"),
 });
 
-type CreateFilmDialogProps = {
-  creating: boolean;
+type FilmEditProps = {
+  film: EditFilm & {
+    filmId: number;
+  };
+  editing: boolean;
   onClose: () => void;
 };
 
-const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
+const FilmEdit: FC<FilmEditProps> = ({
+  film: { filmId, ...initial },
+  editing,
+  onClose,
+}) => {
   const genres = useGenres();
-  const [preview, setPreview] = useState("https://avatar.vercel.sh/cookie");
   const [titleError, setTitleError] = useState<string | null>(null);
-  const [file, setFile] = useState<File | null>(null);
   const [{ values, errors, isValid }, update] = useForm({
-    schema: CreateFilm,
-    initial: {
-      title: "",
-      description: "",
-      genreId: 1,
-      ageRating: "TBC",
-    },
+    schema: EditFilm,
+    initial,
   });
+
   const { mutate } = useSWRConfig();
-  const { trigger } = useMutation(["films"], createFilm, {
+  const { trigger } = useMutation(["films", filmId], editFilm, {
     onSuccess: (res) => {
       match(res, {
         Ok: () => {
           mutate(included("films"));
-          update(() => ({
-            title: "",
-            description: "",
-            genreId: 1,
-            ageRating: "TBC",
-          }));
           onClose();
         },
         BadTitle: () => {
@@ -89,13 +85,8 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
     },
   });
 
-  // Make sure that it validates on mount
-  useEffect(() => {
-    update((prev) => prev);
-  }, [update]);
-
   return (
-    <Transition appear show={creating} as={Fragment}>
+    <Transition appear show={editing} as={Fragment}>
       <Dialog as="div" className="fixed z-40" onClose={onClose}>
         <Overlay.Child />
         <div className="fixed inset-0 overflow-y-auto">
@@ -115,36 +106,17 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
               >
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
+                  className="text-lg font-medium leading-6 max-w-full truncate text-gray-900"
                 >
-                  Create film
+                  Edit {values.title}
                 </Dialog.Title>
                 <div className="mt-4 flex flex-col w-full min-h-max transition-all">
                   <div className="flex w-full items-end justify-start">
                     <Img
-                      className="w-36 md:w-44 h-20 md:h-24 object-cover rounded-lg"
-                      src={preview}
+                      className="w-full h-32 md:h-40 object-cover rounded-lg"
+                      src={`${api}/films/${filmId}/image`}
                       fallback="Cookie"
                       alt="avatar"
-                    />
-                    <EditImage
-                      className="-translate-x-10"
-                      onUpload={(file) => {
-                        const allowedTypes = [
-                          "image/png",
-                          "image/jpeg",
-                          "image/gif",
-                        ];
-                        if (!allowedTypes.includes(file.type)) {
-                          return;
-                        }
-                        setPreview(URL.createObjectURL(file));
-                        setFile(file);
-                      }}
-                      onRemove={() => {
-                        setPreview("https://avatar.vercel.sh/cookie");
-                        setFile(null);
-                      }}
                     />
                   </div>
 
@@ -173,6 +145,7 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
                     />
                     <DateInputField
                       label="Release date"
+                      initialValue={values.releaseDate}
                       error={errors.releaseDate}
                       onChange={(releaseDate) =>
                         update((prev) => ({ ...prev, releaseDate }))
@@ -255,12 +228,12 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
                       active: "active:bg-sky-200",
                       border: "focus-visible:ring-sky-500",
                     }}
-                    onClick={() => {
+                    onClick={() =>
                       trigger({
+                        filmId: `${filmId}`,
                         ...values,
-                        file: file ?? undefined,
-                      });
-                    }}
+                      })
+                    }
                     disabled={!isValid}
                   >
                     Save
@@ -275,4 +248,4 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
   );
 };
 
-export default CreateFilmDialog;
+export default FilmEdit;

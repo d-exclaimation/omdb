@@ -43,3 +43,19 @@ export function ageRatingToColor(ageRating: string): Colors {
       };
   }
 }
+
+export function ratingToColor(rating: number): Colors["text"] {
+  if (rating >= 8) {
+    return "text-green-600";
+  }
+  if (rating >= 6) {
+    return "text-yellow-600";
+  }
+  if (rating >= 4) {
+    return "text-amber-600";
+  }
+  if (rating >= 2) {
+    return "text-orange-600";
+  }
+  return "text-red-600";
+}

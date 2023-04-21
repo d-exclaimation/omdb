@@ -2,14 +2,15 @@ import { Menu, Transition } from "@headlessui/react";
 import { Fragment, useRef, type FC } from "react";
 
 type EditImageProps = {
+  className?: string;
   onUpload: (file: File) => void;
   onRemove: () => void;
 };
 
-const EditImage: FC<EditImageProps> = ({ onUpload, onRemove }) => {
+const EditImage: FC<EditImageProps> = ({ onUpload, onRemove, className }) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   return (
-    <Menu as="div" className="-translate-x-10 min-w-max z-50">
+    <Menu as="div" className={`min-w-max z-50 ${className ?? ""}`}>
       <Menu.Button
         className="inline-flex items-center bg-white ring-1 ring-zinc-400/50 hover:bg-zinc-100
       active:bg-zinc-100 rounded-md px-3 py-1 text-sm"
