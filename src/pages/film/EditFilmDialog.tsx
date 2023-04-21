@@ -17,8 +17,8 @@ import Overlay from "../../common/components/Overlay";
 import Textarea from "../../common/components/Textarea";
 import { useGenres } from "../../common/context/genre/useGenres";
 import { useForm } from "../../common/hooks/useForm";
-import { ageRatings } from "../../common/utils/ageRatings";
 import { maybeInt } from "../../common/utils/coerce";
+import { ageRatings } from "../../common/utils/constants";
 
 type EditFilm = z.infer<typeof EditFilm>;
 const EditFilm = z.object({

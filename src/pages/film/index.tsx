@@ -55,6 +55,8 @@ const FilmPage: FC = () => {
         />
         <FilmReviews
           id={`${data.filmId}`}
+          title={data.title}
+          directorId={`${data.directorId}`}
           rating={data.rating}
           reviews={data.numReviews}
         />

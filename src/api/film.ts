@@ -41,7 +41,7 @@ const FilmReviews = z.array(
   z.object({
     reviewerId: z.number().int(),
     rating: z.number(),
-    reviewContent: z.string().nullish().optional(),
+    review: z.string().nullish().optional(),
     reviewerFirstName: z.string(),
     reviewerLastName: z.string(),
     timestamp: z.coerce.date(),
@@ -360,3 +360,63 @@ export const filmReviews = query(async ([_, id]: [string, string]) => {
     return [];
   }
 });
+
+type ReviewResponse = Union<{
+  Ok: {};
+  BadInput: { message: string };
+  Unauthorized: {};
+  SelfReview: {};
+  Error: { message: string };
+}>;
+
+export const review = mutation(
+  async (arg: {
+    filmId: string;
+    rating: number;
+    review?: string;
+  }): Promise<ReviewResponse> => {
+    try {
+      const res = await fetch(`${api}/films/${arg.filmId}/reviews`, {
+        method: "POST",
+        headers: {
+          "X-Authorization": session() ?? "",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          rating: arg.rating,
+          review: arg.review,
+        }),
+      });
+      if (res.status !== 200 && res.status !== 201) {
+        switch (res.status) {
+          case 400:
+            return {
+              kind: "BadInput",
+              message: res.statusText,
+            };
+          case 401:
+            return {
+              kind: "Unauthorized",
+            };
+          case 403:
+            return {
+              kind: "SelfReview",
+            };
+          default:
+            return {
+              kind: "Error",
+              message: "Unknown error",
+            };
+        }
+      }
+      return {
+        kind: "Ok",
+      };
+    } catch (e) {
+      return {
+        kind: "Error",
+        message: `Unknown error: ${e}`,
+      };
+    }
+  }
+);

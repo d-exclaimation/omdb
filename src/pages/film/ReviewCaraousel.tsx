@@ -16,7 +16,7 @@ const ReviewCaraousel: FC<ReviewCaraouselProps> = ({ reviews, isLoading }) => {
       {reviews.map(
         ({
           rating,
-          reviewContent,
+          review: reviewContent,
           reviewerFirstName,
           reviewerId,
           reviewerLastName,
@@ -29,7 +29,7 @@ const ReviewCaraousel: FC<ReviewCaraouselProps> = ({ reviews, isLoading }) => {
             <div className="flex w-full flex-row gap-2 items-center">
               <Img
                 className="rounded-full w-8 h-8"
-                src={`${api}/user/${reviewerId}/image`}
+                src={`${api}/users/${reviewerId}/image`}
                 fallback={reviewerId.toString()}
                 alt={reviewerFirstName}
               />

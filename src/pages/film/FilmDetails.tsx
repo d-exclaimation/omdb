@@ -4,8 +4,8 @@ import { api } from "../../api/url";
 import Img from "../../common/components/Image";
 import { useCacheControl } from "../../common/context/cache/useCacheControl";
 import { useGenres } from "../../common/context/genre/useGenres";
-import { ageRatings } from "../../common/utils/ageRatings";
 import { ageRatingToColor } from "../../common/utils/color";
+import { ageRatings } from "../../common/utils/constants";
 
 const FilmDetails: FC<FilmDetail> = (data) => {
   const genres = useGenres();

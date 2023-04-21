@@ -1,26 +1,53 @@
 import { useMemo, type FC } from "react";
 import useQuery from "swr";
 import { filmReviews } from "../../api/film";
+import { useAuth } from "../../auth/useAuth";
+import Button from "../../common/components/Button";
 import ChartBar from "../../common/components/ChartBar";
+import { useToggle } from "../../common/hooks/useToggle";
 import { ratingToColor } from "../../common/utils/color";
 import ReviewCaraousel from "./ReviewCaraousel";
+import ReviewFilmDialog from "./ReviewFilmDialog";
 
 type FilmReviewsProps = {
   id: string;
+  directorId: string;
+  title: string;
   rating: number;
   reviews: number;
 };
 
-const FilmReviews: FC<FilmReviewsProps> = ({ id, rating, reviews }) => {
+const FilmReviews: FC<FilmReviewsProps> = ({
+  id,
+  title,
+  rating,
+  reviews,
+  directorId,
+}) => {
+  const { user } = useAuth();
   const { data, isLoading } = useQuery(["films", "review", id], filmReviews);
+  const [reviewing, { open, close }] = useToggle();
 
   const allReviews = useMemo(() => data ?? [], [data]);
   const recentReviews = useMemo(() => allReviews.slice(0, 7), [allReviews]);
 
   return (
     <div className="w-full max-w-2xl h-max bg-white flex overflow-hidden flex-col rounded-lg p-6 py-4 md:p-8 md:py-6">
-      <div className="w-full flex items-center mb-2">
+      <div className="w-full flex items-center justify-between mb-2">
         <h3 className="text-lg font-semibold">Reviews and Ratings</h3>
+        <Button
+          className={user?.id === `${directorId}` ? "hidden" : ""}
+          color={{
+            bg: "bg-zinc-200",
+            text: "text-zinc-900",
+            hover: "hover:bg-zinc-300",
+            active: "active:bg-zinc-300",
+            border: "focus-visible:ring-zinc-200",
+          }}
+          onClick={open}
+        >
+          Review
+        </Button>
       </div>
       <div className="w-full rounded-lg shadow-sm border flex flex-col md:flex-row justify-center md:justify-between md:items-center overflow-x-auto md:h-28 md:gap-3">
         <div className="h-[6.5rem] w-full md:w-48 flex-shrink-0">
@@ -73,6 +100,12 @@ const FilmReviews: FC<FilmReviewsProps> = ({ id, rating, reviews }) => {
       </div>
 
       <ReviewCaraousel reviews={allReviews} isLoading={isLoading} />
+      <ReviewFilmDialog
+        filmId={`${id}`}
+        title={title}
+        onClose={close}
+        reviewing={reviewing}
+      />
     </div>
   );
 };
