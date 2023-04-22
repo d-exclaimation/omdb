@@ -44,18 +44,19 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
   }, [data]);
 
   const highestRated = useMemo(() => {
-    const sorted = data?.films?.sort((a, b) => b.rating - a.rating) ?? [];
+    const sorted =
+      [...(data?.films ?? [])].sort((a, b) => b.rating - a.rating) ?? [];
     return sorted.at(0);
   }, [data]);
 
   const mostRecent = useMemo(() => data?.films?.at(0), [data]);
   return (
-    <div className="w-full max-w-2xl min-h-max gap-2 bg-white flex flex-col items-start overflow-x-hidden rounded-lg p-6 md:p-8">
+    <div className="w-full max-w-3xl min-h-max gap-2 bg-white flex flex-col items-start overflow-x-hidden rounded-lg p-6 md:p-8">
       <div className="flex flex-row items-center justify-start w-full mb-2">
         <h3 className="font-semibold text-xl">Dashboard</h3>
       </div>
       <div className="w-full flex flex-col md:flex-row justify-center md:justify-start md:items-center overflow-x-auto md:h-28 gap-3">
-        <div className="rounded-lg border h-[6.5rem] w-full md:w-48 flex-shrink-0 shadow-sm">
+        <div className="rounded-lg border h-[6.5rem] w-full md:w-52 flex-shrink-0 shadow-sm">
           <div className="p-4 flex flex-row items-center justify-between space-y-0 pb-1">
             <h3 className="tracking-tight text-sm font-medium">
               Most popular genre
@@ -71,7 +72,7 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
           </div>
         </div>
 
-        <div className="rounded-lg border h-[6.5rem] w-full md:w-48  flex-shrink-0 shadow-sm">
+        <div className="rounded-lg border h-[6.5rem] w-full md:w-52 flex-shrink-0 shadow-sm">
           <div className="p-4 flex flex-row items-center justify-between space-y-0 pb-1">
             <h3 className="tracking-tight text-sm font-medium">
               Most recent release
@@ -82,7 +83,7 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
               <>
                 <Link
                   to={`/film?id=${mostRecent.filmId}`}
-                  className="text-xl max-w-full truncate font-bold bg-gradient-to-l from-yellow-500 via-yellow-500 to-lime-500 text-transparent bg-clip-text"
+                  className="text-xl max-w-full truncate font-bold bg-gradient-to-r from-purple-600 via-indigo-500 to-blue-500 text-transparent bg-clip-text"
                 >
                   {mostRecent.title}
                 </Link>
@@ -103,7 +104,7 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
           </div>
         </div>
 
-        <div className="rounded-lg border h-[6.5rem]w-full md:w-48 flex-shrink-0 shadow-sm">
+        <div className="rounded-lg border h-[6.5rem] w-full md:w-52 flex-shrink-0 shadow-sm">
           <div className="p-4 flex flex-row items-center justify-between space-y-0 pb-1">
             <h3 className="tracking-tight text-sm font-medium">
               Most popular age rating
@@ -125,7 +126,7 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
       </div>
 
       <div className="w-full flex flex-col md:flex-row justify-center md:justify-start md:items-center overflow-x-auto md:h-28 gap-3">
-        <div className="rounded-lg border h-[6.5rem] w-full md:w-[24.75rem] flex-shrink-0 shadow-sm">
+        <div className="rounded-lg border h-[6.5rem] w-full md:w-[26.75rem] flex-shrink-0 shadow-sm">
           <div className="p-4 flex flex-row items-center justify-between space-y-0 pb-1">
             <h3 className="tracking-tight text-sm font-medium">
               Highest rated film
@@ -136,7 +137,7 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
               <>
                 <Link
                   to={`/film?id=${highestRated.filmId}`}
-                  className="text-xl max-w-full truncate font-bold bg-gradient-to-l from-red-600 via-red-600 to-blue-600 text-transparent bg-clip-text"
+                  className="text-xl max-w-full truncate font-bold bg-gradient-to-r from-purple-600 via-indigo-500 to-blue-500 text-transparent bg-clip-text"
                 >
                   {highestRated.title}
                 </Link>
@@ -157,7 +158,7 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
           </div>
         </div>
 
-        <div className="rounded-lg border h-[6.5rem] w-full md:w-48  flex-shrink-0 shadow-sm">
+        <div className="rounded-lg border h-[6.5rem] w-full md:w-52 flex-shrink-0 shadow-sm">
           <div className="p-4 flex flex-row items-center justify-between space-y-0 pb-1">
             <h3 className="tracking-tight text-sm font-medium">
               Total films directed

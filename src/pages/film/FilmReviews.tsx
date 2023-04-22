@@ -43,7 +43,7 @@ const FilmReviews: FC<FilmReviewsProps> = ({
   );
 
   return (
-    <div className="w-full max-w-2xl h-max bg-white flex overflow-hidden flex-col rounded-lg p-6 py-4 md:p-8 md:py-6">
+    <div className="w-full max-w-3xl h-max bg-white flex overflow-hidden flex-col rounded-lg p-6 py-4 md:p-8 md:py-6">
       <div className="w-full flex items-center justify-between mb-2">
         <h3 className="text-lg font-semibold">Reviews and Ratings</h3>
         <Button

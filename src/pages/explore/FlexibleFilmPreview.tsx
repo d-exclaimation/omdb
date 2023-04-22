@@ -7,9 +7,9 @@ import { useCacheControl } from "../../common/context/cache/useCacheControl";
 import { useGenres } from "../../common/context/genre/useGenres";
 import { ageRatingToColor } from "../../common/utils/color";
 
-type FilmPreviewProps = FilmSearch["films"][number];
+type FlexibleFilmPreviewProps = FilmSearch["films"][number];
 
-const FilmPreview: FC<FilmPreviewProps> = ({
+const FlexibleFilmPreview: FC<FlexibleFilmPreviewProps> = ({
   filmId,
   title,
   genreId,
@@ -25,11 +25,11 @@ const FilmPreview: FC<FilmPreviewProps> = ({
     <Link
       key={filmId}
       to={`/film?id=${filmId}`}
-      className="flex flex-col w-64 flex-shrink-0 h-full overflow-hidden bg-white rounded group"
+      className="flex flex-col w-full flex-shrink-0 h-full overflow-hidden bg-white rounded group"
     >
-      <div className="object-cover w-64 h-48 rounded overflow-hidden">
+      <div className="object-cover w-full aspect-videorounded overflow-hidden">
         <Img
-          className="object-cover w-64 h-48 rounded transition-all group-hover:scale-110"
+          className="object-cover w-full aspect-video rounded transition-all group-hover:scale-110"
           src={`${api}/films/${filmId}/image?${stamp}`}
           fallback={title}
           alt={title}
@@ -68,4 +68,4 @@ const FilmPreview: FC<FilmPreviewProps> = ({
   );
 };
 
-export default FilmPreview;
+export default FlexibleFilmPreview;

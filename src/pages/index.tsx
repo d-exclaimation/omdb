@@ -29,7 +29,7 @@ const HomePage: FC = () => {
 
   useEffect(() => {
     return () => {
-      window.clearTimeout(timeoutRef.current);
+      clearTimeout(timeoutRef.current);
     };
   }, []);
 
@@ -39,6 +39,7 @@ const HomePage: FC = () => {
         className="max-w-3xl px-5 h-max flex-col items-center justify-center 
         pb-20 backdrop-blur-sm min-h-screen w-full flex p-4"
         onClick={() => {
+          clearTimeout(timeoutRef.current);
           setShow(false);
 
           timeoutRef.current = setTimeout(() => {

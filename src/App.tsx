@@ -4,10 +4,10 @@ import { SWRConfig } from "swr";
 import AuthProvider from "./auth/AuthProvider";
 import GlobalProvider from "./common/context/global/GlobalProvider";
 import NavBar from "./navigation/NavBar";
+import ExplorePage from "./pages/explore";
 import FilmPage from "./pages/film";
 import GalleryPage from "./pages/gallery";
 import HomePage from "./pages/index";
-import Layout from "./pages/layout";
 import LoginPage from "./pages/login";
 import ProfilePage from "./pages/profile";
 import SignupPage from "./pages/signup";
@@ -32,11 +32,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/explore",
-        element: (
-          <Layout route="Films" heading="Explore all films">
-            Search for films
-          </Layout>
-        ),
+        element: <ExplorePage />,
       },
       {
         path: "/gallery",

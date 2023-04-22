@@ -1,4 +1,4 @@
-import { type Base } from "@d-exclaimation/common/lib/tailwind";
+import { Opacity } from "@d-exclaimation/common/tailwind";
 import { useMemo, type FC } from "react";
 
 type ChartBarProps = {
@@ -7,15 +7,15 @@ type ChartBarProps = {
 };
 
 const ChartBar: FC<ChartBarProps> = ({ percentage, inactive }) => {
-  const color = useMemo((): `fill-${Base}` => {
-    if (percentage < 0.125) return "fill-rose-200";
-    if (percentage < 0.25) return "fill-red-200";
-    if (percentage < 0.375) return "fill-orange-200";
-    if (percentage < 0.5) return "fill-amber-200";
-    if (percentage < 0.625) return "fill-yellow-200";
-    if (percentage < 0.75) return "fill-lime-200";
-    if (percentage < 0.875) return "fill-emerald-200";
-    return "fill-cyan-200";
+  const color = useMemo((): `fill-chart/${Opacity}` => {
+    if (percentage < 0.125) return "fill-chart/20";
+    if (percentage < 0.25) return "fill-chart/30";
+    if (percentage < 0.375) return "fill-chart/40";
+    if (percentage < 0.5) return "fill-chart/50";
+    if (percentage < 0.625) return "fill-chart/60";
+    if (percentage < 0.75) return "fill-chart/70";
+    if (percentage < 0.875) return "fill-chart/80";
+    return "fill-chart/100";
   }, [percentage]);
 
   return (
@@ -27,7 +27,12 @@ const ChartBar: FC<ChartBarProps> = ({ percentage, inactive }) => {
       viewBox="0 0 32 80"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <rect width="32" height={`${Math.round(percentage * 80)}`} rx="2.5" />
+      <rect
+        className="animate-to-full-height"
+        width="32"
+        height={`${Math.round(percentage * 80)}`}
+        rx="2.5"
+      />
     </svg>
   );
 };

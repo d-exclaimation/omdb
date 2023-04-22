@@ -12,7 +12,7 @@ const FilmDetails: FC<FilmDetail> = (data) => {
   const { film: stamp } = useCacheControl();
 
   return (
-    <div className="w-full max-w-2xl h-max bg-white flex overflow-hidden flex-col rounded-lg">
+    <div className="w-full max-w-3xl h-max bg-white flex overflow-hidden flex-col rounded-lg">
       <Img
         className="w-full h-48 md:h-64 object-cover"
         src={`${api}/films/${data.filmId}/image?${stamp}`}
