@@ -8,7 +8,6 @@ const SIZES = [
   { sm: "text-4xl", md: "md:text-6xl", lg: "lg:text-8xl" },
   { sm: "text-4xl", md: "md:text-6xl", lg: "lg:text-8xl" },
   { sm: "text-3xl", md: "md:text-5xl", lg: "lg:text-8xl" },
-  { sm: "text-3xl", md: "md:text-5xl", lg: "lg:text-8xl" },
 ] satisfies Array<{
   sm: `text-${string}`;
   md: `md:text-${string}`;
@@ -20,7 +19,6 @@ const MESSAGES = [
   ["Tomatoes", "not", "rotten"],
   ["Outside", "the", "Letterboxd"],
   ["Fandango", "on", "the", "go"],
-  ["Box", "office", "at", "your", "service"],
   ["Web", "movies", "made", "simple"],
 ];
 

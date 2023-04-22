@@ -8,10 +8,14 @@ type ChartBarProps = {
 
 const ChartBar: FC<ChartBarProps> = ({ percentage, inactive }) => {
   const color = useMemo((): `fill-${Base}` => {
+    if (percentage < 0.125) return "fill-rose-200";
     if (percentage < 0.25) return "fill-red-200";
-    if (percentage < 0.5) return "fill-orange-200";
-    if (percentage < 0.75) return "fill-yellow-200";
-    return "fill-lime-200";
+    if (percentage < 0.375) return "fill-orange-200";
+    if (percentage < 0.5) return "fill-amber-200";
+    if (percentage < 0.625) return "fill-yellow-200";
+    if (percentage < 0.75) return "fill-lime-200";
+    if (percentage < 0.875) return "fill-emerald-200";
+    return "fill-cyan-200";
   }, [percentage]);
 
   return (

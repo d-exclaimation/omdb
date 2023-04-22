@@ -15,6 +15,7 @@ type FilmReviewsProps = {
   title: string;
   rating: number;
   reviews: number;
+  releaseDate: Date;
 };
 
 const FilmReviews: FC<FilmReviewsProps> = ({
@@ -23,6 +24,7 @@ const FilmReviews: FC<FilmReviewsProps> = ({
   rating,
   reviews,
   directorId,
+  releaseDate,
 }) => {
   const { user } = useAuth();
   const { data, isLoading } = useQuery(["films", "review", id], filmReviews);
@@ -31,12 +33,21 @@ const FilmReviews: FC<FilmReviewsProps> = ({
   const allReviews = useMemo(() => data ?? [], [data]);
   const recentReviews = useMemo(() => allReviews.slice(0, 7), [allReviews]);
 
+  const canReview = useMemo(
+    () =>
+      user &&
+      user.id !== directorId &&
+      releaseDate < new Date() &&
+      allReviews.every((review) => `${review.reviewerId}` !== user.id),
+    [user, directorId, releaseDate, allReviews]
+  );
+
   return (
     <div className="w-full max-w-2xl h-max bg-white flex overflow-hidden flex-col rounded-lg p-6 py-4 md:p-8 md:py-6">
       <div className="w-full flex items-center justify-between mb-2">
         <h3 className="text-lg font-semibold">Reviews and Ratings</h3>
         <Button
-          className={user?.id === `${directorId}` ? "hidden" : ""}
+          className={!canReview ? "hidden" : ""}
           color={{
             bg: "bg-zinc-200",
             text: "text-zinc-900",

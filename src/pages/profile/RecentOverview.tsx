@@ -1,4 +1,5 @@
 import { useMemo, type FC } from "react";
+import { Link } from "react-router-dom";
 import { type filmGallery } from "../../api/film";
 import { useGenres } from "../../common/context/genre/useGenres";
 import { ageRatingToColor } from "../../common/utils/color";
@@ -79,9 +80,12 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
           <div className="p-4 pt-0">
             {mostRecent ? (
               <>
-                <div className="text-xl max-w-full truncate font-bold bg-gradient-to-l from-yellow-500 via-yellow-500 to-lime-500 text-transparent bg-clip-text">
+                <Link
+                  to={`/film?id=${mostRecent.filmId}`}
+                  className="text-xl max-w-full truncate font-bold bg-gradient-to-l from-yellow-500 via-yellow-500 to-lime-500 text-transparent bg-clip-text"
+                >
                   {mostRecent.title}
-                </div>
+                </Link>
                 <p className="text-xs text-muted-foreground">
                   Released {mostRecent.releaseDate.toLocaleDateString()}
                 </p>
@@ -130,9 +134,12 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
           <div className="p-4 pt-0">
             {highestRated ? (
               <>
-                <div className="text-xl max-w-full truncate font-bold bg-gradient-to-l from-red-600 via-red-600 to-blue-600 text-transparent bg-clip-text">
+                <Link
+                  to={`/film?id=${highestRated.filmId}`}
+                  className="text-xl max-w-full truncate font-bold bg-gradient-to-l from-red-600 via-red-600 to-blue-600 text-transparent bg-clip-text"
+                >
                   {highestRated.title}
-                </div>
+                </Link>
                 <p className="text-xs text-muted-foreground">
                   Rated {highestRated.rating} out of 10
                 </p>

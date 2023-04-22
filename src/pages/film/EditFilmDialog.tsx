@@ -113,7 +113,7 @@ const FilmEdit: FC<FilmEditProps> = ({
                 <div className="mt-4 flex flex-col w-full min-h-max transition-all">
                   <div className="flex w-full items-end justify-start">
                     <Img
-                      className="w-full h-32 md:h-40 object-cover rounded-lg"
+                      className="w-full h-24 md:h-28 object-cover rounded-lg"
                       src={`${api}/films/${filmId}/image`}
                       fallback="Cookie"
                       alt="avatar"

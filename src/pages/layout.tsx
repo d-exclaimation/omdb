@@ -24,7 +24,9 @@ const Layout: FC<LayoutProps> = ({ route, heading, children }) => {
         leaveTo="opacity-0 -translate-y-10"
       >
         <h3 className="font-medium text-black/60 py-3">{route}</h3>
-        <h1 className="text-3xl font-medium text-black py-5">{heading}</h1>
+        <h1 className="text-3xl font-medium max-w-[80%] truncate text-black py-5">
+          {heading}
+        </h1>
       </Transition>
       <Transition
         as="div"

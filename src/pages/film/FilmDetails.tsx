@@ -21,7 +21,9 @@ const FilmDetails: FC<FilmDetail> = (data) => {
       />
       <div className="flex w-full flex-col p-6 md:p-8">
         <div className="w-full flex flex-row justify-between">
-          <h3 className="text-xl font-semibold">{data.title}</h3>
+          <h3 className="text-xl max-w-[60%] truncate font-semibold">
+            {data.title}
+          </h3>
           <h3 className="text-sm font-light">
             {data.releaseDate.toLocaleDateString()}
           </h3>
@@ -38,7 +40,7 @@ const FilmDetails: FC<FilmDetail> = (data) => {
             {ageRatings[data.ageRating as keyof typeof ageRatings]}
           </span>
         </div>
-        <div className="flex flex-wrap text-sm my-2 text-zinc-600">
+        <div className="flex flex-wrap break-words text-sm my-2 text-zinc-600">
           {data.description}
         </div>
       </div>
