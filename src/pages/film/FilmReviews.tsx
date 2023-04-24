@@ -10,8 +10,8 @@ import ReviewCaraousel from "./ReviewCaraousel";
 import ReviewFilmDialog from "./ReviewFilmDialog";
 
 type FilmReviewsProps = {
-  id: string;
-  directorId: string;
+  id: number;
+  directorId: number;
   title: string;
   rating: number;
   reviews: number;
@@ -27,7 +27,10 @@ const FilmReviews: FC<FilmReviewsProps> = ({
   releaseDate,
 }) => {
   const { user } = useAuth();
-  const { data, isLoading } = useQuery(["films", "review", id], filmReviews);
+  const { data, isLoading } = useQuery(
+    ["films", "review", `${id}`],
+    filmReviews
+  );
   const [reviewing, { open, close }] = useToggle();
 
   const allReviews = useMemo(() => data ?? [], [data]);
@@ -38,7 +41,7 @@ const FilmReviews: FC<FilmReviewsProps> = ({
       user &&
       user.id !== directorId &&
       releaseDate < new Date() &&
-      allReviews.every((review) => `${review.reviewerId}` !== user.id),
+      allReviews.every((review) => review.reviewerId !== user.id),
     [user, directorId, releaseDate, allReviews]
   );
 

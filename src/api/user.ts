@@ -1,5 +1,6 @@
 import { type Union } from "@d-exclaimation/common/union";
 import { z } from "zod";
+import { int } from "../common/utils/coerce";
 import {
   clearSession,
   session,
@@ -47,7 +48,7 @@ export const me = query(async () => {
       return null;
     }
     return {
-      id,
+      id: int.parse(id),
       ...maybeUser.data,
     };
   } catch (_) {

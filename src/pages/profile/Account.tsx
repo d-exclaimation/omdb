@@ -8,7 +8,7 @@ import { useCacheControl } from "../../common/context/cache/useCacheControl";
 import Settings from "./Settings";
 
 type AccountProps = {
-  id: string;
+  id: number;
   firstName: string;
   lastName: string;
   email: string;

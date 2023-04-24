@@ -12,7 +12,7 @@ import EditFilmDialog from "./EditFilmDialog";
 type FilmDirectorProps = {
   film: FilmDetail;
   director: {
-    id: string;
+    id: number;
     firstName: string;
     lastName: string;
   };

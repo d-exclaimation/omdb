@@ -5,6 +5,7 @@ import { session, userId } from "../common/utils/storage";
 import { api } from "./url";
 import { mutation, query } from "./utils";
 
+type FilmOverview = z.infer<typeof FilmOverview>;
 const FilmOverview = z.object({
   filmId: z.number().int(),
   title: z.string(),
@@ -277,7 +278,9 @@ export const editFilm = mutation(
           title: arg.title,
           description: arg.description,
           genreId: arg.genreId,
-          releaseDate: arg.releaseDate ? datestring(arg.releaseDate) : null,
+          releaseDate: arg.releaseDate
+            ? datestring(arg.releaseDate)
+            : undefined,
           ageRating: arg.ageRating,
           runtime: arg.runtime,
         }),
@@ -336,6 +339,84 @@ export const film = query(
     } catch (_) {
       return undefined;
     }
+  }
+);
+
+export const similarFilms = query(
+  async ([_, genreId, directorId, filmId]: string[]): Promise<FilmSearch> => {
+    const genreRes = await fetch(
+      `${api}/films?count=${6}&genreIds=${genreId}&sortBy=RATING_DESC`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const directorRes = await fetch(
+      `${api}/films?count=${6}&directorId=${directorId}&sortBy=RATING_DESC`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (directorRes.status !== 200 && genreRes.status !== 200) {
+      return {
+        films: [],
+        count: 0,
+      };
+    }
+
+    const maybeGenreFilms = await FilmSearch.safeParseAsync(
+      genreRes.status === 200 ? await genreRes.json() : { count: 0, films: [] }
+    );
+
+    const maybeDirectorFilms = await FilmSearch.safeParseAsync(
+      directorRes.status === 200
+        ? await directorRes.json()
+        : { count: 0, films: [] }
+    );
+
+    if (maybeGenreFilms.success && maybeDirectorFilms.success) {
+      return {
+        count: 0,
+        films: [...maybeDirectorFilms.data.films, ...maybeGenreFilms.data.films]
+          .reduce(
+            ([acc, ids], curr) => {
+              if (`${curr.filmId}` !== filmId && !ids.has(curr.filmId)) {
+                ids.add(curr.filmId);
+                acc.push(curr);
+              }
+              return [acc, ids] as const;
+            },
+            [[] as FilmOverview[], new Set<number>()] as const
+          )[0]
+          .slice(0, 5),
+      };
+    }
+    if (maybeDirectorFilms.success) {
+      return {
+        count: 0,
+        films: maybeDirectorFilms.data.films
+          .filter((f) => `${f.filmId}` !== filmId)
+          .slice(0, 5),
+      };
+    }
+
+    if (maybeGenreFilms.success) {
+      return {
+        count: 0,
+        films: maybeGenreFilms.data.films
+          .filter((f) => `${f.filmId}` !== filmId)
+          .slice(0, 5),
+      };
+    }
+    return {
+      films: [],
+      count: 0,
+    };
   }
 );
 

@@ -1,7 +1,7 @@
 import { createContext } from "react";
 import { UserInfo } from "../api/user";
 type User = {
-  id: string;
+  id: number;
 } & UserInfo;
 
 export type AuthContextValue = {

@@ -2,18 +2,15 @@ import { type FC } from "react";
 import { Navigate, useSearchParams } from "react-router-dom";
 import useQuery from "swr";
 import { film } from "../../api/film";
-import { useAuth } from "../../auth/useAuth";
 import LoadingIndicator from "../../common/components/LoadingIndicator";
-import { useToggle } from "../../common/hooks/useToggle";
 import Layout from "../layout";
 import FilmDetails from "./FilmDetails";
 import FilmDirector from "./FilmDirector";
 import FilmReviews from "./FilmReviews";
+import SimilarFilms from "./SimilarFilms";
 
 const FilmPage: FC = () => {
-  const { user } = useAuth();
   const [params] = useSearchParams();
-  const [editing, { close, open }] = useToggle();
   const id = params.get("id");
   const { data, isLoading } = useQuery(id ? ["films", id] : null, film);
 
@@ -32,19 +29,24 @@ const FilmPage: FC = () => {
         <FilmDirector
           film={data}
           director={{
-            id: `${data.directorId}`,
+            id: data.directorId,
             firstName: data.directorFirstName,
             lastName: data.directorLastName,
           }}
           releaseDate={data.releaseDate}
         />
         <FilmReviews
-          id={`${data.filmId}`}
+          id={data.filmId}
           title={data.title}
-          directorId={`${data.directorId}`}
+          directorId={data.directorId}
           rating={data.rating}
           reviews={data.numReviews}
           releaseDate={data.releaseDate}
+        />
+        <SimilarFilms
+          filmId={data.filmId}
+          directorId={data.directorId}
+          genreId={data.genreId}
         />
       </div>
     </Layout>

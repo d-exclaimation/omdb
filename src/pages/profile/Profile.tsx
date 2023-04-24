@@ -5,7 +5,7 @@ import Edit from "./Edit";
 
 type ProfileProps = {
   user: {
-    id: string;
+    id: number;
     firstName: string;
     lastName: string;
     email: string;

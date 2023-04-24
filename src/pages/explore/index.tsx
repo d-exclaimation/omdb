@@ -36,7 +36,7 @@ const ExplorePage: FC = () => {
             {Array.from({ length: 6 }).map((_, i) => (
               <FlexibleFilmPreview
                 key={i}
-                filmId={41}
+                filmId={1}
                 title="The Zucc"
                 ageRating="R18"
                 directorId={41}
