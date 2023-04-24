@@ -64,11 +64,14 @@ const FilmEdit: FC<FilmEditProps> = ({
   const [titleError, setTitleError] = useState<string | null>(null);
   const [{ values, errors, isValid }, update] = useForm({
     schema: EditFilm,
-    initial,
+    initial: {
+      ...initial,
+      releaseDate: undefined,
+    },
   });
 
   const { mutate } = useSWRConfig();
-  const { trigger } = useMutation(["films", filmId], editFilm, {
+  const { trigger } = useMutation(["films", `${filmId}`], editFilm, {
     onSuccess: (res) => {
       match(res, {
         Ok: () => {
@@ -145,7 +148,7 @@ const FilmEdit: FC<FilmEditProps> = ({
                     />
                     <DateInputField
                       label="Release date"
-                      initialValue={values.releaseDate}
+                      initialValue={initial.releaseDate}
                       error={errors.releaseDate}
                       onChange={(releaseDate) =>
                         update((prev) => ({ ...prev, releaseDate }))
