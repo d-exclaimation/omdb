@@ -1,50 +1,47 @@
-import { useState, type FC } from "react";
-import useQuery from "swr";
+import { useEffect, useState, type FC } from "react";
+import useQuery, { preload } from "swr";
 import { searchFilms } from "../../api/film";
 import LoadingIndicator from "../../common/components/LoadingIndicator";
 import Layout from "../layout";
+import FilmFilters from "./FilmFilters";
+import FilmSearchBar from "./FilmSearchBar";
 import FlexibleFilmPreview from "./FlexibleFilmPreview";
 import PageControls from "./PageControls";
 
+type Sorting =
+  | "ALPHABETICAL_ASC"
+  | "ALPHABETICAL_DESC"
+  | "RELEASED_ASC"
+  | "RELEASED_DESC"
+  | "RATING_ASC"
+  | "RATING_DESC"
+
 const ExplorePage: FC = () => {
   const [q, setQ] = useState("");
+  const [sort] = useState<Sorting>("RELEASED_ASC");
   const [page, setPage] = useState(1);
   const { data, isValidating } = useQuery(
-    ["films", "explore", q, { page }],
+    ["films", "explore", q, { page, sort }],
     searchFilms,
     {
       keepPreviousData: true,
     }
   );
 
+  useEffect(() => {
+    preload(
+      ["films", "explore", q, { page: page + 1, sort }],
+      searchFilms
+    )
+  }, [q, sort, page]);
+
+
   return (
     <Layout route="Explore" heading="Discover films">
       <div className="w-full flex flex-col justify-start items-center gap-3">
-        <div className="w-full h-max bg-white flex overflow-hidden flex-col rounded-lg max-w-3xl">
-          <div className="w-full flex items-center rounded-lg">
-            <button
-              className="h-full pr-2 pl-1 rounded-l-lg hover:bg-zinc-200
-              focus:outline-none active:bg-zinc-200"
-            >
-              <img className="w-6 h-6 m-2" src="/icons/search.svg" />
-            </button>
-            <input
-              placeholder="Search for films"
-              className="w-full py-3 placeholder:text-slate-400 text-sm focus:outline-none 
-              disabled:cursor-not-allowed disabled:opacity-50 bg-transparent px-3"
-              autoCapitalize="none"
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-            />
 
-            <button
-              className="h-full pl-1 px-2 hover:bg-zinc-200 rounded-r-lg
-              focus:outline-none active:bg-zinc-200"
-            >
-              <img className="w-6 h-6 m-2" src="/icons/filter.svg" />
-            </button>
-          </div>
-        </div>
+        <FilmSearchBar value={q} onUpdate={setQ} />
+        <FilmFilters />
 
         <div className="w-full max-h-max bg-white flex items-center flex-col rounded-lg p-6 md:p-8 max-w-3xl">
           {data?.films?.length ? (

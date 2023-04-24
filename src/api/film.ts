@@ -49,29 +49,34 @@ const FilmReviews = z.array(
   })
 );
 
+type SearchOptions = {
+  page: number;
+  sort: string;
+}
+
 export const searchFilms = query(
-  async ([_, q, {page}]: [string, string, {page: number}]) => {
+  async ([_, q, { page, sort }]: [string, string, SearchOptions]) => {
     const params = new URLSearchParams();
     params.append("count", "6");
-    params.append("sortBy", "RATING_DESC");
+    params.append("sortBy", sort);
     if (q) {
       params.append("q", q);
     }
     params.append("startIndex", `${Math.max(0, (page - 1) * 6)}`);
-  
+
     const res = await fetch(`${api}/films?${params.toString()}`, {
       headers: {
         "Content-Type": "application/json",
       },
     });
-  
+
     if (res.status !== 200) {
       return {
         films: [],
         count: 0,
       };
     }
-  
+
     const raw = await res.json();
     const maybeFilms = await FilmSearch.safeParseAsync(raw);
     if (!maybeFilms.success) {
