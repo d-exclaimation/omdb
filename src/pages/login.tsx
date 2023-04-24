@@ -26,7 +26,7 @@ const LoginPage: FC = () => {
       password: "",
     },
   });
-  const { trigger } = useMutation("/login", login, {
+  const { trigger } = useMutation("login", login, {
     onSuccess: (res) => {
       match(res, {
         Ok: () => {

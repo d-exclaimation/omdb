@@ -452,7 +452,7 @@ type ReviewResponse = Union<{
 
 export const review = mutation(
   async (arg: {
-    filmId: string;
+    filmId: number;
     rating: number;
     review?: string;
   }): Promise<ReviewResponse> => {

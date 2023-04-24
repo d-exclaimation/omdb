@@ -5,7 +5,7 @@ import { type Genre } from "./GenreContext";
 
 const genresCache = new Map<number, Genre>();
 export function useGenreProvider() {
-  const { data } = useQuery("/genres", genres);
+  const { data } = useQuery("genres", genres);
   const proxy = useMemo(() => {
     if (data) {
       for (const genre of data) {

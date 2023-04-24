@@ -115,7 +115,7 @@ const FilmReviews: FC<FilmReviewsProps> = ({
 
       <ReviewCaraousel reviews={allReviews} isLoading={isLoading} />
       <ReviewFilmDialog
-        filmId={`${id}`}
+        filmId={id}
         title={title}
         onClose={close}
         reviewing={reviewing}

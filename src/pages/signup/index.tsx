@@ -47,7 +47,7 @@ const SignupPage: FC = () => {
   const { isLoggedIn, invalidate, isAuthenticating } = useAuth();
   const [isSubmitting, { open, close }] = useToggle();
   const [showPassword, { toggle }] = useToggle();
-  const { trigger, isMutating } = useMutation("/register", register, {
+  const { trigger, isMutating } = useMutation("register", register, {
     onSuccess: (res) => {
       match(res, {
         Ok: () => {
@@ -65,7 +65,7 @@ const SignupPage: FC = () => {
     },
   });
   const { trigger: uploadAvatar } = useMutation(
-    ["/register", "image"],
+    ["register", "image"],
     setAvatar,
     {
       onSuccess: () => {

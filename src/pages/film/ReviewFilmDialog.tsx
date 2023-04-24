@@ -31,7 +31,7 @@ const ReviewFilm = z.object({
 });
 
 type ReviewFilmProps = {
-  filmId: string;
+  filmId: number;
   title: string;
   reviewing: boolean;
   onClose: () => void;
