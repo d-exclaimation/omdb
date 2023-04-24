@@ -3,11 +3,17 @@ import { Fragment, type FC } from "react";
 
 type SettingsProps = {
   className?: string;
+  disabled?: boolean;
   onEdit: () => void;
   onDelete: () => void;
 };
 
-const Settings: FC<SettingsProps> = ({ className, onDelete, onEdit }) => {
+const Settings: FC<SettingsProps> = ({
+  className,
+  onDelete,
+  onEdit,
+  disabled,
+}) => {
   return (
     <Menu
       as="div"
@@ -38,9 +44,12 @@ const Settings: FC<SettingsProps> = ({ className, onDelete, onEdit }) => {
           <Menu.Item>
             {({ active }) => (
               <button
-                className="flex w-full items-center rounded-md px-2 py-2 text-sm data-selected:bg-zinc-800 data-selected:text-white"
-                data-selected={active}
+                className="flex w-full items-center rounded-md px-2 py-2 text-sm 
+                data-selected:bg-zinc-800 data-selected:text-white
+                disabled:cursor-not-allowed disabled:opacity-50"
+                data-selected={!disabled && active}
                 onClick={onEdit}
+                disabled={disabled}
               >
                 Edit
               </button>

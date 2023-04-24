@@ -18,12 +18,14 @@ type FilmDirectorProps = {
     lastName: string;
   };
   releaseDate: Date;
+  hasReview: boolean;
 };
 
 const FilmDirector: FC<FilmDirectorProps> = ({
   film,
   director,
   releaseDate,
+  hasReview,
 }) => {
   const { user } = useAuth();
   const { user: stamp } = useCacheControl();
@@ -46,6 +48,7 @@ const FilmDirector: FC<FilmDirectorProps> = ({
         </h3>
         <Settings
           className={`${isYou ? "" : "hidden"}`}
+          disabled={hasReview}
           onEdit={openEdit}
           onDelete={openDelete}
         />

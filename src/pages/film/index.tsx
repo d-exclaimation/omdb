@@ -34,6 +34,7 @@ const FilmPage: FC = () => {
             lastName: data.directorLastName,
           }}
           releaseDate={data.releaseDate}
+          hasReview={data.numReviews > 0}
         />
         <FilmReviews
           id={data.filmId}
