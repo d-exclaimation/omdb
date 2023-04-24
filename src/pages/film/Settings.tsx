@@ -2,20 +2,25 @@ import { Menu, Transition } from "@headlessui/react";
 import { Fragment, type FC } from "react";
 
 type SettingsProps = {
+  className?: string;
   onEdit: () => void;
-  onLogout: () => void;
+  onDelete: () => void;
 };
 
-const Settings: FC<SettingsProps> = ({ onEdit, onLogout }) => {
+const Settings: FC<SettingsProps> = ({ className, onDelete, onEdit }) => {
   return (
-    <Menu as="div" className="relative inline-block text-left">
+    <Menu
+      as="div"
+      className={`relative inline-block text-left
+      ${className ?? ""}`}
+    >
       <Menu.Button
-        className="inline-flex justify-center rounded-md border border-transparent 
-        bg-zinc-100 px-3 py-2 text-xs font-medium text-zinc-900
-        hover:bg-zinc-200 active:bg-zinc-200 disabled:cursor-not-allowed
+        className="inline-flex justify-center items-center rounded-md border border-transparent 
+      bg-zinc-100 px-3 py-2 text-xs font-medium text-zinc-900
+      hover:bg-zinc-200 active:bg-zinc-200 disabled:cursor-not-allowed
         focus:outline-none focus-visible:ring-2 disabled:opacity-50
-        focus-visible:ring-zinc-500 focus-visible:ring-offset-2
-        "
+      focus-visible:ring-zinc-500 focus-visible:ring-offset-2
+      "
       >
         <img src="/icons/settings.svg" alt="setting" className="w-4 h-4 mr-2" />
         Settings
@@ -45,12 +50,12 @@ const Settings: FC<SettingsProps> = ({ onEdit, onLogout }) => {
             {({ active }) => (
               <button
                 className="flex w-full items-center rounded-md px-2 py-2
-                text-red-700 md:text-black text-sm 
-                md:data-selected:bg-red-500 md:data-selected:text-white"
+              text-red-700 md:text-black text-sm 
+              md:data-selected:bg-red-500 md:data-selected:text-white"
                 data-selected={active}
-                onClick={onLogout}
+                onClick={onDelete}
               >
-                Logout
+                Delete
               </button>
             )}
           </Menu.Item>

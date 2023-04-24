@@ -233,7 +233,7 @@ const FilmEdit: FC<FilmEditProps> = ({
                     }}
                     onClick={() =>
                       trigger({
-                        filmId: `${filmId}`,
+                        filmId,
                         ...values,
                       })
                     }

@@ -3,11 +3,12 @@ import { Link } from "react-router-dom";
 import { type FilmDetail } from "../../api/film";
 import { api } from "../../api/url";
 import { useAuth } from "../../auth/useAuth";
-import Button from "../../common/components/Button";
 import Img from "../../common/components/Image";
 import { useCacheControl } from "../../common/context/cache/useCacheControl";
 import { useToggle } from "../../common/hooks/useToggle";
+import DeleteFilmDialog from "./DeleteFilmDialog";
 import EditFilmDialog from "./EditFilmDialog";
+import Settings from "./Settings";
 
 type FilmDirectorProps = {
   film: FilmDetail;
@@ -26,30 +27,28 @@ const FilmDirector: FC<FilmDirectorProps> = ({
 }) => {
   const { user } = useAuth();
   const { user: stamp } = useCacheControl();
-  const [editing, { close, open }] = useToggle();
+  const [editing, { close: closeEdit, open: openEdit }] = useToggle();
+  const [deleting, { close: closeDelete, open: openDelete }] = useToggle();
 
   const isYou = useMemo(() => user?.id === director.id, [user, director.id]);
-
   return (
     <div className="w-full max-w-3xl h-max bg-white flex overflow-hidden flex-col rounded-lg p-6 py-4 md:p-8 md:py-6">
-      <EditFilmDialog film={film} onClose={close} editing={editing} />
+      <EditFilmDialog film={film} onClose={closeEdit} editing={editing} />
+      <DeleteFilmDialog
+        id={film.filmId}
+        title={film.title}
+        onClose={closeDelete}
+        deleting={deleting}
+      />
       <div className="w-full flex justify-between items-center">
         <h3 className="text-lg font-semibold">
           Directed by{isYou ? " (You)" : ""}
         </h3>
-        <Button
-          className={`absolute -top-[4.5rem] right-2 ${isYou ? "" : "hidden"}`}
-          color={{
-            bg: "bg-zinc-200",
-            text: "text-zinc-900",
-            hover: "hover:bg-zinc-300",
-            active: "active:bg-zinc-300",
-            border: "focus-visible:ring-zinc-200",
-          }}
-          onClick={open}
-        >
-          Edit
-        </Button>
+        <Settings
+          className={`${isYou ? "" : "hidden"}`}
+          onEdit={openEdit}
+          onDelete={openDelete}
+        />
       </div>
       <div className="flex my-2 flex-row items-center justify-start">
         <Img

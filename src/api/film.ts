@@ -253,7 +253,7 @@ export const createFilm = mutation(
 
 export const editFilm = mutation(
   async (arg: {
-    filmId: string;
+    filmId: number;
     title: string;
     description: string;
     genreId: number;
@@ -299,6 +299,51 @@ export const editFilm = mutation(
           case 403:
             return {
               kind: "BadTitle",
+            };
+          default:
+            return {
+              kind: "Error",
+              message: "Unknown error",
+            };
+        }
+      }
+      return {
+        kind: "Ok",
+      };
+    } catch (e) {
+      return {
+        kind: "Error",
+        message: `Unknown error: ${e}`,
+      };
+    }
+  }
+);
+
+export const deleteFilm = mutation(
+  async (filmId: number): Promise<MutateFilmResponse> => {
+    const id = userId();
+    if (!id) {
+      return {
+        kind: "Unauthorized",
+      };
+    }
+    try {
+      const res = await fetch(`${api}/films/${filmId}`, {
+        method: "DELETE",
+        headers: {
+          "X-Authorization": session() ?? "",
+        },
+      });
+      if (res.status !== 200 && res.status !== 201) {
+        switch (res.status) {
+          case 400:
+            return {
+              kind: "BadInput",
+              message: res.statusText,
+            };
+          case 401:
+            return {
+              kind: "Unauthorized",
             };
           default:
             return {
@@ -382,7 +427,7 @@ export const similarFilms = query(
     if (maybeGenreFilms.success && maybeDirectorFilms.success) {
       return {
         count: 0,
-        films: [...maybeDirectorFilms.data.films, ...maybeGenreFilms.data.films]
+        films: [...maybeGenreFilms.data.films, ...maybeDirectorFilms.data.films]
           .reduce(
             ([acc, ids], curr) => {
               if (`${curr.filmId}` !== filmId && !ids.has(curr.filmId)) {
