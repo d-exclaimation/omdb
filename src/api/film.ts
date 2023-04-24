@@ -49,6 +49,41 @@ const FilmReviews = z.array(
   })
 );
 
+export const searchFilms = query(
+  async ([_, q, {page}]: [string, string, {page: number}]) => {
+    const params = new URLSearchParams();
+    params.append("count", "6");
+    params.append("sortBy", "RATING_DESC");
+    if (q) {
+      params.append("q", q);
+    }
+    params.append("startIndex", `${Math.max(0, (page - 1) * 6)}`);
+  
+    const res = await fetch(`${api}/films?${params.toString()}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  
+    if (res.status !== 200) {
+      return {
+        films: [],
+        count: 0,
+      };
+    }
+  
+    const raw = await res.json();
+    const maybeFilms = await FilmSearch.safeParseAsync(raw);
+    if (!maybeFilms.success) {
+      return {
+        films: [],
+        count: 0,
+      };
+    }
+    return maybeFilms.data;
+  }
+);
+
 export const topFilms = query(async () => {
   const id = userId();
   if (!id) {

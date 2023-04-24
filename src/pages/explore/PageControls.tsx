@@ -1,24 +1,24 @@
-import { useCallback, useRef, useState, type FC } from "react";
+import { useCallback, useRef, useState, type FC, type SetStateAction } from "react";
 
 type PageControlsProps = {
   current: number;
   last: number;
+  setPage: (action: SetStateAction<number>) => void;
 };
 
-const PageControls: FC<PageControlsProps> = ({ current, last }) => {
+const PageControls: FC<PageControlsProps> = ({ current, setPage, last }) => {
   const timeoutRef = useRef<number>();
   const [animating, setAnimating] = useState(false);
-  const [curr, setCurr] = useState(current);
 
   const change = useCallback(
-    (...args: Parameters<typeof setCurr>) => {
-      setCurr(...args);
+    (...args: Parameters<typeof setPage>) => {
+      setPage(...args);
       setAnimating(true);
       timeoutRef.current = setTimeout(() => {
         setAnimating(false);
       }, 0);
     },
-    [setAnimating, setCurr]
+    [setAnimating, setPage]
   );
 
   return (
@@ -28,7 +28,7 @@ const PageControls: FC<PageControlsProps> = ({ current, last }) => {
        hover:bg-slate-100 active:bg-slate-100 p-2 transition-all
         disabled:opacity-0 disabled:hover:bg-transparent
         disabled:translate-x-12 disabled:active:bg-transparent"
-        disabled={curr === 1}
+        disabled={current === 1}
         onClick={() => {
           change(1);
         }}
@@ -41,7 +41,7 @@ const PageControls: FC<PageControlsProps> = ({ current, last }) => {
        hover:bg-slate-100 active:bg-slate-100 p-2 transition-all
         disabled:opacity-0 disabled:hover:bg-transparent
         disabled:translate-x-12 disabled:active:bg-transparent"
-        disabled={curr === 1}
+        disabled={current === 1}
         onClick={() => {
           change((prev) => Math.max(prev - 1, 1));
         }}
@@ -56,7 +56,7 @@ const PageControls: FC<PageControlsProps> = ({ current, last }) => {
           data-[animating='true']:translate-y-1 transition-all duration-0"
           data-animating={animating}
         >
-          {curr}
+          {current}
         </span>
         <span className="h-6 ml-1 mr-[0.125rem] w-[1px] bg-black rotate-[30deg]"></span>
         <span className="text-sm hover:underline"> {last}</span>
@@ -67,7 +67,7 @@ const PageControls: FC<PageControlsProps> = ({ current, last }) => {
         hover:bg-slate-100 active:bg-slate-100 p-2 transition-all
         disabled:opacity-0 disabled:hover:bg-transparent
         disabled:-translate-x-12 disabled:active:bg-transparent"
-        disabled={curr === last}
+        disabled={current === last}
         onClick={() => {
           change((prev) => Math.min(prev + 1, last));
         }}
@@ -80,7 +80,7 @@ const PageControls: FC<PageControlsProps> = ({ current, last }) => {
       hover:bg-slate-100 active:bg-slate-100 p-2 transition-all
         disabled:opacity-0 disabled:hover:bg-transparent
         disabled:-translate-x-12 disabled:active:bg-transparent"
-        disabled={curr === last}
+        disabled={current === last}
         onClick={() => {
           change(last);
         }}
