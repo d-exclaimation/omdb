@@ -153,6 +153,9 @@ const FilmEdit: FC<FilmEditProps> = ({
                       onChange={(releaseDate) =>
                         update((prev) => ({ ...prev, releaseDate }))
                       }
+                      disabled={
+                        initial.releaseDate && initial.releaseDate < new Date()
+                      }
                     />
 
                     <ListSelect
