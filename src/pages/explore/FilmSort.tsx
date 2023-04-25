@@ -40,7 +40,7 @@ const FilmSort: FC<FilmSortProps> = ({ sort, onSortChange }) => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Listbox.Options className="absolute p-1 left-0 origin-top-left rounded-md mt-2 w-36 bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Listbox.Options className="absolute p-1 z-10 left-0 origin-top-left rounded-md mt-2 w-36 bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           {
             ALL_SORTINGS.map((sort) => (
               <Listbox.Option

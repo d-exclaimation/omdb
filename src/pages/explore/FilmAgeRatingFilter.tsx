@@ -40,7 +40,7 @@ const FilmAgeRatingFilter: FC<FilmAgeRatingFilterProps> = ({ ratings, onAddAgeRa
       >
         <Menu.Items
           className="absolute right-0 origin-top-right divide-y divide-zinc-100 
-          rounded-md mt-2 bg-white w-60 min-w-max focus:outline-none 
+          rounded-md mt-2 bg-white w-48 min-w-max focus:outline-none 
           shadow-lg ring-1 ring-black ring-opacity-5 z-20"
         >
           {

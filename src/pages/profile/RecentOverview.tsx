@@ -72,18 +72,18 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
           </div>
         </div>
 
-        <div className="rounded-lg border h-[6.5rem] w-full md:w-52 flex-shrink-0 shadow-sm">
-          <div className="p-4 flex flex-row items-center justify-between space-y-0 pb-1">
+        <div className="rounded-lg border h-[6.5rem] w-full md:w-52 flex-shrink-0 shadow-sm truncate">
+          <div className="p-4 flex flex-row items-center justify-between space-y-0 pb-1 w-full">
             <h3 className="tracking-tight text-sm font-medium">
               Most recent release
             </h3>
           </div>
-          <div className="p-4 pt-0">
+          <div className="p-4 pt-0 w-full">
             {mostRecent ? (
               <>
                 <Link
                   to={`/film?id=${mostRecent.filmId}`}
-                  className="text-xl max-w-full truncate font-bold bg-gradient-to-r from-purple-600 via-indigo-500 to-blue-500 text-transparent bg-clip-text"
+                  className="block text-xl max-w-full truncate font-bold bg-gradient-to-r from-purple-600 via-indigo-500 to-blue-500 text-transparent bg-clip-text"
                 >
                   {mostRecent.title}
                 </Link>
@@ -112,9 +112,7 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
           </div>
           <div className="p-4 pt-0">
             <div
-              className={`text-xl max-w-full truncate font-bold ${
-                ageRatingToColor(mostAgeRating.name).text
-              }`}
+              className={`text-xl max-w-full truncate font-bold ${ageRatingToColor(mostAgeRating.name).text}`}
             >
               {mostAgeRating.name}
             </div>
@@ -137,7 +135,7 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
               <>
                 <Link
                   to={`/film?id=${highestRated.filmId}`}
-                  className="text-xl max-w-full truncate font-bold bg-gradient-to-r from-purple-600 via-indigo-500 to-blue-500 text-transparent bg-clip-text"
+                  className="block text-xl max-w-full truncate font-bold bg-gradient-to-r from-purple-600 via-indigo-500 to-blue-500 text-transparent bg-clip-text"
                 >
                   {highestRated.title}
                 </Link>

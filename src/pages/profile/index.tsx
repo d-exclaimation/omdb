@@ -7,6 +7,7 @@ import { useAuth } from "../../auth/useAuth";
 import LoadingIndicator from "../../common/components/LoadingIndicator";
 import { withLayout } from "../layout";
 import Profile from "./Profile";
+import RatingOverview from "./RatingOverview";
 import RecentOverview from "./RecentOverview";
 
 const ProfilePage: FC = () => {
@@ -37,6 +38,7 @@ const ProfilePage: FC = () => {
         filmsReviewed={reviewed?.count ?? 0}
       />
       <RecentOverview data={gallery} />
+      <RatingOverview data={gallery} />
     </div>
   );
 };

@@ -19,7 +19,7 @@ type FilmFiltersProps = {
 const FilmFilters: FC<FilmFiltersProps> = ({ sort, onSortChange, genreIds, onAddGenre, onRemoveGenre, ratings, onAddAgeRating, onRemoveAgeRating }) => {
   const genres = useGenres();
   return (
-    <div className="w-full h-max flex items-start flex-row rounded-lg max-w-3xl gap-3">
+    <div className="w-full h-max flex items-start justify-around md:justify-start flex-row rounded-lg max-w-3xl gap-3">
       <FilmSort sort={sort} onSortChange={onSortChange} />
 
       <FilmGenreFilter
