@@ -1,3 +1,5 @@
+import { type Sorting } from "../../types/constants";
+
 export const ageRatings = {
   TBC: "To Be Confirmed",
   G: "General Audience",
@@ -20,3 +22,13 @@ export const ratings = {
   2: "Very Poor",
   1: "Terrible",
 };
+
+export const sortings = {
+  "RELEASED_ASC": "Released ↑",
+  "RELEASED_DESC": "Released ↓",
+  "RATING_ASC": "Rating ↑",
+  "RATING_DESC": "Rating ↓",
+  "ALPHABETICAL_ASC": "Alphabetical ↑",
+  "ALPHABETICAL_DESC": "Alphabetical ↓",
+} satisfies Record<Sorting, string>;
+

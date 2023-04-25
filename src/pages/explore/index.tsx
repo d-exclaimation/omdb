@@ -1,4 +1,4 @@
-import { useEffect, useState, type FC } from "react";
+import { useCallback, useEffect, useMemo, useState, type FC } from "react";
 import useQuery, { preload } from "swr";
 import { searchFilms } from "../../api/film";
 import LoadingIndicator from "../../common/components/LoadingIndicator";
@@ -7,19 +7,26 @@ import FilmFilters from "./FilmFilters";
 import FilmSearchBar from "./FilmSearchBar";
 import FlexibleFilmPreview from "./FlexibleFilmPreview";
 import PageControls from "./PageControls";
-
-type Sorting =
-  | "ALPHABETICAL_ASC"
-  | "ALPHABETICAL_DESC"
-  | "RELEASED_ASC"
-  | "RELEASED_DESC"
-  | "RATING_ASC"
-  | "RATING_DESC"
+import { type Sorting } from "../../types/constants";
+import { useSearchParams } from "react-router-dom";
+import { maybeInt } from "../../common/utils/coerce";
 
 const ExplorePage: FC = () => {
-  const [q, setQ] = useState("");
-  const [sort] = useState<Sorting>("RELEASED_ASC");
+  const [params, setParams] = useSearchParams();
+  const [q, setQ] = useState(params.get("q") ?? "");
   const [page, setPage] = useState(1);
+  const sort = useMemo<Sorting>(() => params.get("sort") as Sorting ?? "RELEASED_ASC", [params]);
+  const genreIds = useMemo(() =>
+    params
+      .getAll("genreIds")
+      .map((each) => maybeInt.parse(each))
+      .filter((each): each is number => each !== undefined && each !== null)
+    , [params]);
+  const ageRatings = useMemo(() =>
+    params
+      .getAll("ageRatings")
+    , [params]);
+
   const { data, isValidating } = useQuery(
     ["films", "explore", q, { page, sort }],
     searchFilms,
@@ -27,6 +34,26 @@ const ExplorePage: FC = () => {
       keepPreviousData: true,
     }
   );
+
+  const setParamByKey = useCallback((key: string, value: string) => {
+    setParams(prev => {
+      if (prev.has(key)) {
+        prev.delete(key);
+      }
+      prev.append(key, value);
+      return prev;
+    });
+  }, [setParams]);
+
+  const setAllParamsByKey = useCallback((key: string, values: string[]) => {
+    setParams(prev => {
+      if (prev.has(key)) {
+        prev.delete(key);
+      }
+      values.forEach((value) => prev.append(key, value));
+      return prev;
+    });
+  }, [setParams]);
 
   useEffect(() => {
     preload(
@@ -41,7 +68,16 @@ const ExplorePage: FC = () => {
       <div className="w-full flex flex-col justify-start items-center gap-3">
 
         <FilmSearchBar value={q} onUpdate={setQ} />
-        <FilmFilters />
+        <FilmFilters
+          sort={sort}
+          onSortChange={(sort) => setParamByKey("sort", sort)}
+          genreIds={genreIds}
+          onAddGenre={(genreId) => setAllParamsByKey("genreIds", [...genreIds, genreId].map(each => each.toString()))}
+          onRemoveGenre={(genreId) => setAllParamsByKey("genreIds", genreIds.filter(each => each !== genreId).map(each => each.toString()))}
+          ratings={ageRatings}
+          onAddAgeRating={(rating) => setAllParamsByKey("ageRatings", [...ageRatings, rating])}
+          onRemoveAgeRating={(rating) => setAllParamsByKey("ageRatings", ageRatings.filter(each => each !== rating))}
+        />
 
         <div className="w-full max-h-max bg-white flex items-center flex-col rounded-lg p-6 md:p-8 max-w-3xl">
           {data?.films?.length ? (
