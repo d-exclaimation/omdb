@@ -28,7 +28,7 @@ const ExplorePage: FC = () => {
     , [params]);
 
   const { data, isValidating } = useQuery(
-    ["films", "explore", q, { page, sort }],
+    ["films", "explore", q, { page, sort, genreIds, ageRatings }],
     searchFilms,
     {
       keepPreviousData: true,
@@ -57,7 +57,7 @@ const ExplorePage: FC = () => {
 
   useEffect(() => {
     preload(
-      ["films", "explore", q, { page: page + 1, sort }],
+      ["films", "explore", q, { page: page + 1, sort, genreIds, ageRatings }],
       searchFilms
     )
   }, [q, sort, page]);

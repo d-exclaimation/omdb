@@ -52,10 +52,12 @@ const FilmReviews = z.array(
 type SearchOptions = {
   page: number;
   sort: string;
+  genreIds: number[];
+  ageRatings: string[];
 }
 
 export const searchFilms = query(
-  async ([_, q, { page, sort }]: [string, string, SearchOptions]) => {
+  async ([_, q, { page, sort, genreIds, ageRatings }]: [string, string, SearchOptions]) => {
     const params = new URLSearchParams();
     params.append("count", "6");
     params.append("sortBy", sort);
@@ -63,6 +65,8 @@ export const searchFilms = query(
       params.append("q", q);
     }
     params.append("startIndex", `${Math.max(0, (page - 1) * 6)}`);
+    genreIds.forEach((genreId) => params.append("genreIds", `${genreId}`));
+    ageRatings.forEach((ageRating) => params.append("ageRatings", ageRating));
 
     const res = await fetch(`${api}/films?${params.toString()}`, {
       headers: {
