@@ -5,7 +5,7 @@ import { useGenres } from "../../common/context/genre/useGenres";
 import { ageRatingToColor } from "../../common/utils/color";
 
 type RecentOverviewProps = {
-  data?: Awaited<ReturnType<typeof filmGallery>>;
+  data?: Awaited<ReturnType<typeof filmGallery.fn>>;
 };
 
 const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
@@ -88,7 +88,7 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
                   {mostRecent.title}
                 </Link>
                 <p className="text-xs text-muted-foreground">
-                  Released {mostRecent.releaseDate.toLocaleDateString()}
+                  Released {mostRecent.releaseDate.toLocaleDateString("en-NZ")}
                 </p>
               </>
             ) : (
@@ -112,7 +112,9 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
           </div>
           <div className="p-4 pt-0">
             <div
-              className={`text-xl max-w-full truncate font-bold ${ageRatingToColor(mostAgeRating.name).text}`}
+              className={`text-xl max-w-full truncate font-bold ${
+                ageRatingToColor(mostAgeRating.name).text
+              }`}
             >
               {mostAgeRating.name}
             </div>

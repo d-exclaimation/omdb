@@ -57,7 +57,7 @@ const FilmPreview: FC<FilmPreviewProps> = ({
           </span>
         </div>
         <div className="flex flex-row justify-between text-zinc-400 gap-3 pr-1 text-xs">
-          <span>{releaseDate.toLocaleDateString()}</span>
+          <span>{releaseDate.toLocaleDateString("en-NZ")}</span>
           <span className="flex items-center">
             <img className="w-3 h-3 mr-[.125rem]" src="/icons/star.svg" />
             {rating.toFixed(2)}

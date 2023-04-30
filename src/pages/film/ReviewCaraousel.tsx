@@ -38,7 +38,7 @@ const ReviewCaraousel: FC<ReviewCaraouselProps> = ({ reviews, isLoading }) => {
                   {reviewerFirstName} {reviewerLastName}
                 </span>
                 <span className="font-light text-xs">
-                  {timestamp.toLocaleDateString()}
+                  {timestamp.toLocaleDateString("en-NZ")}
                 </span>
               </div>
             </div>

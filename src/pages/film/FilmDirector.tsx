@@ -78,7 +78,7 @@ const FilmDirector: FC<FilmDirectorProps> = ({
           )}
 
           <span className="text-sm font-light">
-            on {releaseDate.toLocaleDateString()}
+            on {releaseDate.toLocaleDateString("en-NZ")}
           </span>
         </div>
       </div>
