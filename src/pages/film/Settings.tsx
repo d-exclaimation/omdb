@@ -28,7 +28,6 @@ const Settings: FC<SettingsProps> = ({
       focus-visible:ring-zinc-500 focus-visible:ring-offset-2
       "
       >
-        <img src="/icons/settings.svg" alt="setting" className="w-4 h-4 mr-2" />
         Settings
       </Menu.Button>
       <Transition

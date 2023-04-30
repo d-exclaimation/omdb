@@ -25,7 +25,7 @@ const FilmDetails: FC<FilmDetail> = (data) => {
             {data.title}
           </h3>
           <h3 className="text-sm font-light">
-            {data.releaseDate.toLocaleDateString()}
+            {data.releaseDate.toLocaleDateString("en-NZ")}
           </h3>
         </div>
         <div className="flex flex-row w-full justify-start gap-3 my-2 text-xs">

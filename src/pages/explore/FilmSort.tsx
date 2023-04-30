@@ -1,7 +1,7 @@
-import { type FC, Fragment } from "react";
-import { type Sorting } from "../../types/constants";
 import { Listbox, Transition } from "@headlessui/react";
+import { Fragment, type FC } from "react";
 import { sortings } from "../../common/utils/constants";
+import { type Sorting } from "../../types/constants";
 
 const ALL_SORTINGS = [
   "ALPHABETICAL_ASC",
@@ -9,7 +9,7 @@ const ALL_SORTINGS = [
   "RATING_ASC",
   "RATING_DESC",
   "RELEASED_ASC",
-  "RELEASED_DESC"
+  "RELEASED_DESC",
 ] as Sorting[];
 
 type FilmSortProps = {
@@ -41,18 +41,18 @@ const FilmSort: FC<FilmSortProps> = ({ sort, onSortChange }) => {
         leaveTo="transform opacity-0 scale-95"
       >
         <Listbox.Options className="absolute p-1 z-10 left-0 origin-top-left rounded-md mt-2 w-36 bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-          {
-            ALL_SORTINGS.map((sort) => (
-              <Listbox.Option
-                className={({ active }) =>
-                  `flex w-full items-center rounded-md px-2 py-2 text-sm 
-                ${active ? "bg-zinc-800 text-white" : ""}`}
-                value={sort}
-              >
-                {sortings[sort]}
-              </Listbox.Option>
-            ))
-          }
+          {ALL_SORTINGS.map((sort) => (
+            <Listbox.Option
+              key={sort}
+              className={({ active }) =>
+                `flex w-full items-center rounded-md px-2 py-2 text-sm 
+                ${active ? "bg-zinc-800 text-white" : ""}`
+              }
+              value={sort}
+            >
+              {sortings[sort]}
+            </Listbox.Option>
+          ))}
         </Listbox.Options>
       </Transition>
     </Listbox>
