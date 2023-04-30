@@ -1,7 +1,7 @@
 import { type FC } from "react";
 import { useToggle } from "../../common/hooks/useToggle";
 import Account from "./Account";
-import Edit from "./Edit";
+import EditDialog from "./EditDialog";
 
 type ProfileProps = {
   user: {
@@ -24,7 +24,7 @@ const Profile: FC<ProfileProps> = ({ filmsDirected, filmsReviewed, user }) => {
         filmsReviewed={filmsReviewed}
         onEdit={open}
       />
-      <Edit {...user} editing={editing} close={close} />
+      <EditDialog {...user} editing={editing} close={close} />
     </div>
   );
 };

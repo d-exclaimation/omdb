@@ -1,5 +1,5 @@
-import { type FC, Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
+import { Fragment, type FC } from "react";
 import { useGenres } from "../../common/context/genre/useGenres";
 
 type FilmGenreFilterProps = {
@@ -11,9 +11,8 @@ type FilmGenreFilterProps = {
 const FilmGenreFilter: FC<FilmGenreFilterProps> = ({
   genreIds,
   onAddGenreId,
-  onRemoveGenreId
+  onRemoveGenreId,
 }) => {
-
   const genres = useGenres();
 
   return (
@@ -32,8 +31,16 @@ const FilmGenreFilter: FC<FilmGenreFilterProps> = ({
         className="px-4 py-2 rounded-md text-start font-medium text-sm bg-white w-max 
         flex-shrink-0 text-zinc-800 hover:bg-zinc-50 active:bg-zinc-50 flex items-center"
       >
-        Genre
-        <img className="w-3 h-3 ml-2" src="/icons/chevron-down.svg" />
+        {({ open }) => (
+          <>
+            Genre
+            <img
+              className="w-3 h-3 ml-2 data-selected:rotate-180 transition-all"
+              src="/icons/chevron-down.svg"
+              data-selected={open}
+            />
+          </>
+        )}
       </Menu.Button>
       <Transition
         as={Fragment}
@@ -45,50 +52,44 @@ const FilmGenreFilter: FC<FilmGenreFilterProps> = ({
         leaveTo="transform opacity-0 scale-95"
       >
         <Menu.Items className="absolute z-20 right-0 origin-top-right divide-y divide-zinc-100 rounded-md mt-2 w-36 bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-          {
-            genreIds.length
-              ? <div className="p-1">
-                {
-                  genreIds.map((genreId) => (
-                    <Menu.Item key={genreId}>
-                      {({ active }) => (
-                        <button
-                          className="flex w-full items-center rounded-md px-2 py-2 text-sm 
+          {genreIds.length ? (
+            <div className="p-1">
+              {genreIds.map((genreId) => (
+                <Menu.Item key={genreId}>
+                  {({ active }) => (
+                    <button
+                      className="flex w-full items-center rounded-md px-2 py-2 text-sm 
                           data-selected:bg-red-600 data-selected:text-white text-red-600 md:text-black
                           disabled:cursor-not-allowed disabled:opacity-50"
-                          data-selected={active}
-                          onClick={() => onRemoveGenreId(genreId)}
-                        >
-                          <img className="w-4 h-4 mr-2" src="/icons/checked.svg" />
-                          {genres.get(genreId)?.name}
-                        </button>
-                      )}
-                    </Menu.Item>
-                  ))
-                }
-              </div>
-              : null
-          }
+                      data-selected={active}
+                      onClick={() => onRemoveGenreId(genreId)}
+                    >
+                      <img className="w-4 h-4 mr-2" src="/icons/checked.svg" />
+                      {genres.get(genreId)?.name}
+                    </button>
+                  )}
+                </Menu.Item>
+              ))}
+            </div>
+          ) : null}
           <div className="p-1">
-            {
-              genres.values
-                .filter(({ genreId }) => !genreIds.includes(genreId))
-                .map(({ genreId, name }) => (
-                  <Menu.Item key={genreId}>
-                    {({ active }) => (
-                      <button
-                        className="flex w-full items-center rounded-md px-2 py-2 text-sm 
+            {genres.values
+              .filter(({ genreId }) => !genreIds.includes(genreId))
+              .map(({ genreId, name }) => (
+                <Menu.Item key={genreId}>
+                  {({ active }) => (
+                    <button
+                      className="flex w-full items-center rounded-md px-2 py-2 text-sm 
                         data-selected:bg-zinc-800 data-selected:text-white
                         disabled:cursor-not-allowed disabled:opacity-50"
-                        data-selected={active}
-                        onClick={() => onAddGenreId(genreId)}
-                      >
-                        {name}
-                      </button>
-                    )}
-                  </Menu.Item>
-                ))
-            }
+                      data-selected={active}
+                      onClick={() => onAddGenreId(genreId)}
+                    >
+                      {name}
+                    </button>
+                  )}
+                </Menu.Item>
+              ))}
           </div>
         </Menu.Items>
       </Transition>

@@ -66,7 +66,7 @@ const EditUser = z
     }
   );
 
-type EditProps = {
+type EditDialogProps = {
   id: number;
   firstName: string;
   lastName: string;
@@ -75,7 +75,7 @@ type EditProps = {
   close: () => void;
 };
 
-const Edit: FC<EditProps> = ({ editing, close, ...user }) => {
+const EditDialog: FC<EditDialogProps> = ({ editing, close, ...user }) => {
   const { invalidate } = useAuth();
   const [preview, setPreview] = useState(`${api}/users/${user.id}/image`);
   const [emailError, setEmailError] = useState<string>();
@@ -136,7 +136,7 @@ const Edit: FC<EditProps> = ({ editing, close, ...user }) => {
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel
-                className="w-full max-w-md z-40 transform overflow-hidden rounded-2xl bg-white 
+                className="w-full max-w-md z-40 transform overflow-hidden rounded-lg bg-white 
                 p-6 text-left align-middle shadow-xl transition-all"
               >
                 <Dialog.Title
@@ -306,4 +306,4 @@ const Edit: FC<EditProps> = ({ editing, close, ...user }) => {
   );
 };
 
-export default Edit;
+export default EditDialog;

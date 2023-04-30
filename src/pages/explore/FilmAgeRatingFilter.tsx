@@ -1,7 +1,7 @@
-import { type FC, Fragment } from "react";
-import { Menu, Transition } from "@headlessui/react";
-import { ageRatings } from "../../common/utils/constants";
 import { keys } from "@d-exclaimation/common";
+import { Menu, Transition } from "@headlessui/react";
+import { Fragment, type FC } from "react";
+import { ageRatings } from "../../common/utils/constants";
 
 type FilmAgeRatingFilterProps = {
   ratings: string[];
@@ -9,7 +9,11 @@ type FilmAgeRatingFilterProps = {
   onRemoveAgeRating: (ageRating: string) => void;
 };
 
-const FilmAgeRatingFilter: FC<FilmAgeRatingFilterProps> = ({ ratings, onAddAgeRating, onRemoveAgeRating }) => {
+const FilmAgeRatingFilter: FC<FilmAgeRatingFilterProps> = ({
+  ratings,
+  onAddAgeRating,
+  onRemoveAgeRating,
+}) => {
   return (
     <Menu
       as="div"
@@ -26,8 +30,16 @@ const FilmAgeRatingFilter: FC<FilmAgeRatingFilterProps> = ({ ratings, onAddAgeRa
         className="px-4 py-2 rounded-md text-start font-medium text-sm bg-white w-max 
         flex-shrink-0 text-zinc-800 hover:bg-zinc-50 active:bg-zinc-50 flex items-center"
       >
-        Age rating
-        <img className="w-3 h-3 ml-2" src="/icons/chevron-down.svg" />
+        {({ open }) => (
+          <>
+            Age rating
+            <img
+              className="w-3 h-3 ml-2 data-selected:rotate-180 transition-all"
+              src="/icons/chevron-down.svg"
+              data-selected={open}
+            />
+          </>
+        )}
       </Menu.Button>
       <Transition
         as={Fragment}
@@ -43,50 +55,44 @@ const FilmAgeRatingFilter: FC<FilmAgeRatingFilterProps> = ({ ratings, onAddAgeRa
           rounded-md mt-2 bg-white w-48 min-w-max focus:outline-none 
           shadow-lg ring-1 ring-black ring-opacity-5 z-20"
         >
-          {
-            ratings.length
-              ? <div className="p-1">
-                {
-                  ratings.map((rating) => (
-                    <Menu.Item key={rating}>
-                      {({ active }) => (
-                        <button
-                          className="flex w-full items-center rounded-md px-2 py-2 text-sm 
+          {ratings.length ? (
+            <div className="p-1">
+              {ratings.map((rating) => (
+                <Menu.Item key={rating}>
+                  {({ active }) => (
+                    <button
+                      className="flex w-full items-center rounded-md px-2 py-2 text-sm 
                           data-selected:bg-red-600 data-selected:text-white text-red-600 md:text-black
                           disabled:cursor-not-allowed disabled:opacity-50"
-                          data-selected={active}
-                          onClick={() => onRemoveAgeRating(rating)}
-                        >
-                          <img className="w-4 h-4 mr-2" src="/icons/checked.svg" />
-                          {ageRatings[rating as keyof typeof ageRatings]}
-                        </button>
-                      )}
-                    </Menu.Item>
-                  ))
-                }
-              </div>
-              : null
-          }
+                      data-selected={active}
+                      onClick={() => onRemoveAgeRating(rating)}
+                    >
+                      <img className="w-4 h-4 mr-2" src="/icons/checked.svg" />
+                      {ageRatings[rating as keyof typeof ageRatings]}
+                    </button>
+                  )}
+                </Menu.Item>
+              ))}
+            </div>
+          ) : null}
           <div className="p-1">
-            {
-              keys(ageRatings)
-                .filter((rating) => !ratings.includes(rating))
-                .map((rating) => (
-                  <Menu.Item key={rating}>
-                    {({ active }) => (
-                      <button
-                        className="flex w-full items-center rounded-md px-2 py-2 text-sm 
+            {keys(ageRatings)
+              .filter((rating) => !ratings.includes(rating))
+              .map((rating) => (
+                <Menu.Item key={rating}>
+                  {({ active }) => (
+                    <button
+                      className="flex w-full items-center rounded-md px-2 py-2 text-sm 
                         data-selected:bg-zinc-800 data-selected:text-white
                         disabled:cursor-not-allowed disabled:opacity-50"
-                        data-selected={active}
-                        onClick={() => onAddAgeRating(rating)}
-                      >
-                        {ageRatings[rating]}
-                      </button>
-                    )}
-                  </Menu.Item>
-                ))
-            }
+                      data-selected={active}
+                      onClick={() => onAddAgeRating(rating)}
+                    >
+                      {ageRatings[rating]}
+                    </button>
+                  )}
+                </Menu.Item>
+              ))}
           </div>
         </Menu.Items>
       </Transition>

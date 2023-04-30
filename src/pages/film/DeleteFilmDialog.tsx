@@ -57,7 +57,7 @@ const DeleteFilmDialog: FC<DeleteFilmDialogProps> = ({
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel
-                className="w-full max-w-md z-40 transform rounded-2xl bg-white 
+                className="w-full max-w-md z-40 transform rounded-lg bg-white 
             p-6 text-left align-middle shadow-xl transition-all"
               >
                 <Dialog.Title
