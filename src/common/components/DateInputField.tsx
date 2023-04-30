@@ -39,7 +39,7 @@ const DateInputField: FC<DateInputFieldProps> = ({
         className="w-full py-3 placeholder:text-slate-400 text-sm focus:outline-none disabled:cursor-not-allowed
         disabled:opacity-50 rounded-md border border-slate-300 bg-transparent px-3 data-[error='true']:border-red-700
         [-webkit-appearance: none] [-moz-appearance: textfield]"
-        value={initialValue?.toISOString().split("T")[0]}
+        defaultValue={initialValue?.toISOString().split("T")[0]}
         onChange={(e) => e.target.valueAsDate && onChange(e.target.valueAsDate)}
         data-error={!!error}
         disabled={disabled}
