@@ -208,6 +208,7 @@ type MutateFilmResponse = Union<{
 }>;
 
 export const createFilm = mutation(
+  ["films", "create"],
   async (arg: {
     title: string;
     description: string;
@@ -298,6 +299,7 @@ export const createFilm = mutation(
 );
 
 export const editFilm = mutation(
+  ["films", "edit"],
   async (arg: {
     filmId: number;
     title: string;
@@ -366,6 +368,7 @@ export const editFilm = mutation(
 );
 
 export const deleteFilm = mutation(
+  ["films", "delete"],
   async (filmId: number): Promise<MutateFilmResponse> => {
     const id = userId();
     if (!id) {
@@ -547,6 +550,7 @@ type ReviewResponse = Union<{
 }>;
 
 export const review = mutation(
+  ["films", "review"],
   async (arg: {
     filmId: number;
     rating: number;

@@ -28,7 +28,7 @@ const Account: FC<AccountProps> = ({
 }) => {
   const { user: stamp } = useCacheControl();
   const { invalidate } = useAuth();
-  const { trigger } = useMutation("logout", logout, {
+  const { trigger } = useMutation(logout.keys, logout.fn, {
     onSuccess: () => {
       invalidate();
     },

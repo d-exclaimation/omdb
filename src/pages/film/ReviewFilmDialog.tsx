@@ -52,7 +52,7 @@ const ReviewFilmDialog: FC<ReviewFilmProps> = ({
   });
 
   const { mutate } = useSWRConfig();
-  const { trigger } = useMutation(["films", "review", filmId], review, {
+  const { trigger } = useMutation([...review.keys, `${filmId}`], review.fn, {
     onSuccess: (res) => {
       match(res, {
         Ok: () => {

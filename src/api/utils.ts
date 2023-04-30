@@ -1,23 +1,24 @@
 import { type Arguments } from "swr";
 
-type Query<Keys extends Arguments[], Args extends Arguments[], Returned> = {
+type Query<Keys extends Arguments[], Params extends Arguments[], Returned> = {
   key: Keys;
-  keys: (args: Args) => [...Keys, ...Args];
-  fn: (keys: [...Keys, ...Args]) => Promise<Returned>;
+  keys: (params: Params) => [...Keys, ...Params];
+  fn: (keys: [...Keys, ...Params]) => Promise<Returned>;
 };
 
 export function query<
   Keys extends Arguments[],
   Returned,
-  Args extends Arguments[] = []
+  Params extends Arguments[] = []
 >(
   keys: Keys,
-  fn: (args: Args, keys: Keys) => Promise<Returned>
-): Query<Keys, Args, Returned> {
+  fn: (params: Params, keys: Keys) => Promise<Returned>
+): Query<Keys, Params, Returned> {
   return {
     key: keys,
-    keys: (args: Args) => [...keys, ...args],
-    fn: (args: [...Keys, ...Args]) => fn(args.slice(keys.length) as Args, keys),
+    keys: (params: Params) => [...keys, ...params],
+    fn: (params: [...Keys, ...Params]) =>
+      fn(params.slice(keys.length) as Params, keys),
   };
 }
 
@@ -26,20 +27,12 @@ type Mutation<Keys extends Arguments[], Arg, Returned> = {
   fn: (keys: Keys, opts: { arg: Arg }) => Promise<Returned>;
 };
 
-export function m<Keys extends Arguments[], Returned, Arg>(
+export function mutation<Keys extends Arguments[], Returned, Arg>(
   keys: Keys,
   fn: (arg: Arg, keys: Keys) => Promise<Returned>
 ): Mutation<Keys, Arg, Returned> {
   return {
     keys,
     fn: (_, { arg }) => fn(arg, keys),
-  };
-}
-
-export function mutation<Arg = void, Returned = any>(
-  fn: (arg: Arg) => Promise<Returned>
-) {
-  return (_: Arguments, opts: { arg: Arg }) => {
-    return fn(opts.arg);
   };
 }

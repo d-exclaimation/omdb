@@ -47,7 +47,7 @@ const SignupPage: FC = () => {
   const { isLoggedIn, invalidate, isAuthenticating } = useAuth();
   const [isSubmitting, { open, close }] = useToggle();
   const [showPassword, { toggle }] = useToggle();
-  const { trigger, isMutating } = useMutation("register", register, {
+  const { trigger, isMutating } = useMutation(register.keys, register.fn, {
     onSuccess: (res) => {
       match(res, {
         Ok: () => {
@@ -64,16 +64,12 @@ const SignupPage: FC = () => {
       });
     },
   });
-  const { trigger: uploadAvatar } = useMutation(
-    ["register", "image"],
-    setAvatar,
-    {
-      onSuccess: () => {
-        invalidate();
-        close();
-      },
-    }
-  );
+  const { trigger: uploadAvatar } = useMutation(setAvatar.keys, setAvatar.fn, {
+    onSuccess: () => {
+      invalidate();
+      close();
+    },
+  });
 
   const [{ values, errors: e, isValid }, updateForm] = useForm({
     schema: RegisterUser,

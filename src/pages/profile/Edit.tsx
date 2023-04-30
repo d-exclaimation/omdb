@@ -87,7 +87,7 @@ const Edit: FC<EditProps> = ({ editing, close, ...user }) => {
       ...user,
     },
   });
-  const { trigger } = useMutation("edit", edit, {
+  const { trigger } = useMutation(edit.keys, edit.fn, {
     onSuccess: (res) => {
       match(res, {
         Ok: () => {

@@ -66,7 +66,7 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
     },
   });
   const { mutate } = useSWRConfig();
-  const { trigger } = useMutation(["films"], createFilm, {
+  const { trigger } = useMutation(createFilm.keys, createFilm.fn, {
     onSuccess: (res) => {
       match(res, {
         Ok: () => {

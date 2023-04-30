@@ -71,22 +71,26 @@ const FilmEdit: FC<FilmEditProps> = ({
   });
 
   const { mutate } = useSWRConfig();
-  const { trigger } = useMutation(["films", `${filmId}`], editFilm, {
-    onSuccess: (res) => {
-      match(res, {
-        Ok: () => {
-          mutate(included("films"));
-          onClose();
-        },
-        BadTitle: () => {
-          setTitleError("Film with that title already exists");
-        },
-        "*": (err) => {
-          console.log(err);
-        },
-      });
-    },
-  });
+  const { trigger } = useMutation(
+    [...editFilm.keys, `${filmId}`],
+    editFilm.fn,
+    {
+      onSuccess: (res) => {
+        match(res, {
+          Ok: () => {
+            mutate(included("films"));
+            onClose();
+          },
+          BadTitle: () => {
+            setTitleError("Film with that title already exists");
+          },
+          "*": (err) => {
+            console.log(err);
+          },
+        });
+      },
+    }
+  );
 
   return (
     <Transition appear show={editing} as={Fragment}>

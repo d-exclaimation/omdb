@@ -24,18 +24,22 @@ const DeleteFilmDialog: FC<DeleteFilmDialogProps> = ({
 }) => {
   const { mutate } = useSWRConfig();
   const nav = useNavigate();
-  const { trigger } = useMutation(["films", `${id}`], deleteFilm, {
-    onSuccess(data) {
-      match(data, {
-        Ok: () => {
-          mutate(included("films"));
-          nav("/gallery");
-          onClose();
-        },
-        "*": () => {},
-      });
-    },
-  });
+  const { trigger } = useMutation(
+    [...deleteFilm.keys, `${id}`],
+    deleteFilm.fn,
+    {
+      onSuccess(data) {
+        match(data, {
+          Ok: () => {
+            mutate(included("films"));
+            nav("/gallery");
+            onClose();
+          },
+          "*": () => {},
+        });
+      },
+    }
+  );
 
   return (
     <Transition appear show={deleting} as={Fragment}>

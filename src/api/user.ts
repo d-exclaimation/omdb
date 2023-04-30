@@ -64,6 +64,7 @@ type AuthResponse = Union<{
 }>;
 
 export const register = mutation(
+  ["users", "signup"],
   async (arg: {
     firstName: string;
     lastName: string;
@@ -127,6 +128,7 @@ export const register = mutation(
 );
 
 export const login = mutation(
+  ["users", "login"],
   async (info: { email: string; password: string }): Promise<AuthResponse> => {
     try {
       const res = await fetch(`${api}/users/login`, {
@@ -168,7 +170,7 @@ export const login = mutation(
   }
 );
 
-export const logout = mutation(async (_: void) => {
+export const logout = mutation(["users", "logout"], async (_: void) => {
   try {
     await fetch(`${api}/users/logout`, {
       method: "POST",
@@ -189,6 +191,7 @@ type EditResponse = Union<{
 }>;
 
 export const edit = mutation(
+  ["users", "edit"],
   async (arg: {
     firstName?: string;
     lastName?: string;
@@ -269,21 +272,24 @@ export const edit = mutation(
   }
 );
 
-export const setAvatar = mutation(async (arg: File) => {
-  const id = userId();
-  if (!id) {
-    return;
+export const setAvatar = mutation(
+  ["users", "signup", "avatar"],
+  async (arg: File) => {
+    const id = userId();
+    if (!id) {
+      return;
+    }
+    try {
+      await fetch(`${api}/users/${id}/image`, {
+        method: "PUT",
+        headers: {
+          "X-Authorization": session() ?? "",
+          "Content-Type": arg.type,
+        },
+        body: arg,
+      });
+    } catch (_) {
+      return;
+    }
   }
-  try {
-    await fetch(`${api}/users/${id}/image`, {
-      method: "PUT",
-      headers: {
-        "X-Authorization": session() ?? "",
-        "Content-Type": arg.type,
-      },
-      body: arg,
-    });
-  } catch (_) {
-    return;
-  }
-});
+);
