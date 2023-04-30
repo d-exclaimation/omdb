@@ -47,15 +47,4 @@ const Layout: FC<LayoutProps> = ({ route, heading, children }) => {
   );
 };
 
-export function withLayout<P extends {} = {}>(
-  WrappedComponent: FC<P>,
-  { heading, route }: Omit<LayoutProps, "children">
-) {
-  return (props: P) => (
-    <Layout route={route} heading={heading}>
-      <WrappedComponent {...props} />
-    </Layout>
-  );
-}
-
 export default Layout;

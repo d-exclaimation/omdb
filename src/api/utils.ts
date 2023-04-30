@@ -1,9 +1,39 @@
 import { type Arguments } from "swr";
 
-export function query<Keys extends Arguments[] = [], Returned = any>(
-  fn: (keys: Keys) => Promise<Returned>
-) {
-  return ([_, ...keys]: [string, ...Keys]) => fn(keys);
+type Query<Keys extends Arguments[], Args extends Arguments[], Returned> = {
+  key: Keys;
+  keys: (args: Args) => [...Keys, ...Args];
+  fn: (keys: [...Keys, ...Args]) => Promise<Returned>;
+};
+
+export function q<
+  Keys extends Arguments[],
+  Returned,
+  Args extends Arguments[] = []
+>(
+  keys: Keys,
+  fn: (args: Args, keys: Keys) => Promise<Returned>
+): Query<Keys, Args, Returned> {
+  return {
+    key: keys,
+    keys: (args: Args) => [...keys, ...args],
+    fn: (args: [...Keys, ...Args]) => fn(args.slice(keys.length) as Args, keys),
+  };
+}
+
+type Mutation<Keys extends Arguments[], Arg, Returned> = {
+  keys: Keys;
+  fn: (keys: Keys, opts: { arg: Arg }) => Promise<Returned>;
+};
+
+export function m<Keys extends Arguments[], Returned, Arg>(
+  keys: Keys,
+  fn: (arg: Arg, keys: Keys) => Promise<Returned>
+): Mutation<Keys, Arg, Returned> {
+  return {
+    keys,
+    fn: (_, { arg }) => fn(arg, keys),
+  };
 }
 
 export function mutation<Arg = void, Returned = any>(

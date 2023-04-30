@@ -5,7 +5,7 @@ import { filmGallery, reviewedFilms } from "../../api/film";
 import { when } from "../../api/keys";
 import { useAuth } from "../../auth/useAuth";
 import LoadingIndicator from "../../common/components/LoadingIndicator";
-import { withLayout } from "../layout";
+import Layout from "../layout";
 import Profile from "./Profile";
 import RatingOverview from "./RatingOverview";
 import RecentOverview from "./RecentOverview";
@@ -13,17 +13,21 @@ import RecentOverview from "./RecentOverview";
 const ProfilePage: FC = () => {
   const { user, isAuthenticating } = useAuth();
   const { data: reviewed } = useQuery(
-    when(!isAuthenticating, ["me", "films", "review"]),
-    reviewedFilms
+    when(!isAuthenticating, reviewedFilms.key),
+    reviewedFilms.fn
   );
 
   const { data: gallery } = useQuery(
-    when(!isAuthenticating, ["me", "films", "films"]),
-    filmGallery
+    when(!isAuthenticating, filmGallery.key),
+    filmGallery.fn
   );
 
   if (isAuthenticating) {
-    return <LoadingIndicator />;
+    return (
+      <Layout heading="Your profile" route="Profile">
+        <LoadingIndicator />
+      </Layout>
+    );
   }
 
   if (!user) {
@@ -31,19 +35,18 @@ const ProfilePage: FC = () => {
   }
 
   return (
-    <div className="w-full flex flex-col items-center gap-3 justify-start">
-      <Profile
-        user={user}
-        filmsDirected={gallery?.count ?? 0}
-        filmsReviewed={reviewed?.count ?? 0}
-      />
-      <RecentOverview data={gallery} />
-      <RatingOverview data={gallery} />
-    </div>
+    <Layout heading="Your profile" route="Profile">
+      <div className="w-full flex flex-col items-center gap-3 justify-start">
+        <Profile
+          user={user}
+          filmsDirected={gallery?.count ?? 0}
+          filmsReviewed={reviewed?.count ?? 0}
+        />
+        <RecentOverview data={gallery} />
+        <RatingOverview data={gallery} />
+      </div>
+    </Layout>
   );
 };
 
-export default withLayout(ProfilePage, {
-  route: "Profile",
-  heading: "Your profile",
-});
+export default ProfilePage;

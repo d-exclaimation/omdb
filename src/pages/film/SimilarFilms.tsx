@@ -15,8 +15,8 @@ const SimilarFilms: FC<SimilarFilmsProps> = ({
   filmId,
 }) => {
   const { data, isLoading } = useQuery(
-    ["films", "similar", `${genreId}`, `${directorId}`, `${filmId}`],
-    similarFilms
+    similarFilms.keys([`${genreId}`, `${directorId}`, `${filmId}`]),
+    similarFilms.fn
   );
   return (
     <FilmsCaraousel

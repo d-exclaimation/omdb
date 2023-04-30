@@ -28,8 +28,8 @@ const FilmReviews: FC<FilmReviewsProps> = ({
 }) => {
   const { user } = useAuth();
   const { data, isLoading } = useQuery(
-    ["films", "review", `${id}`],
-    filmReviews
+    filmReviews.keys([`${id}`]),
+    filmReviews.fn
   );
   const [reviewing, { open, close }] = useToggle();
 

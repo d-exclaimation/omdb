@@ -8,7 +8,7 @@ type AuthProviderProps = {
 };
 
 const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
-  const { data, isValidating } = useQuery(["me"], me);
+  const { data, isValidating } = useQuery(me.key, me.fn);
 
   const user = useMemo(() => {
     if (!data) {

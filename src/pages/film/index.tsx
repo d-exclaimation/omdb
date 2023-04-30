@@ -12,7 +12,7 @@ import SimilarFilms from "./SimilarFilms";
 const FilmPage: FC = () => {
   const [params] = useSearchParams();
   const id = params.get("id");
-  const { data, isLoading } = useQuery(id ? ["films", id] : null, film);
+  const { data, isLoading } = useQuery(id ? film.keys([id]) : null, film.fn);
 
   if (isLoading) {
     return <LoadingIndicator />;

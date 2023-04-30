@@ -9,7 +9,7 @@ import {
   userId,
 } from "../common/utils/storage";
 import { api } from "./url";
-import { mutation, query } from "./utils";
+import { mutation, q } from "./utils";
 
 const User = z.object({
   firstName: z.string(),
@@ -28,7 +28,7 @@ const LoginResponse = z.object({
   token: z.string(),
 });
 
-export const me = query(async () => {
+export const me = q(["me"], async () => {
   const id = userId();
   if (!id) {
     return null;

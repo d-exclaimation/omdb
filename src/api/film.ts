@@ -3,7 +3,7 @@ import { z } from "zod";
 import { datestring } from "../common/utils/date";
 import { session, userId } from "../common/utils/storage";
 import { api } from "./url";
-import { mutation, query } from "./utils";
+import { mutation, q } from "./utils";
 
 type FilmOverview = z.infer<typeof FilmOverview>;
 const FilmOverview = z.object({
@@ -54,10 +54,12 @@ type SearchOptions = {
   sort: string;
   genreIds: number[];
   ageRatings: string[];
-}
+};
 
-export const searchFilms = query(
-  async ([_, q, { page, sort, genreIds, ageRatings }]: [string, string, SearchOptions]) => {
+export const searchFilms = q(
+  ["films", "explore"],
+  async ([q, opts]: [string, SearchOptions]) => {
+    const { page, sort, genreIds, ageRatings } = opts;
     const params = new URLSearchParams();
     params.append("count", "6");
     params.append("sortBy", sort);
@@ -93,7 +95,7 @@ export const searchFilms = query(
   }
 );
 
-export const topFilms = query(async () => {
+export const topFilms = q(["me", "films", "top-5"], async () => {
   const id = userId();
   if (!id) {
     return {
@@ -129,7 +131,7 @@ export const topFilms = query(async () => {
   };
 });
 
-export const filmGallery = query(async () => {
+export const filmGallery = q(["me", "films", "gallery"], async () => {
   const id = userId();
   if (!id) {
     return {
@@ -163,7 +165,7 @@ export const filmGallery = query(async () => {
   return maybeFilms.data;
 });
 
-export const reviewedFilms = query(async () => {
+export const reviewedFilms = q(["me", "films", "review"], async () => {
   const id = userId();
   if (!id) {
     return {
@@ -408,7 +410,8 @@ export const deleteFilm = mutation(
   }
 );
 
-export const film = query(
+export const film = q(
+  ["films"],
   async ([id]: [string]): Promise<FilmDetail | undefined> => {
     try {
       const res = await fetch(`${api}/films/${id}`, {
@@ -431,8 +434,9 @@ export const film = query(
   }
 );
 
-export const similarFilms = query(
-  async ([_, genreId, directorId, filmId]: string[]): Promise<FilmSearch> => {
+export const similarFilms = q(
+  ["films", "similar"],
+  async ([genreId, directorId, filmId]: string[]): Promise<FilmSearch> => {
     const genreRes = await fetch(
       `${api}/films?count=${6}&genreIds=${genreId}&sortBy=RATING_DESC`,
       {
@@ -509,7 +513,7 @@ export const similarFilms = query(
   }
 );
 
-export const filmReviews = query(async ([_, id]: [string, string]) => {
+export const filmReviews = q(["films", "review"], async ([id]: [string]) => {
   try {
     const res = await fetch(`${api}/films/${id}/reviews`, {
       headers: {
