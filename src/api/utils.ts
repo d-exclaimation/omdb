@@ -6,7 +6,7 @@ type Query<Keys extends Arguments[], Args extends Arguments[], Returned> = {
   fn: (keys: [...Keys, ...Args]) => Promise<Returned>;
 };
 
-export function q<
+export function query<
   Keys extends Arguments[],
   Returned,
   Args extends Arguments[] = []

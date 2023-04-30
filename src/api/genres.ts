@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { api } from "./url";
-import { q } from "./utils";
+import { query } from "./utils";
 
 export type Genres = z.infer<typeof Genres>;
 export const Genres = z.array(
@@ -9,7 +9,7 @@ export const Genres = z.array(
     name: z.string(),
   })
 );
-export const genres = q(["genres"], async (): Promise<Genres> => {
+export const genres = query(["genres"], async (): Promise<Genres> => {
   const res = await fetch(`${api}/films/genres`);
   if (res.status !== 200 && res.status !== 201) {
     return [];

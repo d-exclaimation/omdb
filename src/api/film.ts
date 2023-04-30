@@ -3,7 +3,7 @@ import { z } from "zod";
 import { datestring } from "../common/utils/date";
 import { session, userId } from "../common/utils/storage";
 import { api } from "./url";
-import { mutation, q } from "./utils";
+import { mutation, query } from "./utils";
 
 type FilmOverview = z.infer<typeof FilmOverview>;
 const FilmOverview = z.object({
@@ -56,7 +56,7 @@ type SearchOptions = {
   ageRatings: string[];
 };
 
-export const searchFilms = q(
+export const searchFilms = query(
   ["films", "explore"],
   async ([q, opts]: [string, SearchOptions]) => {
     const { page, sort, genreIds, ageRatings } = opts;
@@ -95,7 +95,7 @@ export const searchFilms = q(
   }
 );
 
-export const topFilms = q(["me", "films", "top-5"], async () => {
+export const topFilms = query(["me", "films", "top-5"], async () => {
   const id = userId();
   if (!id) {
     return {
@@ -131,7 +131,7 @@ export const topFilms = q(["me", "films", "top-5"], async () => {
   };
 });
 
-export const filmGallery = q(["me", "films", "gallery"], async () => {
+export const filmGallery = query(["me", "films", "gallery"], async () => {
   const id = userId();
   if (!id) {
     return {
@@ -165,7 +165,7 @@ export const filmGallery = q(["me", "films", "gallery"], async () => {
   return maybeFilms.data;
 });
 
-export const reviewedFilms = q(["me", "films", "review"], async () => {
+export const reviewedFilms = query(["me", "films", "review"], async () => {
   const id = userId();
   if (!id) {
     return {
@@ -410,7 +410,7 @@ export const deleteFilm = mutation(
   }
 );
 
-export const film = q(
+export const film = query(
   ["films"],
   async ([id]: [string]): Promise<FilmDetail | undefined> => {
     try {
@@ -434,7 +434,7 @@ export const film = q(
   }
 );
 
-export const similarFilms = q(
+export const similarFilms = query(
   ["films", "similar"],
   async ([genreId, directorId, filmId]: string[]): Promise<FilmSearch> => {
     const genreRes = await fetch(
@@ -513,27 +513,30 @@ export const similarFilms = q(
   }
 );
 
-export const filmReviews = q(["films", "review"], async ([id]: [string]) => {
-  try {
-    const res = await fetch(`${api}/films/${id}/reviews`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (res.status !== 200) {
+export const filmReviews = query(
+  ["films", "review"],
+  async ([id]: [string]) => {
+    try {
+      const res = await fetch(`${api}/films/${id}/reviews`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.status !== 200) {
+        return [];
+      }
+      const raw = await res.json();
+      const maybeReviews = await FilmReviews.safeParseAsync(raw);
+      if (!maybeReviews.success) {
+        console.log(maybeReviews.error);
+        return [];
+      }
+      return maybeReviews.data;
+    } catch (_) {
       return [];
     }
-    const raw = await res.json();
-    const maybeReviews = await FilmReviews.safeParseAsync(raw);
-    if (!maybeReviews.success) {
-      console.log(maybeReviews.error);
-      return [];
-    }
-    return maybeReviews.data;
-  } catch (_) {
-    return [];
   }
-});
+);
 
 type ReviewResponse = Union<{
   Ok: {};
