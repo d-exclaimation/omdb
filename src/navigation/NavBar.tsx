@@ -45,15 +45,15 @@ const NavBar: FC = () => {
         <NavTab
           href="/explore"
           icons={{
-            deselected: "/icons/compass.svg",
-            selected: "/icons/compass-selected.svg",
+            deselected: "/icons/telescope.svg",
+            selected: "/icons/telescope-selected.svg",
           }}
         />
         <NavTab
           href="/gallery"
           icons={{
-            deselected: "/icons/popcorn.svg",
-            selected: "/icons/popcorn-selected.svg",
+            deselected: "/icons/gallery.svg",
+            selected: "/icons/gallery-selected.svg",
           }}
         />
 

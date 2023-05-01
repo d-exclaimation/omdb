@@ -157,12 +157,12 @@ const SignupPage: FC = () => {
             </button>
           </InputField>
           <Button
-            className="w-full"
+            className="w-full hover:text-zinc-900 active:text-zinc-900 ring-1 ring-zinc-900"
             color={{
               bg: "bg-zinc-900",
               text: "text-zinc-50",
-              hover: "hover:bg-zinc-700",
-              active: "active:bg-zinc-700",
+              hover: "hover:bg-zinc-50",
+              active: "active:bg-zinc-50",
               border: "focus-visible:ring-zinc-500",
             }}
             onClick={async () => {

@@ -7,10 +7,9 @@ import Button from "../../common/components/Button";
 import LoadingIndicator from "../../common/components/LoadingIndicator";
 import { useToggle } from "../../common/hooks/useToggle";
 import Layout from "../layout";
-import BlurFilmsCaraousel from "./BlurFilmsCaraousel";
 import CreateFilmDialog from "./CreateFilmDialog";
 import FilmsCaraousel from "./FilmsCaraousel";
-import LoginDialog from "./LoginDialog";
+import GalleryPagePreview from "./preview";
 
 const GalleryPage: FC = () => {
   const [creating, { close, open }] = useToggle();
@@ -37,32 +36,20 @@ const GalleryPage: FC = () => {
     );
   }
 
-  // // TODO: Show the page but make it disabled under a blur with a login button
   if (!user) {
-    return (
-      <>
-        <LoginDialog open />
-        <Layout heading="Your film gallery" route="Gallery">
-          <div className="w-full flex flex-col justify-start items-center gap-3">
-            <BlurFilmsCaraousel title="Known for" />
-            <BlurFilmsCaraousel title="Directed" />
-            <BlurFilmsCaraousel title="Reviewed" />
-          </div>
-        </Layout>
-      </>
-    );
+    return <GalleryPagePreview />;
   }
 
   return (
     <Layout heading="Your film gallery" route="Gallery">
       <div className="w-full flex flex-col justify-start items-center gap-3">
         <Button
-          className="absolute -top-[4.5rem] right-2"
+          className="absolute -top-[4.5rem] right-2 hover:text-zinc-900 active:text-zinc-900 ring-1 ring-zinc-900"
           color={{
             bg: "bg-zinc-900",
             text: "text-zinc-50",
-            hover: "hover:bg-zinc-700",
-            active: "active:bg-zinc-700",
+            hover: "hover:bg-zinc-50",
+            active: "active:bg-zinc-50",
             border: "focus-visible:ring-zinc-500",
           }}
           onClick={open}

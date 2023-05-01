@@ -1,10 +1,10 @@
 import { type FC } from "react";
 
-type BlurFilmsCaraouselProps = {
+type SkeletonFilmsCaraouselProps = {
   title: string;
 };
 
-const BlurFilmsCaraousel: FC<BlurFilmsCaraouselProps> = ({ title }) => {
+const SkeletonFilmsCaraousel: FC<SkeletonFilmsCaraouselProps> = ({ title }) => {
   return (
     <div className="w-full relative max-w-3xl max-h-max bg-white flex flex-col rounded-lg p-6 md:p-8">
       <section className="w-full flex items-center justify-between">
@@ -47,4 +47,4 @@ const BlurFilmsCaraousel: FC<BlurFilmsCaraouselProps> = ({ title }) => {
   );
 };
 
-export default BlurFilmsCaraousel;
+export default SkeletonFilmsCaraousel;
