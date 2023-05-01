@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { UserInfo } from "../api/user";
+import { type UserInfo } from "../types/user";
 type User = {
   id: number;
 } & UserInfo;

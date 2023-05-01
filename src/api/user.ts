@@ -8,25 +8,15 @@ import {
   setUserId,
   userId,
 } from "../common/utils/storage";
+import {
+  LoginResponse,
+  UserInfo,
+  type EditUser,
+  type LoginUser,
+  type RegisterUser,
+} from "../types/user";
 import { api } from "./url";
 import { mutation, query } from "./utils";
-
-const User = z.object({
-  firstName: z.string(),
-  lastName: z.string(),
-});
-
-const UserEmail = z.object({
-  email: z.string(),
-});
-
-export type UserInfo = z.infer<typeof UserInfo>;
-const UserInfo = z.intersection(User, UserEmail);
-
-const LoginResponse = z.object({
-  userId: z.coerce.number(),
-  token: z.string(),
-});
 
 export const me = query(["me"], async () => {
   const id = userId();
@@ -65,12 +55,7 @@ type AuthResponse = Union<{
 
 export const register = mutation(
   ["users", "signup"],
-  async (arg: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-  }): Promise<AuthResponse> => {
+  async (arg: RegisterUser): Promise<AuthResponse> => {
     try {
       const res1 = await fetch(`${api}/users/register`, {
         method: "POST",
@@ -129,7 +114,7 @@ export const register = mutation(
 
 export const login = mutation(
   ["users", "login"],
-  async (info: { email: string; password: string }): Promise<AuthResponse> => {
+  async (info: LoginUser): Promise<AuthResponse> => {
     try {
       const res = await fetch(`${api}/users/login`, {
         method: "POST",
@@ -190,16 +175,11 @@ type EditResponse = Union<{
   Error: { message: string };
 }>;
 
+type EditInput = EditUser & { file?: File | null };
+
 export const edit = mutation(
   ["users", "edit"],
-  async (arg: {
-    firstName?: string;
-    lastName?: string;
-    email?: string;
-    password?: string;
-    currentPassword?: string;
-    file?: File | null;
-  }): Promise<EditResponse> => {
+  async (arg: EditInput): Promise<EditResponse> => {
     const { file, ...info } = arg;
     const id = userId();
     if (!id) {

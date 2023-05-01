@@ -3,18 +3,13 @@ import { Transition } from "@headlessui/react";
 import { useState, type FC } from "react";
 import { Link, Navigate } from "react-router-dom";
 import useMutation from "swr/mutation";
-import { z } from "zod";
 import { login } from "../api/user";
 import { useAuth } from "../auth/useAuth";
 import Button from "../common/components/Button";
 import InputField from "../common/components/InputField";
 import LoadingIndicator from "../common/components/LoadingIndicator";
 import { useForm } from "../common/hooks/useForm";
-
-const LoginUser = z.object({
-  email: z.string().email("Must be a valid email"),
-  password: z.string(),
-});
+import { LoginUser } from "../types/user";
 
 const LoginPage: FC = () => {
   const { isLoggedIn, invalidate, isAuthenticating } = useAuth();

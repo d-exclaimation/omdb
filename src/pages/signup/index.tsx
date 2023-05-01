@@ -3,7 +3,6 @@ import { Transition } from "@headlessui/react";
 import { useCallback, useEffect, useMemo, useState, type FC } from "react";
 import { Link, Navigate } from "react-router-dom";
 import useMutation from "swr/mutation";
-import { z } from "zod";
 import { register, setAvatar } from "../../api/user";
 import { useAuth } from "../../auth/useAuth";
 import Button from "../../common/components/Button";
@@ -11,36 +10,8 @@ import InputField from "../../common/components/InputField";
 import LoadingIndicator from "../../common/components/LoadingIndicator";
 import { useForm } from "../../common/hooks/useForm";
 import { useToggle } from "../../common/hooks/useToggle";
-import { sensiblespaces } from "../../common/utils/refinements";
+import { RegisterUser } from "../../types/user";
 import AvatarDialog from "./AvatarDialog";
-
-const RegisterUser = z.object({
-  firstName: z
-    .string()
-    .min(1, "Must be at least 1 character long")
-    .max(64, "Must be at most 64 characters long")
-    .refine(
-      sensiblespaces,
-      "Must contain leading, trailing or consecutive spaces"
-    ),
-  lastName: z
-    .string()
-    .min(1, "Must be at least 1 character long")
-    .max(64, "Must be at most 64 characters long")
-    .refine(
-      sensiblespaces,
-      "Must contain leading, trailing or consecutive spaces"
-    ),
-  email: z
-    .string()
-    .email("Must be a valid email")
-    .min(1, "Must be at least 1 character long")
-    .max(256, "Must be at most 256 characters long"),
-  password: z
-    .string()
-    .min(6, "Must be at least 6 characters long")
-    .max(64, "Must be at most 64 characters long"),
-});
 
 const SignupPage: FC = () => {
   const [serverError, setServerError] = useState<string>();

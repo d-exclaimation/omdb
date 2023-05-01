@@ -2,7 +2,6 @@ import { match } from "@d-exclaimation/common/union";
 import { Dialog, Disclosure, Transition } from "@headlessui/react";
 import { Fragment, useCallback, useState, type FC } from "react";
 import useMutation from "swr/mutation";
-import { z } from "zod";
 import { api } from "../../api/url";
 import { edit } from "../../api/user";
 import { useAuth } from "../../auth/useAuth";
@@ -11,61 +10,8 @@ import Img from "../../common/components/Image";
 import InputField from "../../common/components/InputField";
 import Overlay from "../../common/components/Overlay";
 import { useForm } from "../../common/hooks/useForm";
-import { sensiblespaces } from "../../common/utils/refinements";
+import { EditUser } from "../../types/user";
 import EditImage from "./EditImage";
-
-type EditUser = z.infer<typeof EditUser>;
-const EditUser = z
-  .object({
-    firstName: z
-      .string()
-      .min(1, "Must be at least 1 character long")
-      .max(64, "Must be at most 64 characters long")
-      .refine(
-        sensiblespaces,
-        "Must contain leading, trailing or consecutive spaces"
-      ),
-    lastName: z
-      .string()
-      .min(1, "Must be at least 1 character long")
-      .max(64, "Must be at most 64 characters long")
-      .refine(
-        sensiblespaces,
-        "Must contain leading, trailing or consecutive spaces"
-      ),
-    email: z
-      .string()
-      .email("Must include an @ symbol and a top level domain")
-      .min(1, "Must be at least 1 character long")
-      .max(256, "Must be at most 256 characters long"),
-    password: z
-      .string()
-      .min(6, "Must be at least 6 characters long")
-      .max(64, "Must be at most 64 characters long")
-      .optional(),
-    currentPassword: z
-      .string()
-      .min(6, "Must be at least 6 characters long")
-      .max(64, "Must be at most 64 characters long")
-      .optional(),
-  })
-  .refine(
-    ({ password, currentPassword }) =>
-      password !== undefined ? currentPassword !== undefined : true,
-    {
-      message: "Current password is required to change password",
-      path: ["currentPassword"],
-    }
-  )
-  .refine(
-    ({ password, currentPassword }) =>
-      password && currentPassword ? password !== currentPassword : true,
-    {
-      message: "New password is identical to current",
-      path: ["password"],
-    }
-  );
-
 type EditDialogProps = {
   id: number;
   firstName: string;
@@ -117,7 +63,7 @@ const EditDialog: FC<EditDialogProps> = ({ editing, close, ...user }) => {
     if (!isValid) {
       return;
     }
-    trigger({ ...values, file: file });
+    trigger({ ...values, file });
   }, [values, isValid, trigger, file]);
 
   return (
