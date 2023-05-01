@@ -13,7 +13,7 @@ const EditImage: FC<EditImageProps> = ({ onUpload, onRemove, className }) => {
     <Menu as="div" className={`min-w-max z-50 ${className ?? ""}`}>
       <Menu.Button
         className="inline-flex items-center bg-white ring-1 ring-zinc-400/50 hover:bg-zinc-100
-      active:bg-zinc-100 rounded-md px-3 py-1 text-sm"
+      active:bg-zinc-100 rounded px-3 py-1 text-sm"
       >
         <img className="w-3 h-3 mr-1" src="/icons/edit.svg" />
         Edit
@@ -40,11 +40,11 @@ const EditImage: FC<EditImageProps> = ({ onUpload, onRemove, className }) => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute p-1 rounded-md mt-2 w-36 bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="absolute p-1 rounded mt-2 w-36 bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <Menu.Item>
             {({ active }) => (
               <button
-                className="flex w-full items-center rounded-md px-2 py-2 text-sm data-selected:bg-zinc-800 data-selected:text-white"
+                className="flex w-full items-center rounded px-2 py-2 text-sm data-selected:bg-zinc-800 data-selected:text-white"
                 data-selected={active}
                 onClick={() => {
                   fileInputRef.current?.click();
@@ -57,7 +57,7 @@ const EditImage: FC<EditImageProps> = ({ onUpload, onRemove, className }) => {
           <Menu.Item>
             {({ active }) => (
               <button
-                className="flex w-full items-center rounded-md px-2 py-2
+                className="flex w-full items-center rounded px-2 py-2
                 text-red-700 md:text-black text-sm 
                 md:data-selected:bg-red-500 md:data-selected:text-white"
                 data-selected={active}

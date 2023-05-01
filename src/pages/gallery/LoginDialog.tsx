@@ -23,7 +23,7 @@ const LoginDialog: FC<LoginDialogProps> = ({ open }) => {
     >
       <div
         className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-        w-[90vw] max-w-md z-30 transform rounded-md bg-white 
+        w-[90vw] max-w-md z-30 transform rounded bg-white 
         p-6 text-left align-middle shadow-2xl transition-all"
       >
         <h3 className="text-lg font-medium leading-6 max-w-full truncate text-gray-900">

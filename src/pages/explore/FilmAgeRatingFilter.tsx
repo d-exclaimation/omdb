@@ -27,7 +27,7 @@ const FilmAgeRatingFilter: FC<FilmAgeRatingFilterProps> = ({
         {ratings.length}
       </span>
       <Menu.Button
-        className="px-4 py-2 rounded-md text-start font-medium text-sm bg-white w-max 
+        className="px-4 py-2 rounded text-start font-medium text-sm bg-white w-max 
         flex-shrink-0 text-zinc-800 hover:bg-zinc-50 active:bg-zinc-50 flex items-center"
       >
         {({ open }) => (
@@ -52,7 +52,7 @@ const FilmAgeRatingFilter: FC<FilmAgeRatingFilterProps> = ({
       >
         <Menu.Items
           className="absolute right-0 origin-top-right divide-y divide-zinc-100 
-          rounded-md mt-2 bg-white w-48 min-w-max focus:outline-none 
+          rounded mt-2 bg-white w-48 min-w-max focus:outline-none 
           shadow-lg ring-1 ring-black ring-opacity-5 z-20"
         >
           {ratings.length ? (
@@ -61,9 +61,9 @@ const FilmAgeRatingFilter: FC<FilmAgeRatingFilterProps> = ({
                 <Menu.Item key={rating}>
                   {({ active }) => (
                     <button
-                      className="flex w-full items-center rounded-md px-2 py-2 text-sm 
-                          data-selected:bg-red-600 data-selected:text-white text-red-600 md:text-black
-                          disabled:cursor-not-allowed disabled:opacity-50"
+                      className="flex w-full items-center rounded px-2 py-2 text-sm 
+                      data-selected:bg-red-600 data-selected:text-white text-red-600 md:text-black
+                      disabled:cursor-not-allowed disabled:opacity-50"
                       data-selected={active}
                       onClick={() => onRemoveAgeRating(rating)}
                     >
@@ -82,7 +82,7 @@ const FilmAgeRatingFilter: FC<FilmAgeRatingFilterProps> = ({
                 <Menu.Item key={rating}>
                   {({ active }) => (
                     <button
-                      className="flex w-full items-center rounded-md px-2 py-2 text-sm 
+                      className="flex w-full items-center rounded px-2 py-2 text-sm 
                         data-selected:bg-zinc-800 data-selected:text-white
                         disabled:cursor-not-allowed disabled:opacity-50"
                       data-selected={active}

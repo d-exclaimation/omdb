@@ -82,7 +82,7 @@ const EditDialog: FC<EditDialogProps> = ({ editing, close, ...user }) => {
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel
-                className="w-full max-w-md z-40 transform overflow-hidden rounded-lg bg-white 
+                className="w-full max-w-md z-40 transform overflow-hidden rounded-md bg-white 
                 p-6 text-left align-middle shadow-xl transition-all"
               >
                 <Dialog.Title
@@ -154,7 +154,7 @@ const EditDialog: FC<EditDialogProps> = ({ editing, close, ...user }) => {
                       {({ open }) => (
                         <>
                           <Disclosure.Button
-                            className="mt-1 flex w-full justify-between rounded-lg bg-zinc-100 
+                            className="mt-1 flex w-full justify-between rounded-md bg-zinc-100 
                             px-4 py-2 text-left text-sm font-medium text-zinc-900 
                            hover:bg-zinc-200 focus:outline-none focus-visible:ring 
                            focus-visible:ring-zinc-500 focus-visible:ring-opacity-75"

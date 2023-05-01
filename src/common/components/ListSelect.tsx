@@ -38,7 +38,7 @@ const ListSelect = <T extends string | number>({
           <Listbox.Button
             className="w-full py-3 placeholder:text-slate-400 text-sm
             focus:outline-none disabled:cursor-not-allowed text-start
-            disabled:opacity-50 rounded-md border border-slate-300 bg-transparent 
+            disabled:opacity-50 rounded border border-slate-300 bg-transparent 
             px-3 data-[error='true']:border-red-700 truncate"
           >
             {selected.name}
@@ -49,8 +49,8 @@ const ListSelect = <T extends string | number>({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="absolute mt-1 h-max w-full z-50 max-w-md overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
-              <Listbox.Options className="mt-1 max-h-24 md:max-h-32 z-50 w-full overflow-auto rounded-md bg-white py-1 text-base focus:outline-none sm:text-sm">
+            <div className="absolute mt-1 h-max w-full z-50 max-w-md overflow-hidden rounded bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+              <Listbox.Options className="mt-1 max-h-24 md:max-h-32 z-50 w-full overflow-auto rounded bg-white py-1 text-base focus:outline-none sm:text-sm">
                 {options.map((option) => (
                   <Listbox.Option
                     key={option.value}

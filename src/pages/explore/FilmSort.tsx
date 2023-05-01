@@ -26,7 +26,7 @@ const FilmSort: FC<FilmSortProps> = ({ sort, onSortChange }) => {
       onChange={onSortChange}
     >
       <Listbox.Button
-        className="px-4 py-2 rounded-md text-start font-medium text-sm bg-white w-max 
+        className="px-4 py-2 rounded text-start font-medium text-sm bg-white w-max 
         flex-shrink-0 text-zinc-800 hover:bg-zinc-50 active:bg-zinc-50 flex items-center"
       >
         {sortings[sort]}
@@ -40,12 +40,12 @@ const FilmSort: FC<FilmSortProps> = ({ sort, onSortChange }) => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Listbox.Options className="absolute p-1 z-10 left-0 origin-top-left rounded-md mt-2 w-36 bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Listbox.Options className="absolute p-1 z-10 left-0 origin-top-left rounded mt-2 w-36 bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           {ALL_SORTINGS.map((sort) => (
             <Listbox.Option
               key={sort}
               className={({ active }) =>
-                `flex w-full items-center rounded-md px-2 py-2 text-sm 
+                `flex w-full items-center rounded px-2 py-2 text-sm 
                 ${active ? "bg-zinc-800 text-white" : ""}`
               }
               value={sort}

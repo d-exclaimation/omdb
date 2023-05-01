@@ -148,7 +148,7 @@ const SignupPage: FC = () => {
           >
             <button
               className="absolute right-1 bottom-2 text-sm px-2 py-1 
-             bg-zinc-200 rounded-md z-10 active:bg-zinc-300 hover:bg-zinc-300
+             bg-zinc-200 rounded z-10 active:bg-zinc-300 hover:bg-zinc-300
               disabled:opacity-50 disabled:cursor-not-allowed"
               onClick={toggle}
               disabled={isSubmitting}

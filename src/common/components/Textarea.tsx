@@ -34,7 +34,7 @@ const Textarea: FC<TextareaProps> = ({
       </label>
       <textarea
         placeholder={placeholder}
-        className="flex w-full h-28 rounded-md bg-transparent px-3 border border-slate-300
+        className="flex w-full h-28 rounded bg-transparent px-3 border border-slate-300
         py-3 text-sm placeholder:text-slate-400 focus:outline-none data-[error='true']:border-red-700
         disabled:cursor-not-allowed disabled:opacity-50"
         value={value}

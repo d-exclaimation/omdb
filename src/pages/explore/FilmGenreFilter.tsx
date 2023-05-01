@@ -28,7 +28,7 @@ const FilmGenreFilter: FC<FilmGenreFilterProps> = ({
         {genreIds.length}
       </span>
       <Menu.Button
-        className="px-4 py-2 rounded-md text-start font-medium text-sm bg-white w-max 
+        className="px-4 py-2 rounded text-start font-medium text-sm bg-white w-max 
         flex-shrink-0 text-zinc-800 hover:bg-zinc-50 active:bg-zinc-50 flex items-center"
       >
         {({ open }) => (
@@ -51,14 +51,14 @@ const FilmGenreFilter: FC<FilmGenreFilterProps> = ({
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute z-20 right-0 origin-top-right divide-y divide-zinc-100 rounded-md mt-2 w-36 bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="absolute z-20 right-0 origin-top-right divide-y divide-zinc-100 rounded mt-2 w-36 bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           {genreIds.length ? (
             <div className="p-1">
               {genreIds.map((genreId) => (
                 <Menu.Item key={genreId}>
                   {({ active }) => (
                     <button
-                      className="flex w-full items-center rounded-md px-2 py-2 text-sm 
+                      className="flex w-full items-center rounded px-2 py-2 text-sm 
                           data-selected:bg-red-600 data-selected:text-white text-red-600 md:text-black
                           disabled:cursor-not-allowed disabled:opacity-50"
                       data-selected={active}
@@ -79,9 +79,9 @@ const FilmGenreFilter: FC<FilmGenreFilterProps> = ({
                 <Menu.Item key={genreId}>
                   {({ active }) => (
                     <button
-                      className="flex w-full items-center rounded-md px-2 py-2 text-sm 
-                        data-selected:bg-zinc-800 data-selected:text-white
-                        disabled:cursor-not-allowed disabled:opacity-50"
+                      className="flex w-full items-center rounded px-2 py-2 text-sm 
+                      data-selected:bg-zinc-800 data-selected:text-white
+                      disabled:cursor-not-allowed disabled:opacity-50"
                       data-selected={active}
                       onClick={() => onAddGenreId(genreId)}
                     >

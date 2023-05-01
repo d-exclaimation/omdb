@@ -40,7 +40,7 @@ const InputField: FC<InputFieldProps> = ({
         type={type ?? "text"}
         placeholder={placeholder}
         className="w-full py-3 placeholder:text-slate-400 text-sm focus:outline-none disabled:cursor-not-allowed 
-        disabled:opacity-50 rounded-md border border-slate-300 bg-transparent px-3 data-[error='true']:border-red-700 "
+        disabled:opacity-50 rounded border border-slate-300 bg-transparent px-3 data-[error='true']:border-red-700 "
         value={value}
         onChange={(e) => onChange(e.target.value)}
         data-error={!!error}
