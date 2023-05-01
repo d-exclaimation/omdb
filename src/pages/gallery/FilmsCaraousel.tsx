@@ -1,6 +1,6 @@
 import { type FC } from "react";
-import { FilmSearch } from "../../api/film";
 import LoadingIndicator from "../../common/components/LoadingIndicator";
+import { type FilmSearch } from "../../types/film";
 import FilmPreview from "./FilmPreview";
 
 type FilmCaraouselProps = {

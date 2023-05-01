@@ -1,53 +1,18 @@
 import { type Union } from "@d-exclaimation/common/union";
-import { z } from "zod";
 import { datestring } from "../common/utils/date";
 import { session, userId } from "../common/utils/storage";
+import {
+  FilmDetail,
+  FilmId,
+  FilmOverview,
+  FilmReviews,
+  FilmSearch,
+  type CreateFilm,
+  type EditFilm,
+  type ReviewFilm,
+} from "../types/film";
 import { api } from "./url";
 import { mutation, query } from "./utils";
-
-type FilmOverview = z.infer<typeof FilmOverview>;
-const FilmOverview = z.object({
-  filmId: z.number().int(),
-  title: z.string(),
-  genreId: z.number().int(),
-  directorId: z.number().int(),
-  directorFirstName: z.string(),
-  directorLastName: z.string(),
-  releaseDate: z.coerce.date(),
-  ageRating: z
-    .enum(["G", "PG", "M", "R13", "R16", "R18", "TBC"])
-    .default("TBC"),
-  rating: z.number(),
-});
-
-export type FilmDetail = z.infer<typeof FilmDetail>;
-const FilmDetail = FilmOverview.extend({
-  description: z.string(),
-  runtime: z.number().int().nullish().optional(),
-  numReviews: z.number().int(),
-});
-
-export type FilmSearch = z.infer<typeof FilmSearch>;
-const FilmSearch = z.object({
-  films: z.array(FilmOverview),
-  count: z.number().int(),
-});
-
-const FilmId = z.object({
-  filmId: z.number().int(),
-});
-
-export type FilmReviews = z.infer<typeof FilmReviews>;
-const FilmReviews = z.array(
-  z.object({
-    reviewerId: z.number().int(),
-    rating: z.number(),
-    review: z.string().nullish().optional(),
-    reviewerFirstName: z.string(),
-    reviewerLastName: z.string(),
-    timestamp: z.coerce.date(),
-  })
-);
 
 type SearchOptions = {
   page: number;
@@ -207,17 +172,13 @@ type MutateFilmResponse = Union<{
   Error: { message: string };
 }>;
 
+type CreateFilmInput = CreateFilm & {
+  file?: File;
+};
+
 export const createFilm = mutation(
   ["films", "create"],
-  async (arg: {
-    title: string;
-    description: string;
-    genreId: number;
-    releaseDate?: Date | null;
-    ageRating?: string;
-    runtime?: number | null;
-    file?: File;
-  }): Promise<MutateFilmResponse> => {
+  async (arg: CreateFilmInput): Promise<MutateFilmResponse> => {
     const id = userId();
     if (!id) {
       return {
@@ -298,17 +259,13 @@ export const createFilm = mutation(
   }
 );
 
+type EditFilmInput = EditFilm & {
+  filmId: number;
+};
+
 export const editFilm = mutation(
   ["films", "edit"],
-  async (arg: {
-    filmId: number;
-    title: string;
-    description: string;
-    genreId: number;
-    releaseDate?: Date | null;
-    ageRating?: string;
-    runtime?: number | null;
-  }): Promise<MutateFilmResponse> => {
+  async (arg: EditFilmInput): Promise<MutateFilmResponse> => {
     const id = userId();
     if (!id) {
       return {
@@ -549,13 +506,11 @@ type ReviewResponse = Union<{
   Error: { message: string };
 }>;
 
+type ReviewFilmInput = ReviewFilm & { filmId: number };
+
 export const review = mutation(
   ["films", "review"],
-  async (arg: {
-    filmId: number;
-    rating: number;
-    review?: string;
-  }): Promise<ReviewResponse> => {
+  async (arg: ReviewFilmInput): Promise<ReviewResponse> => {
     try {
       const res = await fetch(`${api}/films/${arg.filmId}/reviews`, {
         method: "POST",

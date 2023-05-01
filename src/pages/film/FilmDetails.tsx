@@ -1,11 +1,11 @@
 import { type FC } from "react";
-import { type FilmDetail } from "../../api/film";
 import { api } from "../../api/url";
 import Img from "../../common/components/Image";
 import { useCacheControl } from "../../common/context/cache/useCacheControl";
 import { useGenres } from "../../common/context/genre/useGenres";
 import { ageRatingToColor } from "../../common/utils/color";
 import { ageRatings } from "../../common/utils/constants";
+import { type FilmDetail } from "../../types/film";
 
 const FilmDetails: FC<FilmDetail> = (data) => {
   const genres = useGenres();

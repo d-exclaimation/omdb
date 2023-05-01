@@ -4,7 +4,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState, type FC } from "react";
 import { useSWRConfig } from "swr";
 import useMutation from "swr/mutation";
-import { isValid, z } from "zod";
+import { isValid } from "zod";
 import { review } from "../../api/film";
 import { included } from "../../api/keys";
 import { api } from "../../api/url";
@@ -16,19 +16,7 @@ import Textarea from "../../common/components/Textarea";
 import { useForm } from "../../common/hooks/useForm";
 import { int } from "../../common/utils/coerce";
 import { ratings } from "../../common/utils/constants";
-
-const ReviewFilm = z.object({
-  review: z
-    .string()
-    .min(1, "Must be at least 1 character long")
-    .max(512, "Must be at most 512 characters long")
-    .optional(),
-  rating: z
-    .number()
-    .int()
-    .min(1, "Must be at least 1")
-    .max(10, "Must be at most 5"),
-});
+import { ReviewFilm } from "../../types/film";
 
 type ReviewFilmProps = {
   filmId: number;

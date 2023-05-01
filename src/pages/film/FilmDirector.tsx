@@ -1,11 +1,11 @@
 import { useMemo, type FC } from "react";
 import { Link } from "react-router-dom";
-import { type FilmDetail } from "../../api/film";
 import { api } from "../../api/url";
 import { useAuth } from "../../auth/useAuth";
 import Img from "../../common/components/Image";
 import { useCacheControl } from "../../common/context/cache/useCacheControl";
 import { useToggle } from "../../common/hooks/useToggle";
+import { type FilmDetail } from "../../types/film";
 import DeleteFilmDialog from "./DeleteFilmDialog";
 import EditFilmDialog from "./EditFilmDialog";
 import Settings from "./Settings";

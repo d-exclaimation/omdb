@@ -4,7 +4,6 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState, type FC } from "react";
 import { useSWRConfig } from "swr";
 import useMutation from "swr/mutation";
-import { z } from "zod";
 import { editFilm } from "../../api/film";
 import { included } from "../../api/keys";
 import { api } from "../../api/url";
@@ -19,34 +18,7 @@ import { useGenres } from "../../common/context/genre/useGenres";
 import { useForm } from "../../common/hooks/useForm";
 import { maybeInt } from "../../common/utils/coerce";
 import { ageRatings } from "../../common/utils/constants";
-
-type EditFilm = z.infer<typeof EditFilm>;
-const EditFilm = z.object({
-  title: z
-    .string()
-    .min(1, "Must be at least 1 character long")
-    .max(64, "Must be at most 64 characters long"),
-  description: z
-    .string()
-    .min(1, "Must be at least 1 character long")
-    .max(256, "Must be at most 256 characters long"),
-  releaseDate: z
-    .date()
-    .refine((date) => date > new Date(), "Must be in the future")
-    .optional(),
-  genreId: z.number().int(),
-  runtime: z
-    .number()
-    .int()
-    .min(1, "Must be at least 1 minute long")
-    .max(300, "Must be at most 300 minutes long")
-    .nullable()
-    .optional(),
-  ageRating: z
-    .enum(["G", "PG", "M", "R13", "R16", "R18", "TBC"])
-    .default("TBC"),
-});
-
+import { EditFilm } from "../../types/film";
 type FilmEditProps = {
   film: EditFilm & {
     filmId: number;

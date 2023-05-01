@@ -1,8 +1,8 @@
 import { type FC } from "react";
-import { FilmReviews } from "../../api/film";
 import { api } from "../../api/url";
 import Img from "../../common/components/Image";
 import LoadingIndicator from "../../common/components/LoadingIndicator";
+import { type FilmReviews } from "../../types/film";
 
 type ReviewCaraouselProps = {
   reviews: FilmReviews;

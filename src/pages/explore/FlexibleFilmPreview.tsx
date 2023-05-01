@@ -1,11 +1,11 @@
 import { type FC } from "react";
 import { Link } from "react-router-dom";
-import { type FilmSearch } from "../../api/film";
 import { api } from "../../api/url";
 import Img from "../../common/components/Image";
 import { useCacheControl } from "../../common/context/cache/useCacheControl";
 import { useGenres } from "../../common/context/genre/useGenres";
 import { ageRatingToColor } from "../../common/utils/color";
+import { type FilmSearch } from "../../types/film";
 
 type FlexibleFilmPreviewProps = FilmSearch["films"][number];
 

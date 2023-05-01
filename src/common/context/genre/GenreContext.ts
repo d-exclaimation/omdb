@@ -1,4 +1,4 @@
-import { type Genres } from "../../../api/genres";
+import { type Genres } from "../../../types/genres";
 
 export type Genre = Genres[number];
 
