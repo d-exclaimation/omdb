@@ -1,11 +1,11 @@
 import { useMemo, type FC } from "react";
 import { Link } from "react-router-dom";
-import { type filmGallery } from "../../api/film";
 import { useGenres } from "../../common/context/genre/useGenres";
 import { ageRatingToColor } from "../../common/utils/color";
+import { type FilmSearch } from "../../types/film";
 
 type RecentOverviewProps = {
-  data?: Awaited<ReturnType<typeof filmGallery.fn>>;
+  data?: FilmSearch;
 };
 
 const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {

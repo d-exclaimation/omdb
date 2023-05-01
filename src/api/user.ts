@@ -1,5 +1,4 @@
 import { type Union } from "@d-exclaimation/common/union";
-import { z } from "zod";
 import { int } from "../common/utils/coerce";
 import {
   clearSession,
@@ -47,7 +46,7 @@ export const me = query(["me"], async () => {
 });
 
 type AuthResponse = Union<{
-  Ok: z.infer<typeof LoginResponse>;
+  Ok: LoginResponse;
   BadEmail: {};
   BadInput: { message: string };
   Error: { message: string };
