@@ -13,7 +13,7 @@ const PreviewDialog: FC<PreviewDialogProps> = ({ open }) => {
       key="login-dialog"
       show
       appear
-      className="fixed inset-0 w-screen h-screen z-10"
+      className="fixed inset-0 w-screen h-screen z-10 bg-zinc-900/5 backdrop-blur-[2px]"
       enter="ease-out duration-300"
       enterFrom="opacity-0 scale-95"
       enterTo="opacity-100 scale-100"
@@ -23,7 +23,7 @@ const PreviewDialog: FC<PreviewDialogProps> = ({ open }) => {
     >
       <div
         className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-        w-[90vw] max-w-md z-30 transform rounded bg-white 
+        w-[85vw] max-w-md z-30 transform rounded bg-white 
         p-6 text-left align-middle shadow-2xl transition-all"
       >
         <h3 className="inline-flex items-center text-lg font-medium leading-6 max-w-full truncate text-gray-900">

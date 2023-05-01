@@ -1,4 +1,10 @@
-import { useCallback, useRef, useState, type FC, type SetStateAction } from "react";
+import {
+  useCallback,
+  useRef,
+  useState,
+  type FC,
+  type SetStateAction,
+} from "react";
 
 type PageControlsProps = {
   current: number;
@@ -49,7 +55,7 @@ const PageControls: FC<PageControlsProps> = ({ current, setPage, last }) => {
         <img className="w-5 h-5" src="/icons/arrow-left.svg" />
       </button>
 
-      <div className="flex flex-row justify-end gap-1 items-end w-16 mx-4">
+      <div className="flex flex-row justify-end gap-1 items-end min-w-12 w-max mx-2">
         <span
           className="-translate-y-1 text-2xl font-semibold hover:underline
           data-[animating='true']:opacity-0 data-[animating='false']:duration-400
