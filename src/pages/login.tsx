@@ -89,11 +89,11 @@ const LoginPage: FC = () => {
           <Button
             className="w-full"
             color={{
-              bg: "bg-zinc-200",
-              text: "text-zinc-900",
-              hover: "hover:bg-zinc-300",
-              active: "active:bg-zinc-300",
-              border: "focus-visible:ring-zinc-800",
+              bg: "bg-zinc-900",
+              text: "text-zinc-50",
+              hover: "hover:bg-zinc-700",
+              active: "active:bg-zinc-700",
+              border: "focus-visible:ring-zinc-500",
             }}
             onClick={() => {
               trigger(values);
