@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState, type FC } from "react";
+import { useCallback, useEffect, useMemo, useState, type FC, type SetStateAction } from "react";
 import { useSearchParams } from "react-router-dom";
 import useQuery, { preload } from "swr";
 import { searchFilms } from "../../api/film";
@@ -13,8 +13,14 @@ import PageControls from "./PageControls";
 
 const ExplorePage: FC = () => {
   const [params, setParams] = useSearchParams();
-  const [q, setQ] = useState(params.get("q") ?? "");
-  const [page, setPage] = useState(1);
+  const q = useMemo(
+    () => params.get("q") ?? "",
+    [params]
+  );
+  const page = useMemo(
+    () => maybeInt.parse(params.get("page")) ?? 1,
+    [params]
+  );
   const sort = useMemo<Sorting>(
     () => (params.get("sort") as Sorting) ?? "RELEASED_ASC",
     [params]
@@ -36,6 +42,18 @@ const ExplorePage: FC = () => {
       keepPreviousData: true,
     }
   );
+
+  const finalPage = useMemo(() => Math.ceil((data?.count ?? page) / 6), [data, page])
+
+  const setPage = useCallback((newPage: SetStateAction<number>) => {
+    setParams(prev => {
+      if (prev.has("page")) {
+        prev.delete("page");
+      }
+      prev.append("page", `${typeof newPage === "function" ? newPage(page) : newPage}`);
+      return prev;
+    });
+  }, [page]);
 
   const setParamByKey = useCallback(
     (key: string, value: string) => {
@@ -70,10 +88,17 @@ const ExplorePage: FC = () => {
     );
   }, [q, sort, page]);
 
+  useEffect(() => {
+    if (page > finalPage) {
+      setPage(Math.max(1, finalPage));
+    }
+  }, [finalPage, page])
+
+
   return (
     <Layout route="Explore" heading="Discover films">
       <div className="w-full flex flex-col justify-start items-center gap-3">
-        <FilmSearchBar value={q} onUpdate={setQ} />
+        <FilmSearchBar value={q} onUpdate={(query) => setParamByKey("q", query)} />
         <FilmFilters
           sort={sort}
           onSortChange={(sort) => setParamByKey("sort", sort)}
@@ -123,7 +148,7 @@ const ExplorePage: FC = () => {
         <div className="w-full max-w-3xl max-h-max bg-white flex items-center flex-col rounded-lg p-2">
           <PageControls
             current={page}
-            last={data ? Math.ceil(data.count / 6) : page}
+            last={data ? finalPage : page}
             setPage={setPage}
           />
         </div>
