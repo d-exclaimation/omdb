@@ -56,6 +56,7 @@ export const searchFilms = query(
         count: 0,
       };
     }
+
     return maybeFilms.data;
   }
 );
