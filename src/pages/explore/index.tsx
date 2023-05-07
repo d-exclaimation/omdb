@@ -13,10 +13,7 @@ import PageControls from "./PageControls";
 
 const ExplorePage: FC = () => {
   const [params, setParams] = useSearchParams();
-  const q = useMemo(
-    () => params.get("q") ?? "",
-    [params]
-  );
+  const [q, setQ] = useState(params.get("q") ?? "");
   const page = useMemo(
     () => maybeInt.parse(params.get("page")) ?? 1,
     [params]
@@ -43,7 +40,7 @@ const ExplorePage: FC = () => {
     }
   );
 
-  const finalPage = useMemo(() => Math.ceil((data?.count ?? page) / 6), [data, page])
+  const finalPage = useMemo(() => Math.max(1, Math.ceil((data?.count ?? page) / 6)), [data, page])
 
   const setPage = useCallback((newPage: SetStateAction<number>) => {
     setParams(prev => {
@@ -54,6 +51,17 @@ const ExplorePage: FC = () => {
       return prev;
     });
   }, [page]);
+
+  const setSearch = useCallback((q: string) => {
+    setQ(q);
+    setParams((prev) => {
+      if (prev.has("q")) {
+        prev.delete("q")
+      }
+      prev.append("q", q);
+      return prev;
+    });
+  }, [setQ, setParams]);
 
   const setParamByKey = useCallback(
     (key: string, value: string) => {
@@ -90,7 +98,7 @@ const ExplorePage: FC = () => {
 
   useEffect(() => {
     if (page > finalPage) {
-      setPage(Math.max(1, finalPage));
+      setPage(finalPage);
     }
   }, [finalPage, page])
 
@@ -98,7 +106,10 @@ const ExplorePage: FC = () => {
   return (
     <Layout route="Explore" heading="Discover films">
       <div className="w-full flex flex-col justify-start items-center gap-3">
-        <FilmSearchBar value={q} onUpdate={(query) => setParamByKey("q", query)} />
+        <FilmSearchBar
+          value={q}
+          onUpdate={setSearch}
+        />
         <FilmFilters
           sort={sort}
           onSortChange={(sort) => setParamByKey("sort", sort)}
