@@ -44,7 +44,11 @@ const Notification: FC<NotificationProps> = ({
         </Toast.Description>
       </div>
       <Toast.Action asChild altText="Close">
-        <button className="inline-flex items-center justify-center rounded font-medium text-xs px-3 py-1 bg-green-50 text-green-900 hover:bg-green-100 active:bg-green-100 ring-1 ring-green-600">
+        <button
+          className="inline-flex items-center justify-center rounded font-medium text-xs px-3 py-1 
+        bg-zinc-100 text-zinc-900 hover:bg-zinc-900 active:bg-zinc-900 
+        hover:text-zinc-50 active:text-zinc-50  ring-1 ring-zinc-900"
+        >
           Ok
         </button>
       </Toast.Action>
