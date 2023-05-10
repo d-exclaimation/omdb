@@ -1,10 +1,15 @@
 import { createContext } from "react";
-import { CacheControl } from "../cache/CacheControl";
-import { GenreContext, initialGenreContext } from "../genre/GenreContext";
+import { type CacheControl } from "../cache/CacheControl";
+import { initialGenreContext, type GenreContext } from "../genre/GenreContext";
+import {
+  initialNotificationContext,
+  type NotificationContext,
+} from "../notification/NotificationContext";
 
 export type GlobalContext = {
   genres: GenreContext;
   cache: CacheControl<["user", "film"]>;
+  notification: NotificationContext;
 };
 
 export const GlobalContext = createContext<GlobalContext>({
@@ -12,4 +17,5 @@ export const GlobalContext = createContext<GlobalContext>({
   get cache(): CacheControl<["user", "film"]> {
     throw new Error("invalidate is not implemented");
   },
+  notification: initialNotificationContext,
 });

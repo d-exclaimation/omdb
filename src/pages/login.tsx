@@ -8,11 +8,13 @@ import { useAuth } from "../auth/useAuth";
 import Button from "../common/components/Button";
 import InputField from "../common/components/InputField";
 import LoadingIndicator from "../common/components/LoadingIndicator";
+import { useNotifcation } from "../common/context/notification/useNotification";
 import { useForm } from "../common/hooks/useForm";
 import { LoginUser } from "../types/user";
 
 const LoginPage: FC = () => {
   const { isLoggedIn, invalidate, isAuthenticating } = useAuth();
+  const { notify } = useNotifcation();
   const [serverError, setServerError] = useState<string>();
   const [{ values, errors }, update] = useForm({
     schema: LoginUser,
@@ -26,12 +28,20 @@ const LoginPage: FC = () => {
       match(res, {
         Ok: () => {
           invalidate();
+          notify({
+            kind: "success",
+            title: "Successfully logged in",
+          });
         },
         BadEmail: () => {
           setServerError("Invalid email or password");
         },
         "*": (e) => {
           console.log(e);
+          notify({
+            kind: "error",
+            title: "Unexcepted error occured",
+          });
         },
       });
     },

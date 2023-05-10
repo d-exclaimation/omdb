@@ -5,6 +5,7 @@ import { logout } from "../../api/user";
 import { useAuth } from "../../auth/useAuth";
 import Img from "../../common/components/Image";
 import { useCacheControl } from "../../common/context/cache/useCacheControl";
+import { useNotifcation } from "../../common/context/notification/useNotification";
 import Settings from "./Settings";
 
 type AccountProps = {
@@ -28,9 +29,14 @@ const Account: FC<AccountProps> = ({
 }) => {
   const { user: stamp } = useCacheControl();
   const { invalidate } = useAuth();
+  const { notify } = useNotifcation();
   const { trigger } = useMutation(logout.keys, logout.fn, {
     onSuccess: () => {
       invalidate();
+      notify({
+        kind: "info",
+        title: "You have been logged out",
+      });
     },
   });
   return (

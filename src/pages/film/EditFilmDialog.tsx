@@ -15,6 +15,7 @@ import ListSelect from "../../common/components/ListSelect";
 import Overlay from "../../common/components/Overlay";
 import Textarea from "../../common/components/Textarea";
 import { useGenres } from "../../common/context/genre/useGenres";
+import { useNotifcation } from "../../common/context/notification/useNotification";
 import { useForm } from "../../common/hooks/useForm";
 import { maybeInt } from "../../common/utils/coerce";
 import { ageRatings } from "../../common/utils/constants";
@@ -33,6 +34,7 @@ const FilmEdit: FC<FilmEditProps> = ({
   onClose,
 }) => {
   const genres = useGenres();
+  const { notify } = useNotifcation();
   const [titleError, setTitleError] = useState<string | null>(null);
   const [{ values, errors, isValid }, update] = useForm({
     schema: EditFilm,
@@ -51,6 +53,10 @@ const FilmEdit: FC<FilmEditProps> = ({
         match(res, {
           Ok: () => {
             mutate(included("films"));
+            notify({
+              kind: "success",
+              title: "Film updated",
+            });
             onClose();
           },
           BadTitle: () => {
@@ -58,6 +64,10 @@ const FilmEdit: FC<FilmEditProps> = ({
           },
           "*": (err) => {
             console.log(err);
+            notify({
+              kind: "error",
+              title: "Unexpected error occured",
+            });
           },
         });
       },

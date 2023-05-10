@@ -14,6 +14,7 @@ import ListSelect from "../../common/components/ListSelect";
 import Overlay from "../../common/components/Overlay";
 import Textarea from "../../common/components/Textarea";
 import { useGenres } from "../../common/context/genre/useGenres";
+import { useNotifcation } from "../../common/context/notification/useNotification";
 import { useForm } from "../../common/hooks/useForm";
 import { maybeInt } from "../../common/utils/coerce";
 import { ageRatings } from "../../common/utils/constants";
@@ -28,6 +29,7 @@ type CreateFilmDialogProps = {
 const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
   const genres = useGenres();
   const [preview, setPreview] = useState("https://avatar.vercel.sh/cookie");
+  const { notify } = useNotifcation();
   const [titleError, setTitleError] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [{ values, errors, isValid }, update] = useForm({
@@ -52,12 +54,20 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
             ageRating: "TBC",
           }));
           onClose();
+          notify({
+            kind: "success",
+            title: "Film created",
+          });
         },
         BadTitle: () => {
           setTitleError("Film with that title already exists");
         },
         "*": (err) => {
           console.log(err);
+          notify({
+            kind: "error",
+            title: "Unexpected error occured",
+          });
         },
       });
     },

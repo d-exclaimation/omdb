@@ -13,6 +13,7 @@ import Img from "../../common/components/Image";
 import ListSelect from "../../common/components/ListSelect";
 import Overlay from "../../common/components/Overlay";
 import Textarea from "../../common/components/Textarea";
+import { useNotifcation } from "../../common/context/notification/useNotification";
 import { useForm } from "../../common/hooks/useForm";
 import { int } from "../../common/utils/coerce";
 import { ratings } from "../../common/utils/constants";
@@ -32,6 +33,7 @@ const ReviewFilmDialog: FC<ReviewFilmProps> = ({
   reviewing,
 }) => {
   const [serverError, setServerError] = useState<string>();
+  const { notify } = useNotifcation();
   const [{ values, errors }, update] = useForm({
     schema: ReviewFilm,
     initial: {
@@ -46,6 +48,10 @@ const ReviewFilmDialog: FC<ReviewFilmProps> = ({
         Ok: () => {
           onClose();
           mutate(included("films"));
+          notify({
+            kind: "success",
+            title: "Film reviewed",
+          });
           update(() => ({ rating: 5 }));
           setServerError(undefined);
         },
@@ -54,6 +60,10 @@ const ReviewFilmDialog: FC<ReviewFilmProps> = ({
         },
         "*": (e) => {
           console.log("Error", e);
+          notify({
+            kind: "error",
+            title: "Unexpected error occurred",
+          });
         },
       });
     },

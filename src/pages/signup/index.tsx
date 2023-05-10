@@ -8,6 +8,7 @@ import { useAuth } from "../../auth/useAuth";
 import Button from "../../common/components/Button";
 import InputField from "../../common/components/InputField";
 import LoadingIndicator from "../../common/components/LoadingIndicator";
+import { useNotifcation } from "../../common/context/notification/useNotification";
 import { useForm } from "../../common/hooks/useForm";
 import { useToggle } from "../../common/hooks/useToggle";
 import { RegisterUser } from "../../types/user";
@@ -16,6 +17,7 @@ import AvatarDialog from "./AvatarDialog";
 const SignupPage: FC = () => {
   const [serverError, setServerError] = useState<string>();
   const { isLoggedIn, invalidate, isAuthenticating } = useAuth();
+  const { notify } = useNotifcation();
   const [isSubmitting, { open, close }] = useToggle();
   const [showPassword, { toggle }] = useToggle();
   const { trigger, isMutating } = useMutation(register.keys, register.fn, {
@@ -23,6 +25,10 @@ const SignupPage: FC = () => {
       match(res, {
         Ok: () => {
           invalidate();
+          notify({
+            kind: "success",
+            title: "Successfully signed up",
+          });
         },
         BadEmail: () => {
           close();
@@ -30,6 +36,10 @@ const SignupPage: FC = () => {
         },
         "*": (e) => {
           close();
+          notify({
+            kind: "error",
+            title: "Unexcepted error occured",
+          });
           console.log(e);
         },
       });
@@ -38,6 +48,10 @@ const SignupPage: FC = () => {
   const { trigger: uploadAvatar } = useMutation(setAvatar.keys, setAvatar.fn, {
     onSuccess: () => {
       invalidate();
+      notify({
+        kind: "info",
+        title: "Profile picture updated",
+      });
       close();
     },
   });
