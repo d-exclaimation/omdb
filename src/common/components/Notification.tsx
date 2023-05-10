@@ -1,6 +1,6 @@
 import { Palette } from "@d-exclaimation/common/tailwind";
 import * as Toast from "@radix-ui/react-toast";
-import { type FC } from "react";
+import { useEffect, useRef, useState, type FC } from "react";
 
 type NotificationProps = {
   date: Date;
@@ -15,23 +15,33 @@ const Notification: FC<NotificationProps> = ({
   title,
   onRemove,
 }) => {
+  const timeoutRef = useRef<number>();
+  const [open, setOpen] = useState(true);
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timeoutRef.current);
+    };
+  }, []);
+
   return (
     <Toast.Root
-      className="bg-white rounded-md shadow-md p-4 flex flex-row items-center data-[state=open]:animate-slideIn  data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=cancel]:translate-x-0 data-[swipe=cancel]:transition-[transform_200ms_ease-out] data-[swipe=end]:animate-swipeOut"
+      duration={2_000}
+      className="bg-white rounded-md shadow-xl md:shadow-md p-4 flex flex-row items-center 
+      data-[state=open]:animate-slideIn data-[state=closed]:animate-swipeOut
+      data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=end]:animate-swipeOut
+      data-[swipe=cancel]:translate-x-0 data-[swipe=cancel]:transition-[transform_200ms_ease-out]"
+      open={open}
       onOpenChange={(open) => {
+        setOpen(open);
         if (!open) {
-          onRemove(date);
+          clearTimeout(timeoutRef.current);
+          timeoutRef.current = setTimeout(() => onRemove(date), 110);
         }
       }}
     >
       <div className="flex flex-1 flex-col">
         <Toast.Title className="mb-1 font-bold text-zinc-800 text-sm flex items-center w-full">
-          <span
-            className={`px-2 py-[0.125rem] mr-2 text-[0.675rem] leading-3 
-            rounded ring-1 ${kindStyle(kind).join(" ")}`}
-          >
-            {kind}
-          </span>
           <span className="max-w-full truncate">{title}</span>
         </Toast.Title>
         <Toast.Description asChild>
@@ -43,15 +53,12 @@ const Notification: FC<NotificationProps> = ({
           </time>
         </Toast.Description>
       </div>
-      <Toast.Action asChild altText="Close">
-        <button
-          className="inline-flex items-center justify-center rounded font-medium text-xs px-3 py-1 
-        bg-zinc-100 text-zinc-900 hover:bg-zinc-900 active:bg-zinc-900 
-        hover:text-zinc-50 active:text-zinc-50  ring-1 ring-zinc-900"
-        >
-          Ok
-        </button>
-      </Toast.Action>
+      <div
+        className={`inline-flex items-center justify-center rounded font-medium text-xs px-3 py-1 
+        ring-1 ${kindStyle(kind).join(" ")}`}
+      >
+        {kind.charAt(0).toUpperCase() + kind.slice(1)}
+      </div>
     </Toast.Root>
   );
 };

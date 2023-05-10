@@ -49,7 +49,7 @@ export default {
         },
         swipeOut: {
           from: { transform: 'translateX(var(--radix-toast-swipe-end-x))' },
-          to: { transform: 'translateX(calc(100% + var(--viewport-padding)))' },
+          to: { transform: 'translateX(calc(-100% - var(--viewport-padding)))' },
         },
       },
     },
