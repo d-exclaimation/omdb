@@ -42,7 +42,7 @@ const GlobalProvider: FC<GlobalProviderProps> = ({ children }) => {
             {...rest}
           />
         ))}
-        <Toast.Viewport className="[--viewport-padding:_25px] fixed top-0 md:top-unset md:bottom-0 left-0 flex flex-col p-[var(--viewport-padding)] gap-[10px] w-[390px] max-w-[100vw] m-0 list-none z-[100] outline-none" />
+        <Toast.Viewport className="[--viewport-padding:_25px] fixed top-0 md:top-[unset] md:bottom-0 left-0 flex flex-col p-[var(--viewport-padding)] gap-[10px] w-[390px] max-w-[100vw] m-0 list-none z-[100] outline-none" />
       </Toast.Provider>
     </GlobalContext.Provider>
   );
