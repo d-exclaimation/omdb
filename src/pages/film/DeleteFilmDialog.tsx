@@ -35,7 +35,7 @@ const DeleteFilmDialog: FC<DeleteFilmDialogProps> = ({
           Ok: () => {
             mutate(included("films"));
             notify({
-              kind: "info",
+              kind: "warning",
               title: "Film deleted",
             });
             nav("/gallery");
