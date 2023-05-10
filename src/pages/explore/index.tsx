@@ -1,4 +1,11 @@
-import { useCallback, useEffect, useMemo, useState, type FC, type SetStateAction } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  type FC,
+  type SetStateAction,
+} from "react";
 import { useSearchParams } from "react-router-dom";
 import useQuery, { preload } from "swr";
 import { searchFilms } from "../../api/film";
@@ -14,10 +21,7 @@ import PageControls from "./PageControls";
 const ExplorePage: FC = () => {
   const [params, setParams] = useSearchParams();
   const [q, setQ] = useState(params.get("q") ?? "");
-  const page = useMemo(
-    () => maybeInt.parse(params.get("page")) ?? 1,
-    [params]
-  );
+  const page = useMemo(() => maybeInt.parse(params.get("page")) ?? 1, [params]);
   const sort = useMemo<Sorting>(
     () => (params.get("sort") as Sorting) ?? "RELEASED_ASC",
     [params]
@@ -40,28 +44,41 @@ const ExplorePage: FC = () => {
     }
   );
 
-  const finalPage = useMemo(() => Math.max(1, Math.ceil((data?.count ?? page) / 6)), [data, page])
+  const finalPage = useMemo(
+    () => Math.max(1, Math.ceil((data?.count ?? page) / 6)),
+    [data, page]
+  );
 
-  const setPage = useCallback((newPage: SetStateAction<number>) => {
-    setParams(prev => {
-      if (prev.has("page")) {
+  const setPage = useCallback(
+    (newPage: SetStateAction<number>) => {
+      setParams((prev) => {
+        if (prev.has("page")) {
+          prev.delete("page");
+        }
+        prev.append(
+          "page",
+          `${typeof newPage === "function" ? newPage(page) : newPage}`
+        );
+        return prev;
+      });
+    },
+    [page]
+  );
+
+  const setSearch = useCallback(
+    (q: string) => {
+      setQ(q);
+      setParams((prev) => {
+        if (prev.has("q")) {
+          prev.delete("q");
+        }
         prev.delete("page");
-      }
-      prev.append("page", `${typeof newPage === "function" ? newPage(page) : newPage}`);
-      return prev;
-    });
-  }, [page]);
-
-  const setSearch = useCallback((q: string) => {
-    setQ(q);
-    setParams((prev) => {
-      if (prev.has("q")) {
-        prev.delete("q")
-      }
-      prev.append("q", q);
-      return prev;
-    });
-  }, [setQ, setParams]);
+        prev.append("q", q);
+        return prev;
+      });
+    },
+    [setQ, setParams]
+  );
 
   const setParamByKey = useCallback(
     (key: string, value: string) => {
@@ -69,6 +86,7 @@ const ExplorePage: FC = () => {
         if (prev.has(key)) {
           prev.delete(key);
         }
+        prev.delete("page");
         prev.append(key, value);
         return prev;
       });
@@ -82,6 +100,7 @@ const ExplorePage: FC = () => {
         if (prev.has(key)) {
           prev.delete(key);
         }
+        prev.delete("page");
         values.forEach((value) => prev.append(key, value));
         return prev;
       });
@@ -96,20 +115,10 @@ const ExplorePage: FC = () => {
     );
   }, [q, sort, page]);
 
-  useEffect(() => {
-    if (page > finalPage) {
-      setPage(finalPage);
-    }
-  }, [finalPage, page])
-
-
   return (
     <Layout route="Explore" heading="Discover films">
       <div className="w-full flex flex-col justify-start items-center gap-3">
-        <FilmSearchBar
-          value={q}
-          onUpdate={setSearch}
-        />
+        <FilmSearchBar value={q} onUpdate={setSearch} />
         <FilmFilters
           sort={sort}
           onSortChange={(sort) => setParamByKey("sort", sort)}
