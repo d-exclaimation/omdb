@@ -51,30 +51,28 @@ const ExplorePage: FC = () => {
 
   const setPage = useCallback(
     (newPage: SetStateAction<number>) => {
-      setParams((prev) => {
-        if (prev.has("page")) {
-          prev.delete("page");
-        }
-        prev.append(
+      setParams((curr) => {
+        curr.delete("page");
+        curr.append(
           "page",
           `${typeof newPage === "function" ? newPage(page) : newPage}`
         );
-        return prev;
+        return curr;
       });
     },
-    [page]
+    [page, setParams]
   );
 
   const setSearch = useCallback(
     (q: string) => {
       setQ(q);
-      setParams((prev) => {
-        if (prev.has("q")) {
-          prev.delete("q");
+      setParams((curr) => {
+        if (curr.has("q")) {
+          curr.delete("q");
         }
-        prev.delete("page");
-        prev.append("q", q);
-        return prev;
+        curr.delete("page");
+        curr.append("q", q);
+        return curr;
       });
     },
     [setQ, setParams]
@@ -82,13 +80,13 @@ const ExplorePage: FC = () => {
 
   const setParamByKey = useCallback(
     (key: string, value: string) => {
-      setParams((prev) => {
-        if (prev.has(key)) {
-          prev.delete(key);
+      setParams((curr) => {
+        if (curr.has(key)) {
+          curr.delete(key);
         }
-        prev.delete("page");
-        prev.append(key, value);
-        return prev;
+        curr.delete("page");
+        curr.append(key, value);
+        return curr;
       });
     },
     [setParams]
@@ -96,13 +94,13 @@ const ExplorePage: FC = () => {
 
   const setAllParamsByKey = useCallback(
     (key: string, values: string[]) => {
-      setParams((prev) => {
-        if (prev.has(key)) {
-          prev.delete(key);
+      setParams((curr) => {
+        if (curr.has(key)) {
+          curr.delete(key);
         }
-        prev.delete("page");
-        values.forEach((value) => prev.append(key, value));
-        return prev;
+        curr.delete("page");
+        values.forEach((value) => curr.append(key, value));
+        return curr;
       });
     },
     [setParams]
@@ -113,7 +111,7 @@ const ExplorePage: FC = () => {
       searchFilms.keys([q, { page: page + 1, sort, genreIds, ageRatings }]),
       searchFilms.fn
     );
-  }, [q, sort, page]);
+  }, [q, sort, page, genreIds, ageRatings]);
 
   return (
     <Layout route="Explore" heading="Discover films">
