@@ -28,7 +28,7 @@ const FilmFilters: FC<FilmFiltersProps> = ({
 }) => {
   const genres = useGenres();
   return (
-    <div className="w-full h-max flex items-start justify-around md:justify-start flex-row rounded-lg max-w-3xl gap-3">
+    <div className="w-full h-max flex items-start justify-start flex-row rounded-lg max-w-3xl gap-3">
       <FilmSort sort={sort} onSortChange={onSortChange} />
 
       <FilmGenreFilter
