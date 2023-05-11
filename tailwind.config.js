@@ -6,6 +6,10 @@ export default {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      },
       colors: {
         chart: "rgb(173, 250, 29)"
       },
@@ -27,6 +31,7 @@ export default {
         hide: 'hide 100ms ease-in',
         slideIn: 'slideIn 150ms cubic-bezier(0.16, 1, 0.3, 1)',
         swipeOut: 'swipeOut 100ms ease-out',
+        slideUp: 'slideUp 150ms cubic-bezier(0.16, 1, 0.3, 1)',
       },
       keyframes: {
         "handdrawn": {
@@ -37,6 +42,16 @@ export default {
         "to-full-height": {
           from: {
             height: "0",
+          },
+        },
+        slideUp: {
+          from: {
+            transform: 'translateY(50%)',
+            opacity: 0,
+          },
+          to: {
+            transform: 'translateY(0)',
+            opacity: 1,
           },
         },
         hide: {

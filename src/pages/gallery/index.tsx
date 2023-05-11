@@ -58,19 +58,40 @@ const GalleryPage: FC = () => {
         </Button>
         <FilmsCaraousel
           title="Known for"
-          emptyMessage="There's no films you have directed yet"
+          empty={{
+            message: "There's no films you have directed yet",
+            action: {
+              kind: "action",
+              onClick: open,
+              label: "Create your first masterpiece",
+            },
+          }}
           films={top5?.films ?? []}
           isLoading={isTop5Loading}
         />
         <FilmsCaraousel
           title="Directed"
-          emptyMessage="There's no films you have directed yet"
+          empty={{
+            message: "There's no films you have directed yet",
+            action: {
+              kind: "action",
+              onClick: open,
+              label: "Start directing now",
+            },
+          }}
           films={gallery?.films ?? []}
           isLoading={isGalleryLoading}
         />
         <FilmsCaraousel
           title="Reviewed"
-          emptyMessage="There's no films you have reviewed yet"
+          empty={{
+            message: "There's no films you have reviewed yet",
+            action: {
+              kind: "link",
+              href: "/explore",
+              label: "Start exploring",
+            },
+          }}
           films={reviewed?.films ?? []}
           isLoading={isReviewedLoading}
         />

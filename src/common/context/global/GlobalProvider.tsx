@@ -1,5 +1,5 @@
 import * as Toast from "@radix-ui/react-toast";
-import { useEffect, type FC, type ReactNode } from "react";
+import { type FC, type ReactNode } from "react";
 import Notification from "../../components/Notification";
 import { useCacheControlProvider } from "../cache/useCacheControlProvider";
 import { useGenreProvider } from "../genre/useGenreProvider";
@@ -17,10 +17,6 @@ const GlobalProvider: FC<GlobalProviderProps> = ({ children }) => {
     film: new Date().toISOString(),
   });
   const { remove, notifications, notify } = useNotificationProvider();
-
-  useEffect(() => {
-    console.log(notifications);
-  }, [notifications]);
 
   return (
     <GlobalContext.Provider

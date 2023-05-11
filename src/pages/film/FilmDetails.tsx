@@ -41,7 +41,11 @@ const FilmDetails: FC<FilmDetail> = (data) => {
           </span>
         </div>
         <div className="flex flex-wrap break-words text-sm my-2 text-zinc-600">
-          {data.description}
+          {data.description ? (
+            data.description
+          ) : (
+            <span className="italic text-zinc-400">No description given</span>
+          )}
         </div>
       </div>
     </div>

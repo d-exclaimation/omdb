@@ -1,4 +1,6 @@
+import { match, type Union } from "@d-exclaimation/common/union";
 import { type FC } from "react";
+import { Link } from "react-router-dom";
 import LoadingIndicator from "../../common/components/LoadingIndicator";
 import { type FilmSearch } from "../../types/film";
 import FilmPreview from "./FilmPreview";
@@ -7,12 +9,18 @@ type FilmCaraouselProps = {
   title: string;
   isLoading: boolean;
   films: FilmSearch["films"];
-  emptyMessage: string;
+  empty: {
+    message: string;
+    action?: Union<{
+      link: { label: string; href: string };
+      action: { label: string; onClick: () => void };
+    }>;
+  };
 };
 
 const FilmsCaraousel: FC<FilmCaraouselProps> = ({
   title,
-  emptyMessage,
+  empty,
   films,
   isLoading,
 }) => {
@@ -27,8 +35,30 @@ const FilmsCaraousel: FC<FilmCaraouselProps> = ({
         ) : isLoading ? (
           <LoadingIndicator />
         ) : (
-          <div className="w-full h-full flex items-center justify-center pt-6 pb-4 text-zinc-500">
-            {emptyMessage}
+          <div className="w-full h-full flex flex-col items-center justify-center pt-6 pb-4">
+            <h3 className="font-bold text-base">No films here</h3>
+            <span className="text-sm my-2 text-zinc-500">{empty.message}</span>
+            {empty.action &&
+              match(empty.action, {
+                link: ({ label, href }) => (
+                  <Link
+                    to={href}
+                    className="text-xs text-zinc-700 border-b-[1px] border-zinc-500 transition-all
+                    hover:text-zinc-500 hover:border-zinc-500 active:text-zinc-500 active:border-zinc-500"
+                  >
+                    {label} &rarr;
+                  </Link>
+                ),
+                action: ({ label, onClick }) => (
+                  <button
+                    onClick={onClick}
+                    className="text-xs text-zinc-700 border-b-[1px] border-zinc-500 transition-all
+                    hover:text-zinc-500 hover:border-zinc-500 active:text-zinc-500 active:border-zinc-500"
+                  >
+                    {label} &rarr;
+                  </button>
+                ),
+              })}
           </div>
         )}
       </section>

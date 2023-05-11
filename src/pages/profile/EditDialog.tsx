@@ -106,7 +106,7 @@ const EditDialog: FC<EditDialogProps> = ({ editing, close, ...user }) => {
                     <Img
                       className="w-20 md:w-24 h-20 md:h-24 object-cover rounded-full"
                       src={preview}
-                      fallback="Cookie"
+                      fallback={user.email}
                       alt="avatar"
                     />
                     <EditImage

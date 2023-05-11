@@ -49,6 +49,11 @@ const ExplorePage: FC = () => {
     [data, page]
   );
 
+  const hasFilters = useMemo(
+    () => genreIds.length > 0 || ageRatings.length > 0 || !!q,
+    [genreIds, ageRatings, q]
+  );
+
   const setPage = useCallback(
     (newPage: SetStateAction<number>) => {
       setParams((curr) => {
@@ -157,8 +162,13 @@ const ExplorePage: FC = () => {
           ) : isValidating ? (
             <LoadingIndicator />
           ) : (
-            <div className="w-full h-full flex items-center justify-center pt-6 pb-4 text-zinc-500">
-              No films found
+            <div className="w-full h-full flex flex-col items-center justify-center pt-6 pb-4">
+              <h3 className="font-bold text-base">No films here</h3>
+              <span className="text-sm mt-2 text-zinc-500">
+                {hasFilters
+                  ? "Your search did not match any films"
+                  : "No films have been added yet"}
+              </span>
             </div>
           )}
         </div>
