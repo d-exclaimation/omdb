@@ -21,7 +21,14 @@ const SimilarFilms: FC<SimilarFilmsProps> = ({
   return (
     <FilmsCaraousel
       title="Similar Films"
-      emptyMessage="No films similar to this one"
+      empty={{
+        message: "No films similar to this one",
+        action: {
+          label: "Explore all films",
+          kind: "link",
+          href: "/explore",
+        },
+      }}
       films={data?.films ?? []}
       isLoading={isLoading}
     />
