@@ -57,7 +57,7 @@ const FilmDirector: FC<FilmDirectorProps> = ({
         <Img
           className="w-12 md:w-16 h-12 md:h-16 object-cover rounded-full"
           src={`${api}/users/${director.id}/image?${stamp}`}
-          fallback="Cookie"
+          fallback={director.firstName}
           alt="avatar"
         />
         <div className="flex flex-col text-start mx-2">

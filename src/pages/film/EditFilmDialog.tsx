@@ -104,7 +104,7 @@ const FilmEdit: FC<FilmEditProps> = ({
                     <Img
                       className="w-full h-24 md:h-28 object-cover rounded-lg"
                       src={`${api}/films/${filmId}/image`}
-                      fallback="Cookie"
+                      fallback={values.title || "Cookie"}
                       alt="avatar"
                     />
                   </div>

@@ -1,5 +1,6 @@
 import { type FC } from "react";
 import { useGenres } from "../../common/context/genre/useGenres";
+import { ageRatingToColor } from "../../common/utils/color";
 import { Sorting } from "../../types/constants";
 import FilmAgeRatingFilter from "./FilmAgeRatingFilter";
 import FilmGenreFilter from "./FilmGenreFilter";
@@ -54,7 +55,7 @@ const FilmFilters: FC<FilmFiltersProps> = ({
         {genreIds.map((genreId) => (
           <button
             key={genreId}
-            className="px-4 py-2 rounded-full text-sm bg-zinc-900 text-zinc-50 w-max flex-shrink-0"
+            className="px-4 py-2 rounded-full text-sm bg-white text-zinc-600 w-max flex-shrink-0"
             onClick={() => onRemoveGenre(genreId)}
           >
             {genres.get(genreId)?.name} <span className="ml-2">✕</span>
@@ -63,7 +64,8 @@ const FilmFilters: FC<FilmFiltersProps> = ({
         {ratings.map((rating) => (
           <button
             key={rating}
-            className="px-4 py-2 rounded-full text-sm bg-zinc-900 text-zinc-50 w-max flex-shrink-0"
+            className={`px-4 py-2 rounded-full text-sm bg-white font-medium w-max flex-shrink-0 
+            ${ageRatingToColor(rating).text}`}
             onClick={() => onRemoveAgeRating(rating)}
           >
             {rating} <span className="ml-2">✕</span>

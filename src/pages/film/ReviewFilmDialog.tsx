@@ -99,7 +99,7 @@ const ReviewFilmDialog: FC<ReviewFilmProps> = ({
                     <Img
                       className="w-full h-32 md:h-40 object-cover rounded-lg"
                       src={`${api}/films/${filmId}/image`}
-                      fallback="Cookie"
+                      fallback={title}
                       alt="avatar"
                     />
                   </div>

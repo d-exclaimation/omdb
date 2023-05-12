@@ -108,7 +108,7 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
                     <Img
                       className="w-36 md:w-44 h-20 md:h-24 object-cover rounded-lg"
                       src={preview}
-                      fallback="Cookie"
+                      fallback={values.title}
                       alt="avatar"
                     />
                     <EditImage

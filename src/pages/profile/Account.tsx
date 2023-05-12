@@ -45,7 +45,7 @@ const Account: FC<AccountProps> = ({
         <Img
           className="w-16 md:w-20 h-16 md:h-20 object-cover rounded-full"
           src={`${api}/users/${id}/image?${stamp}`}
-          fallback={email}
+          fallback={firstName}
           alt="avatar"
         />
         <Settings onEdit={onEdit} onLogout={trigger} />

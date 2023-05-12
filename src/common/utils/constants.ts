@@ -24,11 +24,10 @@ export const ratings = {
 };
 
 export const sortings = {
-  "RELEASED_ASC": "Release ↑",
-  "RELEASED_DESC": "Release ↓",
-  "RATING_ASC": "Rating ↑",
-  "RATING_DESC": "Rating ↓",
-  "ALPHABETICAL_ASC": "A-Z ↑",
-  "ALPHABETICAL_DESC": "Z-A ↓",
+  RELEASED_ASC: "Release ↑",
+  RELEASED_DESC: "Release ↓",
+  RATING_ASC: "Rating ↑",
+  RATING_DESC: "Rating ↓",
+  ALPHABETICAL_ASC: "A-Z ↑",
+  ALPHABETICAL_DESC: "Z-A ↓",
 } satisfies Record<Sorting, string>;
-
