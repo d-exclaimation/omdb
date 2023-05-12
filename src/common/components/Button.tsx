@@ -24,7 +24,6 @@ const Button: FC<ButtonProps> = ({
 }) => {
   return (
     <button
-      type="button"
       className={`inline-flex justify-center rounded border border-transparent 
       ${color.bg} px-4 py-2 text-sm font-medium ${color.text} 
       ${color.hover} ${color.active} disabled:cursor-not-allowed

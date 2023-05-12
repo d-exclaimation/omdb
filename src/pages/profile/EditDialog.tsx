@@ -92,8 +92,13 @@ const EditDialog: FC<EditDialogProps> = ({ editing, close, ...user }) => {
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel
+                as="form"
                 className="w-full max-w-md z-40 transform overflow-hidden rounded-md bg-white 
                 p-6 text-left align-middle shadow-xl transition-all"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  onSubmit();
+                }}
               >
                 <Dialog.Title
                   as="h3"

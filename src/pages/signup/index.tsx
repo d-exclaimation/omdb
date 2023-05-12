@@ -56,7 +56,7 @@ const SignupPage: FC = () => {
     },
   });
 
-  const [{ values, errors: e, isValid }, updateForm] = useForm({
+  const [{ values, errors: e, isValid, isInitial }, updateForm] = useForm({
     schema: RegisterUser,
     initial: {
       firstName: "",
@@ -84,6 +84,17 @@ const SignupPage: FC = () => {
     },
     [updateForm, close]
   );
+
+  const submit = useCallback(async () => {
+    if (!isValid || isInitial) return;
+    open();
+    trigger({
+      firstName: values.firstName,
+      lastName: values.lastName,
+      email: values.email,
+      password: values.password,
+    });
+  }, [open, isValid, trigger, values]);
 
   // Make sure that it validates on mount
   useEffect(() => {
@@ -118,9 +129,12 @@ const SignupPage: FC = () => {
         leaveFrom="opacity-100 translate-y-0"
         leaveTo="opacity-0 translate-y-10"
       >
-        <div
-          className="w-[90%] max-w-md overflow-hidden
-            flex flex-col items-start p-6 gap-2"
+        <form
+          className="w-full max-w-md overflow-hidden flex flex-col items-start p-6 gap-2"
+          onSubmit={(e) => {
+            e.preventDefault();
+            submit();
+          }}
         >
           <div className="w-full flex flex-col justify-center items-center mb-2">
             <h2 className="font-bold text-3xl">Create Your</h2>
@@ -179,17 +193,7 @@ const SignupPage: FC = () => {
               active: "active:bg-zinc-50",
               border: "focus-visible:ring-zinc-500",
             }}
-            onClick={async () => {
-              open();
-              if (isValid) {
-                trigger({
-                  firstName: values.firstName,
-                  lastName: values.lastName,
-                  email: values.email,
-                  password: values.password,
-                });
-              }
-            }}
+            onClick={submit}
           >
             Continue with email
           </Button>
@@ -203,7 +207,7 @@ const SignupPage: FC = () => {
               Log in
             </Link>
           </div>
-        </div>
+        </form>
       </Transition>
     </div>
   );

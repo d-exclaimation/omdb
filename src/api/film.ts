@@ -288,7 +288,7 @@ export const editFilm = mutation(
             ? datestring(arg.releaseDate)
             : undefined,
           ageRating: arg.ageRating,
-          runtime: arg.runtime,
+          runtime: arg.runtime ?? undefined,
         }),
       });
       if (res.status !== 200 && res.status !== 201) {

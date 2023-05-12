@@ -1,7 +1,7 @@
 import { entries } from "@d-exclaimation/common";
 import { match } from "@d-exclaimation/common/union";
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState, type FC } from "react";
+import { Fragment, useCallback, useState, type FC } from "react";
 import { useSWRConfig } from "swr";
 import useMutation from "swr/mutation";
 import { editFilm } from "../../api/film";
@@ -74,6 +74,14 @@ const FilmEdit: FC<FilmEditProps> = ({
     }
   );
 
+  const onSubmit = useCallback(() => {
+    if (!isValid) return;
+    trigger({
+      filmId,
+      ...values,
+    });
+  }, [isValid, values, filmId, trigger]);
+
   return (
     <Transition appear show={editing} as={Fragment}>
       <Dialog as="div" className="fixed z-40" onClose={onClose}>
@@ -90,8 +98,13 @@ const FilmEdit: FC<FilmEditProps> = ({
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel
+                as="form"
                 className="w-full max-w-md z-40 transform rounded-md bg-white 
                 p-6 text-left align-middle shadow-xl transition-all"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  onSubmit();
+                }}
               >
                 <Dialog.Title
                   as="h3"
@@ -220,12 +233,7 @@ const FilmEdit: FC<FilmEditProps> = ({
                       active: "active:bg-sky-200",
                       border: "focus-visible:ring-sky-500",
                     }}
-                    onClick={() =>
-                      trigger({
-                        filmId,
-                        ...values,
-                      })
-                    }
+                    onClick={onSubmit}
                     disabled={!isValid}
                   >
                     Save

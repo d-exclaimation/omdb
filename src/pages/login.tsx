@@ -1,6 +1,6 @@
 import { match } from "@d-exclaimation/common/union";
 import { Transition } from "@headlessui/react";
-import { useState, type FC } from "react";
+import { useCallback, useState, type FC } from "react";
 import { Link, Navigate } from "react-router-dom";
 import useMutation from "swr/mutation";
 import { login } from "../api/user";
@@ -16,7 +16,7 @@ const LoginPage: FC = () => {
   const { isLoggedIn, invalidate, isAuthenticating } = useAuth();
   const { notify } = useNotifcation();
   const [serverError, setServerError] = useState<string>();
-  const [{ values, errors }, update] = useForm({
+  const [{ values, isValid, isInitial, errors }, update] = useForm({
     schema: LoginUser,
     initial: {
       email: "",
@@ -47,6 +47,11 @@ const LoginPage: FC = () => {
     },
   });
 
+  const submit = useCallback(async () => {
+    if (!isValid || isInitial) return;
+    trigger(values);
+  }, [trigger, values]);
+
   if (isAuthenticating) {
     return <LoadingIndicator />;
   }
@@ -70,9 +75,12 @@ const LoginPage: FC = () => {
         leaveFrom="opacity-100 translate-y-0"
         leaveTo="opacity-0 translate-y-10"
       >
-        <div
-          className="w-[90%] max-w-md overflow-hidden
-            flex flex-col items-start p-6 gap-2"
+        <form
+          className="w-full max-w-md overflow-hidden flex flex-col items-start p-6 gap-2"
+          onSubmit={(e) => {
+            e.preventDefault();
+            submit();
+          }}
         >
           <div className="w-full flex justify-center items-center mb-2">
             <h2 className="font-bold text-3xl">Log in to OMDb</h2>
@@ -105,9 +113,7 @@ const LoginPage: FC = () => {
               active: "active:bg-zinc-50",
               border: "focus-visible:ring-zinc-500",
             }}
-            onClick={() => {
-              trigger(values);
-            }}
+            onClick={submit}
           >
             Continue with email
           </Button>
@@ -121,7 +127,7 @@ const LoginPage: FC = () => {
               Sign up
             </Link>
           </div>
-        </div>
+        </form>
       </Transition>
     </div>
   );

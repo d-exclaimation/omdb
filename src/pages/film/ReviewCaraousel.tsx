@@ -33,7 +33,7 @@ const ReviewCaraousel: FC<ReviewCaraouselProps> = ({ reviews, isLoading }) => {
                 fallback={reviewerFirstName}
                 alt={reviewerFirstName}
               />
-              <div className="flex flex-col items-start">
+              <div className="flex flex-col items-start max-w-[70%]">
                 <span className="font-semibold max-w-full truncate text-sm">
                   {reviewerFirstName} {reviewerLastName}
                 </span>

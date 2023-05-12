@@ -53,27 +53,29 @@ const FilmDirector: FC<FilmDirectorProps> = ({
           onDelete={openDelete}
         />
       </div>
-      <div className="flex my-2 flex-row items-center justify-start">
+      <div className="flex my-2 flex-row w-full items-center justify-start">
         <Img
           className="w-12 md:w-16 h-12 md:h-16 object-cover rounded-full"
           src={`${api}/users/${director.id}/image?${stamp}`}
           fallback={director.firstName}
           alt="avatar"
         />
-        <div className="flex flex-col text-start mx-2">
+        <div className="flex flex-col text-start mx-2 w-full">
           {isYou ? (
             <Link
               to="/profile"
-              className="flex flex-row justify-start gap-1
-            text-zinc-900 hover:underline active:underline"
+              className="flex flex-row justify-start gap-1 font-medium
+            text-zinc-900 hover:underline active:underline max-w-[80%]"
             >
-              <span className="font-medium">{director.firstName}</span>
-              <span className="font-medium">{director.lastName}</span>
+              <span className="truncate max-w-full">
+                {director.firstName} {director.lastName}
+              </span>
             </Link>
           ) : (
-            <div className="flex flex-row justify-start gap-1">
-              <span className="font-medium">{director.firstName}</span>
-              <span className="font-medium">{director.lastName}</span>
+            <div className="flex flex-row justify-start gap-1 max-w-[80%] font-medium">
+              <span className="truncate max-w-full">
+                {director.firstName} {director.lastName}
+              </span>
             </div>
           )}
 

@@ -1,7 +1,7 @@
 import { entries } from "@d-exclaimation/common";
 import { match } from "@d-exclaimation/common/union";
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState, type FC } from "react";
+import { Fragment, useCallback, useState, type FC } from "react";
 import { useSWRConfig } from "swr";
 import useMutation from "swr/mutation";
 import { isValid } from "zod";
@@ -69,6 +69,13 @@ const ReviewFilmDialog: FC<ReviewFilmProps> = ({
     },
   });
 
+  const onSubmit = useCallback(() => {
+    trigger({
+      ...values,
+      filmId,
+    });
+  }, [values, filmId]);
+
   return (
     <Transition appear show={reviewing} as={Fragment}>
       <Dialog as="div" className="fixed z-40" onClose={onClose}>
@@ -85,8 +92,13 @@ const ReviewFilmDialog: FC<ReviewFilmProps> = ({
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel
+                as="form"
                 className="w-full max-w-md z-40 transform rounded-md bg-white 
                 p-6 text-left align-middle shadow-xl transition-all"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  onSubmit();
+                }}
               >
                 <Dialog.Title
                   as="h3"
@@ -158,12 +170,7 @@ const ReviewFilmDialog: FC<ReviewFilmProps> = ({
                       active: "active:bg-sky-200",
                       border: "focus-visible:ring-sky-500",
                     }}
-                    onClick={() => {
-                      trigger({
-                        ...values,
-                        filmId,
-                      });
-                    }}
+                    onClick={onSubmit}
                     disabled={!isValid}
                   >
                     Save

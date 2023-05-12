@@ -1,7 +1,7 @@
 import { entries } from "@d-exclaimation/common";
 import { match } from "@d-exclaimation/common/union";
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useEffect, useState, type FC } from "react";
+import { Fragment, useCallback, useEffect, useState, type FC } from "react";
 import { useSWRConfig } from "swr";
 import useMutation from "swr/mutation";
 import { createFilm } from "../../api/film";
@@ -32,7 +32,7 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
   const { notify } = useNotifcation();
   const [titleError, setTitleError] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
-  const [{ values, errors, isValid }, update] = useForm({
+  const [{ values, errors, isValid, isInitial }, update] = useForm({
     schema: CreateFilm,
     initial: {
       title: "",
@@ -73,6 +73,14 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
     },
   });
 
+  const submit = useCallback(() => {
+    if (!isValid || isInitial) return;
+    trigger({
+      ...values,
+      file: file ?? undefined,
+    });
+  }, [trigger, values, file]);
+
   // Make sure that it validates on mount
   useEffect(() => {
     update((prev) => prev);
@@ -94,8 +102,13 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel
+                as="form"
                 className="w-full max-w-md z-40 transform rounded-md bg-white 
                 p-6 text-left align-middle shadow-xl transition-all"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  submit();
+                }}
               >
                 <Dialog.Title
                   as="h3"
@@ -239,12 +252,7 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
                       active: "active:bg-sky-200",
                       border: "focus-visible:ring-sky-500",
                     }}
-                    onClick={() => {
-                      trigger({
-                        ...values,
-                        file: file ?? undefined,
-                      });
-                    }}
+                    onClick={submit}
                     disabled={!isValid}
                   >
                     Save

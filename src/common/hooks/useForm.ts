@@ -8,6 +8,7 @@ type UseFormArgs<T extends ZodTypeAny> = {
 };
 
 type UseFormState<T extends ZodTypeAny> = {
+  isInitial: boolean;
   values: z.infer<T>;
   errors: {
     [Key in keyof z.infer<T>]?: string;
@@ -26,12 +27,14 @@ function formReducer<T extends ZodTypeAny>(schema: T) {
     const res = schema.safeParse(newValues);
     if (res.success) {
       return {
+        isInitial: false,
         values: res.data,
         errors: {},
       };
     }
 
     return {
+      isInitial: false,
       values: newValues,
       errors: entries(res.error.formErrors.fieldErrors).reduce(
         (acc, [key, value]) => {
@@ -49,6 +52,7 @@ export function useForm<T extends ZodTypeAny>({
   schema,
 }: UseFormArgs<T>) {
   const [state, update] = useReducer(formReducer(schema), {
+    isInitial: true,
     values: initial,
     errors: {},
   });
