@@ -28,8 +28,8 @@ const Notification: FC<NotificationProps> = ({
     <Toast.Root
       duration={2_000}
       className="bg-white rounded-md shadow-xl md:shadow-md p-4 flex flex-row items-center 
-      data-[state=open]:animate-slideIn data-[state=closed]:animate-swipeOut
-      data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=end]:animate-swipeOut
+      data-[state=open]:animate-slide-in data-[state=closed]:animate-swipe-out
+      data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=end]:animate-swipe-out
       data-[swipe=cancel]:translate-x-0 data-[swipe=cancel]:transition-[transform_200ms_ease-out]"
       open={open}
       onOpenChange={(open) => {

@@ -27,31 +27,21 @@ export default {
       },
       animation: {
         "handdrawn": "2s ease-in-out 0.5s 1 normal forwards running handdrawn",
-        "to-full-height": "to-full-height 1s cubic-bezier(0.4, 0, 0.6, 1)",
+        "to-full-height": "toFullHeight 1s cubic-bezier(0.4, 0, 0.6, 1)",
         hide: 'hide 100ms ease-in',
-        slideIn: 'slideIn 150ms cubic-bezier(0.16, 1, 0.3, 1)',
-        swipeOut: 'swipeOut 100ms ease-out',
-        slideUp: 'slideUp 150ms cubic-bezier(0.16, 1, 0.3, 1)',
+        "slide-in": 'slideIn 150ms cubic-bezier(0.16, 1, 0.3, 1)',
+        "swipe-out": 'swipeOut 100ms ease-out',
+        "slide-right": 'slideRight 150ms cubic-bezier(0.16, 1, 0.3, 1)',
       },
       keyframes: {
-        "handdrawn": {
+        handdrawn: {
           to: {
             strokeDashoffset: 0,
           }
         },
-        "to-full-height": {
+        toFullHeight: {
           from: {
             height: "0",
-          },
-        },
-        slideUp: {
-          from: {
-            transform: 'translateY(50%)',
-            opacity: 0,
-          },
-          to: {
-            transform: 'translateY(0)',
-            opacity: 1,
           },
         },
         hide: {
@@ -66,6 +56,10 @@ export default {
           from: { transform: 'translateX(var(--radix-toast-swipe-end-x))' },
           to: { transform: 'translateX(calc(-100% - var(--viewport-padding)))' },
         },
+        slideRight: {
+          from: { transform: 'translateX(-100%)' },
+          to: { transform: 'translateX(0)' },
+        }
       },
     },
   },
