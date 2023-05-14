@@ -1,7 +1,7 @@
 import { match } from "@d-exclaimation/common/union";
 import { Transition } from "@headlessui/react";
 import { useCallback, useState, type FC } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import useMutation from "swr/mutation";
 import { login } from "../api/user";
 import { useAuth } from "../auth/useAuth";
@@ -15,6 +15,7 @@ import { LoginUser } from "../types/user";
 const LoginPage: FC = () => {
   const { isLoggedIn, invalidate, isAuthenticating } = useAuth();
   const { notify } = useNotifcation();
+  const navigate = useNavigate();
   const [serverError, setServerError] = useState<string>();
   const [{ values, isValid, isInitial, errors }, update] = useForm({
     schema: LoginUser,
@@ -32,6 +33,7 @@ const LoginPage: FC = () => {
             kind: "success",
             title: "Successfully logged in",
           });
+          navigate("/profile");
         },
         BadEmail: () => {
           setServerError("Invalid email or password");
