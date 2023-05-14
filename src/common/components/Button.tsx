@@ -3,6 +3,7 @@ import { type FC, type ReactNode } from "react";
 
 type ButtonProps = {
   className?: string;
+  type?: "button" | "submit" | "reset";
   color: {
     bg: Palette["bg"];
     text: Palette["text"];
@@ -18,6 +19,7 @@ type ButtonProps = {
 const Button: FC<ButtonProps> = ({
   className,
   color,
+  type,
   onClick,
   disabled,
   children,
@@ -32,6 +34,7 @@ const Button: FC<ButtonProps> = ({
       ${className ?? ""} disabled:opacity-50`}
       onClick={onClick}
       disabled={disabled}
+      type={type}
     >
       {children}
     </button>
