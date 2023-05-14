@@ -78,6 +78,7 @@ const DeleteFilmDialog: FC<DeleteFilmDialogProps> = ({
 
                 <div className="mt-4 flex justify-between z-60">
                   <Button
+                    type="button"
                     color={{
                       bg: "bg-zinc-100",
                       text: "text-zinc-900",
