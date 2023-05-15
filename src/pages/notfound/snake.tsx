@@ -143,29 +143,32 @@ const SnakePage: FC = () => {
           ))
         )}
       </div>
-      <div className="md:hidden flex flex-col my-3 items-center w-48 h-28 justify-around">
+      <div className="md:hidden flex flex-col my-4 items-center w-56 h-40 gap-1 justify-center">
         <button
-          className="bg-zinc-50 text-black text-lg py-1 px-3 rounded-md shadow active:scale-95"
+          className="bg-zinc-50 text-black text-xl py-2 px-4 rounded-md shadow active:scale-95"
           onClick={() => dispatch({ kind: "change", direction: "up" })}
         >
           &uarr;
         </button>
-        <div className="flex flex-row items-center w-full justify-around">
+        <div className="flex flex-row items-center w-full gap-1 justify-center">
           <button
-            className="bg-zinc-50 text-black text-lg py-1 px-3 rounded-md shadow active:scale-95"
+            className="bg-zinc-50 text-black text-xl py-2 px-4 rounded-md shadow active:scale-95"
             onClick={() => dispatch({ kind: "change", direction: "left" })}
           >
             &larr;
           </button>
+          <button className="bg-transparent text-transparent text-xl py-3 px-5">
+            _
+          </button>
           <button
-            className="bg-zinc-50 text-black text-lg py-1 px-3 rounded-md shadow active:scale-95"
+            className="bg-zinc-50 text-black text-xl py-2 px-4 rounded-md shadow active:scale-95"
             onClick={() => dispatch({ kind: "change", direction: "right" })}
           >
             &rarr;
           </button>
         </div>
         <button
-          className="bg-zinc-50 text-black text-lg py-1 px-3 rounded-md shadow active:scale-95"
+          className="bg-zinc-50 text-black text-xl py-2 px-4 rounded-md shadow active:scale-95"
           onClick={() => dispatch({ kind: "change", direction: "down" })}
         >
           &darr;
