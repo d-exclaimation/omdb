@@ -9,6 +9,7 @@ import FilmPage from "./pages/film";
 import GalleryPage from "./pages/gallery";
 import HomePage from "./pages/index";
 import LoginPage from "./pages/login";
+import NotFoundPage from "./pages/notfound";
 import ProfilePage from "./pages/profile";
 import SignupPage from "./pages/signup";
 
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
         element: <SignupPage />,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <NotFoundPage />,
   },
 ]);
 
