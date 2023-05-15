@@ -24,7 +24,9 @@ cp vite.config.ts temp/vite.config.ts
 cp .gitignore temp/.gitignore
 
 # Zip
-zip -r seng365-assignment2-omdb-vno16.zip temp
+cd temp
+zip -r ../seng365-assignment2-omdb-vno16.zip *
+cd ..
 
 # Remove temp
 rm -rf temp
