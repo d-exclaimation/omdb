@@ -30,7 +30,7 @@ const ReviewCaraousel: FC<ReviewCaraouselProps> = ({ reviews, isLoading }) => {
               <Img
                 className="rounded-full w-8 h-8 object-cover"
                 src={`${api}/users/${reviewerId}/image`}
-                fallback={reviewerFirstName}
+                fallback={`${reviewerFirstName}${reviewerLastName}`}
                 alt={reviewerFirstName}
               />
               <div className="flex flex-col items-start max-w-[70%]">

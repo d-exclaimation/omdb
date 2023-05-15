@@ -16,11 +16,12 @@ const FilmPreview: FC<FilmPreviewProps> = ({
   ageRating,
   rating,
   releaseDate,
+  directorId,
   directorFirstName,
   directorLastName,
 }) => {
   const genres = useGenres();
-  const { film: stamp } = useCacheControl();
+  const { film: stamp, user } = useCacheControl();
   return (
     <Link
       key={filmId}
@@ -39,10 +40,18 @@ const FilmPreview: FC<FilmPreviewProps> = ({
         <h3 className="max-w-[90%] font-semibold group-hover:text-zinc-500 group-hover:underline truncate text-sm">
           {title}
         </h3>
-        <div className="flex flex-row justify-between gap-3 text-zinc-500 text-xs">
-          <span className="max-w-[32rem] truncate">
-            {directorFirstName} {directorLastName}
-          </span>
+        <div className="flex flex-row w-full items-center justify-start">
+          <Img
+            className="w-4 h-4 rounded-full mr-1"
+            src={`${api}/users/${directorId}/image?${user}`}
+            fallback={`${directorFirstName}${directorLastName}`}
+            alt={`${directorFirstName}${directorLastName}`}
+          />
+          <div className="flex flex-row justify-start gap-3 text-zinc-500 text-xs">
+            <span className="max-w-[28rem] truncate">
+              {directorFirstName} {directorLastName}
+            </span>
+          </div>
         </div>
         <div className="flex flex-row justify-between text-zinc-400 h-max gap-3 pr-1 text-xs">
           <span className="px-1 rounded bg-zinc-200 text-zinc-900">

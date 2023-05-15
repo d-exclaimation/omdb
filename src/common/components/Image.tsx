@@ -1,4 +1,4 @@
-import { useEffect, useMemo, type FC } from "react";
+import { useEffect, useMemo, useState, type FC } from "react";
 import { useToggle } from "../hooks/useToggle";
 
 type ImageProps = {
@@ -9,16 +9,20 @@ type ImageProps = {
 };
 
 const Img: FC<ImageProps> = ({ src, fallback, alt, className }) => {
-  const [notFound, { open, close: reset }] = useToggle(false);
-  const [loading, { close }] = useToggle(true);
-  const href = useMemo(
-    () => (notFound ? `https://avatar.vercel.sh/${fallback}` : src),
-    [src, fallback, notFound]
+  const hrefs = useMemo(
+    () => [
+      src,
+      `https://avatar.vercel.sh/${(fallback ?? "cookie").toLowerCase()}`,
+      `https://avatar.vercel.sh/cookie`,
+    ],
+    [src]
   );
+  const [attempt, setAttempt] = useState(0);
+  const [loading, { close }] = useToggle(true);
 
-  useEffect(() => {
-    reset();
-  }, [src]);
+  const href = useMemo(() => hrefs[attempt], [attempt]);
+
+  useEffect(() => setAttempt(0), [src, setAttempt]);
 
   return (
     <img
@@ -29,7 +33,7 @@ const Img: FC<ImageProps> = ({ src, fallback, alt, className }) => {
       data-loading={loading}
       onLoad={close}
       onError={() => {
-        open();
+        setAttempt((prev) => prev + 1);
       }}
       alt={alt}
     />
