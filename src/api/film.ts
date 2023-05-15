@@ -197,9 +197,11 @@ export const createFilm = mutation(
           title: arg.title,
           description: arg.description,
           genreId: arg.genreId,
-          releaseDate: arg.releaseDate ? datestring(arg.releaseDate) : null,
+          releaseDate: arg.releaseDate
+            ? datestring(arg.releaseDate)
+            : undefined,
           ageRating: arg.ageRating,
-          runtime: arg.runtime,
+          runtime: arg.runtime ?? undefined,
         }),
       });
       if (res.status !== 200 && res.status !== 201) {
