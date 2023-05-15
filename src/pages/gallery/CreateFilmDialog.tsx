@@ -147,7 +147,9 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
                         if (!allowedTypes.includes(file.type)) {
                           return;
                         }
-                        console.log(URL.createObjectURL(file));
+                        setTitleError((prev) =>
+                          prev?.includes("Image") ? prev : null
+                        );
                         setPreview(URL.createObjectURL(file));
                         setFile(file);
                       }}
