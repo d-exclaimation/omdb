@@ -264,6 +264,7 @@ export const createFilm = mutation(
 
 type EditFilmInput = EditFilm & {
   filmId: number;
+  file?: File;
 };
 
 export const editFilm = mutation(
@@ -313,6 +314,23 @@ export const editFilm = mutation(
               kind: "Error",
               message: "Unknown error",
             };
+        }
+      }
+      console.log(arg);
+      if (arg.file) {
+        const res = await fetch(`${api}/films/${arg.filmId}/image`, {
+          method: "PUT",
+          headers: {
+            "X-Authorization": session() ?? "",
+            "Content-Type": arg.file.type,
+          },
+          body: arg.file,
+        });
+        if (res.status !== 200 && res.status !== 201) {
+          return {
+            kind: "Error",
+            message: res.statusText,
+          };
         }
       }
       return {

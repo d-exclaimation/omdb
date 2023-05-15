@@ -14,12 +14,14 @@ import InputField from "../../common/components/InputField";
 import ListSelect from "../../common/components/ListSelect";
 import Overlay from "../../common/components/Overlay";
 import Textarea from "../../common/components/Textarea";
+import { useCacheControl } from "../../common/context/cache/useCacheControl";
 import { useGenres } from "../../common/context/genre/useGenres";
 import { useNotifcation } from "../../common/context/notification/useNotification";
 import { useForm } from "../../common/hooks/useForm";
 import { maybeInt } from "../../common/utils/coerce";
 import { ageRatings } from "../../common/utils/constants";
 import { EditFilm } from "../../types/film";
+import EditFilmImage from "./EditFilmImage";
 type FilmEditProps = {
   film: EditFilm & {
     filmId: number;
@@ -34,8 +36,11 @@ const FilmEdit: FC<FilmEditProps> = ({
   onClose,
 }) => {
   const genres = useGenres();
+  const { invalidate } = useCacheControl();
   const { notify } = useNotifcation();
   const [titleError, setTitleError] = useState<string | null>(null);
+  const [preview, setPreview] = useState(`${api}/films/${filmId}/image`);
+  const [file, setFile] = useState<File | null>(null);
   const [{ values, errors, isValid }, update] = useForm({
     schema: EditFilm,
     initial: {
@@ -62,6 +67,7 @@ const FilmEdit: FC<FilmEditProps> = ({
         match(res, {
           Ok: () => {
             mutate(included("films"));
+            invalidate("film");
             notify({
               kind: "success",
               title: "Film updated",
@@ -87,9 +93,10 @@ const FilmEdit: FC<FilmEditProps> = ({
     if (!isValid) return;
     trigger({
       filmId,
+      file: file ?? undefined,
       ...values,
     });
-  }, [isValid, values, filmId, trigger]);
+  }, [isValid, values, filmId, trigger, file]);
 
   return (
     <Transition appear show={editing} as={Fragment}>
@@ -124,10 +131,26 @@ const FilmEdit: FC<FilmEditProps> = ({
                 <div className="mt-4 flex flex-col w-full min-h-max transition-all">
                   <div className="flex w-full items-end justify-start">
                     <Img
-                      className="w-full h-24 md:h-28 object-cover rounded-lg"
-                      src={`${api}/films/${filmId}/image`}
-                      fallback={values.title || "Cookie"}
+                      className="w-36 md:w-44 h-20 md:h-24 object-cover rounded-lg"
+                      src={preview}
+                      fallback={values.title}
                       alt="avatar"
+                    />
+                    <EditFilmImage
+                      className="-translate-x-10"
+                      label="Edit"
+                      onUpload={(file) => {
+                        const allowedTypes = [
+                          "image/png",
+                          "image/jpeg",
+                          "image/gif",
+                        ];
+                        if (!allowedTypes.includes(file.type)) {
+                          return;
+                        }
+                        setPreview(URL.createObjectURL(file));
+                        setFile(file);
+                      }}
                     />
                   </div>
 

@@ -19,7 +19,7 @@ import { useForm } from "../../common/hooks/useForm";
 import { maybeInt } from "../../common/utils/coerce";
 import { ageRatings } from "../../common/utils/constants";
 import { CreateFilm } from "../../types/film";
-import EditImage from "../profile/EditImage";
+import EditFilmImage from "../film/EditFilmImage";
 
 type CreateFilmDialogProps = {
   creating: boolean;
@@ -83,6 +83,10 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
 
   const submit = useCallback(() => {
     if (!isValid || isInitial) return;
+    if (!file) {
+      setTitleError("Image not provided");
+      return;
+    }
     trigger({
       ...values,
       file: file ?? undefined,
@@ -132,7 +136,7 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
                       fallback={values.title}
                       alt="avatar"
                     />
-                    <EditImage
+                    <EditFilmImage
                       className="-translate-x-10"
                       onUpload={(file) => {
                         const allowedTypes = [
@@ -146,10 +150,6 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
                         console.log(URL.createObjectURL(file));
                         setPreview(URL.createObjectURL(file));
                         setFile(file);
-                      }}
-                      onRemove={() => {
-                        setPreview("https://avatar.vercel.sh/cookie");
-                        setFile(null);
                       }}
                     />
                   </div>
