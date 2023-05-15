@@ -30,7 +30,7 @@ const EditFilmImage: FC<EditFilmImageProps> = ({
           accept="image/*"
           ref={fileInputRef}
           onChange={(e) => {
-            if (!e.target.files) {
+            if (!e.target.files || !e.target.files.length) {
               return;
             }
             const file = e.target.files[0];

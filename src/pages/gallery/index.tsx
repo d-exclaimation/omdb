@@ -30,7 +30,7 @@ const GalleryPage: FC = () => {
 
   if (isAuthenticating) {
     return (
-      <Layout heading="Your film gallery" route="Gallery">
+      <Layout heading="Your gallery" route="Gallery">
         <LoadingIndicator />{" "}
       </Layout>
     );
@@ -41,7 +41,7 @@ const GalleryPage: FC = () => {
   }
 
   return (
-    <Layout heading="Your film gallery" route="Gallery">
+    <Layout heading="Your gallery" route="Gallery">
       <div className="w-full flex flex-col justify-start items-center gap-3">
         <Button
           className="absolute -top-[4.5rem] right-2 hover:text-zinc-900 active:text-zinc-900 ring-1 ring-zinc-900"
