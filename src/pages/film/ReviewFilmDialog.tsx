@@ -4,7 +4,6 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useCallback, useState, type FC } from "react";
 import { useSWRConfig } from "swr";
 import useMutation from "swr/mutation";
-import { isValid } from "zod";
 import { review } from "../../api/film";
 import { included } from "../../api/keys";
 import { api } from "../../api/url";
@@ -34,26 +33,32 @@ const ReviewFilmDialog: FC<ReviewFilmProps> = ({
 }) => {
   const [serverError, setServerError] = useState<string>();
   const { notify } = useNotifcation();
-  const [{ values, errors }, update] = useForm({
+  const [{ values, errors, isValid }, update] = useForm({
     schema: ReviewFilm,
     initial: {
       rating: 5,
     },
   });
 
+  const close = useCallback(() => {
+    setServerError(undefined);
+    update(() => ({
+      rating: 5,
+    }));
+    onClose();
+  }, [onClose, update, setServerError]);
+
   const { mutate } = useSWRConfig();
   const { trigger } = useMutation([...review.keys, `${filmId}`], review.fn, {
     onSuccess: (res) => {
       match(res, {
         Ok: () => {
-          onClose();
+          close();
           mutate(included("films"));
           notify({
             kind: "success",
             title: "Film reviewed",
           });
-          update(() => ({ rating: 5 }));
-          setServerError(undefined);
         },
         SelfReview: () => {
           setServerError("Cannot rate a reviewed film or unreleased one");
@@ -69,12 +74,14 @@ const ReviewFilmDialog: FC<ReviewFilmProps> = ({
     },
   });
 
-  const onSubmit = useCallback(() => {
+  const submit = useCallback(() => {
+    if (!isValid) return;
+    setServerError(undefined);
     trigger({
       ...values,
       filmId,
     });
-  }, [values, filmId]);
+  }, [values, filmId, setServerError]);
 
   return (
     <Transition appear show={reviewing} as={Fragment}>
@@ -97,7 +104,7 @@ const ReviewFilmDialog: FC<ReviewFilmProps> = ({
                 p-6 text-left align-middle shadow-xl transition-all"
                 onSubmit={(e) => {
                   e.preventDefault();
-                  onSubmit();
+                  submit();
                 }}
               >
                 <Dialog.Title
@@ -159,7 +166,7 @@ const ReviewFilmDialog: FC<ReviewFilmProps> = ({
                       active: "active:bg-zinc-200",
                       border: "focus-visible:ring-zinc-500",
                     }}
-                    onClick={onClose}
+                    onClick={close}
                   >
                     Cancel
                   </Button>
@@ -171,7 +178,6 @@ const ReviewFilmDialog: FC<ReviewFilmProps> = ({
                       active: "active:bg-sky-200",
                       border: "focus-visible:ring-sky-500",
                     }}
-                    onClick={onSubmit}
                     disabled={!isValid}
                   >
                     Save

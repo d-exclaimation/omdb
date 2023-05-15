@@ -1,4 +1,4 @@
-import { useState, type FC } from "react";
+import { useMemo, type FC } from "react";
 import { useToggle } from "../hooks/useToggle";
 
 type ImageProps = {
@@ -9,8 +9,12 @@ type ImageProps = {
 };
 
 const Img: FC<ImageProps> = ({ src, fallback, alt, className }) => {
-  const [href, setHref] = useState(src);
+  const [notFound, { open }] = useToggle(false);
   const [loading, { close }] = useToggle(true);
+  const href = useMemo(
+    () => (notFound ? `https://avatar.vercel.sh/${fallback}` : src),
+    [src, fallback, notFound]
+  );
   return (
     <img
       className={`data-[loading='true']:bg-zinc-200 data-[loading='true']:animate-pulse
@@ -20,7 +24,7 @@ const Img: FC<ImageProps> = ({ src, fallback, alt, className }) => {
       data-loading={loading}
       onLoad={close}
       onError={() => {
-        setHref(`https://avatar.vercel.sh/${fallback}`);
+        open();
       }}
       alt={alt}
     />

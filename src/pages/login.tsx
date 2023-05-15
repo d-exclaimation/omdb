@@ -115,7 +115,6 @@ const LoginPage: FC = () => {
               active: "active:bg-zinc-50",
               border: "focus-visible:ring-zinc-500",
             }}
-            onClick={submit}
           >
             Continue with email
           </Button>

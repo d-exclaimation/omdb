@@ -43,15 +43,16 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
   });
 
   const close = useCallback(() => {
+    onClose();
     setTitleError(null);
     setFile(null);
+    setPreview("https://avatar.vercel.sh/cookie");
     update(() => ({
       title: "",
       description: "",
       genreId: 1,
       ageRating: "TBC",
     }));
-    onClose();
   }, [onClose, update, setFile, setTitleError]);
 
   const { mutate } = useSWRConfig();
@@ -60,12 +61,6 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
       match(res, {
         Ok: () => {
           mutate(included("films"));
-          update(() => ({
-            title: "",
-            description: "",
-            genreId: 1,
-            ageRating: "TBC",
-          }));
           close();
           notify({
             kind: "success",
@@ -148,6 +143,7 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
                         if (!allowedTypes.includes(file.type)) {
                           return;
                         }
+                        console.log(URL.createObjectURL(file));
                         setPreview(URL.createObjectURL(file));
                         setFile(file);
                       }}
@@ -267,7 +263,6 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
                       active: "active:bg-sky-200",
                       border: "focus-visible:ring-sky-500",
                     }}
-                    onClick={submit}
                     disabled={!isValid}
                   >
                     Save

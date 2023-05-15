@@ -253,7 +253,6 @@ const EditDialog: FC<EditDialogProps> = ({ editing, close, ...user }) => {
                       active: "active:bg-sky-200",
                       border: "focus-visible:ring-sky-500",
                     }}
-                    onClick={onSubmit}
                     disabled={!isValid}
                   >
                     Save

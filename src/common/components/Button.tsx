@@ -11,7 +11,7 @@ type ButtonProps = {
     hover: `hover:${Palette["bg"]}`;
     border: `focus-visible:${Palette["ring"]}`;
   };
-  onClick: () => void;
+  onClick?: () => void;
   disabled?: boolean;
   children: ReactNode;
 };

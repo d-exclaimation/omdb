@@ -243,7 +243,6 @@ const FilmEdit: FC<FilmEditProps> = ({
                       active: "active:bg-sky-200",
                       border: "focus-visible:ring-sky-500",
                     }}
-                    onClick={submit}
                     disabled={!isValid}
                   >
                     Save
