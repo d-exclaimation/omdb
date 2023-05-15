@@ -41,6 +41,19 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
       ageRating: "TBC",
     },
   });
+
+  const close = useCallback(() => {
+    setTitleError(null);
+    setFile(null);
+    update(() => ({
+      title: "",
+      description: "",
+      genreId: 1,
+      ageRating: "TBC",
+    }));
+    onClose();
+  }, [onClose, update, setFile, setTitleError]);
+
   const { mutate } = useSWRConfig();
   const { trigger } = useMutation(createFilm.keys, createFilm.fn, {
     onSuccess: (res) => {
@@ -53,7 +66,7 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
             genreId: 1,
             ageRating: "TBC",
           }));
-          onClose();
+          close();
           notify({
             kind: "success",
             title: "Film created",
@@ -153,9 +166,10 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
                       }
                       value={values.title}
                       placeholder="Provide a title"
-                      onChange={(title) =>
-                        update((prev) => ({ ...prev, title }))
-                      }
+                      onChange={(title) => {
+                        setTitleError(null);
+                        update((prev) => ({ ...prev, title }));
+                      }}
                     />
                     <Textarea
                       label="Description"
@@ -241,7 +255,7 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
                       active: "active:bg-zinc-200",
                       border: "focus-visible:ring-zinc-500",
                     }}
-                    onClick={onClose}
+                    onClick={close}
                   >
                     Cancel
                   </Button>

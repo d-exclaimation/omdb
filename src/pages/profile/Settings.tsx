@@ -32,6 +32,7 @@ const Settings: FC<SettingsProps> = ({ onEdit, onLogout }) => {
           <Menu.Item>
             {({ active }) => (
               <button
+                type="button"
                 className="flex w-full items-center rounded px-2 py-2 text-sm data-selected:bg-zinc-800 data-selected:text-white"
                 data-selected={active}
                 onClick={onEdit}
@@ -43,6 +44,7 @@ const Settings: FC<SettingsProps> = ({ onEdit, onLogout }) => {
           <Menu.Item>
             {({ active }) => (
               <button
+                type="button"
                 className="flex w-full items-center rounded px-2 py-2
                 text-red-700 md:text-black text-sm 
                 md:data-selected:bg-red-500 md:data-selected:text-white"

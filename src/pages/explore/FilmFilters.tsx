@@ -54,6 +54,7 @@ const FilmFilters: FC<FilmFiltersProps> = ({
       <div className="w-full hidden md:flex flex-row overflow-x-auto gap-2">
         {genreIds.map((genreId) => (
           <button
+            type="button"
             key={genreId}
             className="px-4 py-2 rounded-full text-sm bg-white text-zinc-600 w-max flex-shrink-0 animate-slide-right"
             onClick={() => onRemoveGenre(genreId)}
@@ -63,6 +64,7 @@ const FilmFilters: FC<FilmFiltersProps> = ({
         ))}
         {ratings.map((rating) => (
           <button
+            type="button"
             key={rating}
             className={`px-4 py-2 rounded-full text-sm bg-white font-medium w-max flex-shrink-0 
             ${ageRatingToColor(rating).text} animate-slide-right`}

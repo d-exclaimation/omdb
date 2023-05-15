@@ -30,6 +30,7 @@ const PageControls: FC<PageControlsProps> = ({ current, setPage, last }) => {
   return (
     <div className="flex w-max font-light flex-row items-center justify-center gap-3">
       <button
+        type="button"
         className="flex items-center justify-center rounded-full 
        hover:bg-slate-100 active:bg-slate-100 p-2 transition-all
         disabled:opacity-0 disabled:hover:bg-transparent
@@ -43,6 +44,7 @@ const PageControls: FC<PageControlsProps> = ({ current, setPage, last }) => {
       </button>
 
       <button
+        type="button"
         className="flex items-center justify-center rounded-full
        hover:bg-slate-100 active:bg-slate-100 p-2 transition-all
         disabled:opacity-0 disabled:hover:bg-transparent
@@ -69,6 +71,7 @@ const PageControls: FC<PageControlsProps> = ({ current, setPage, last }) => {
       </div>
 
       <button
+        type="button"
         className="flex items-center justify-center rounded-full
         hover:bg-slate-100 active:bg-slate-100 p-2 transition-all
         disabled:opacity-0 disabled:hover:bg-transparent
@@ -82,6 +85,7 @@ const PageControls: FC<PageControlsProps> = ({ current, setPage, last }) => {
       </button>
 
       <button
+        type="button"
         className="flex items-center justify-center rounded-full
       hover:bg-slate-100 active:bg-slate-100 p-2 transition-all
         disabled:opacity-0 disabled:hover:bg-transparent

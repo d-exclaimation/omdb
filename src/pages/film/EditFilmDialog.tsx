@@ -44,6 +44,15 @@ const FilmEdit: FC<FilmEditProps> = ({
     },
   });
 
+  const close = useCallback(() => {
+    setTitleError(null);
+    update(() => ({
+      ...initial,
+      releaseDate: undefined,
+    }));
+    onClose();
+  }, [onClose, update, initial, setTitleError]);
+
   const { mutate } = useSWRConfig();
   const { trigger } = useMutation(
     [...editFilm.keys, `${filmId}`],
@@ -57,7 +66,7 @@ const FilmEdit: FC<FilmEditProps> = ({
               kind: "success",
               title: "Film updated",
             });
-            onClose();
+            close();
           },
           BadTitle: () => {
             setTitleError("Film with that title already exists");
@@ -74,7 +83,7 @@ const FilmEdit: FC<FilmEditProps> = ({
     }
   );
 
-  const onSubmit = useCallback(() => {
+  const submit = useCallback(() => {
     if (!isValid) return;
     trigger({
       filmId,
@@ -103,7 +112,7 @@ const FilmEdit: FC<FilmEditProps> = ({
                 p-6 text-left align-middle shadow-xl transition-all"
                 onSubmit={(e) => {
                   e.preventDefault();
-                  onSubmit();
+                  submit();
                 }}
               >
                 <Dialog.Title
@@ -222,7 +231,7 @@ const FilmEdit: FC<FilmEditProps> = ({
                       active: "active:bg-zinc-200",
                       border: "focus-visible:ring-zinc-500",
                     }}
-                    onClick={onClose}
+                    onClick={close}
                   >
                     Cancel
                   </Button>
@@ -234,7 +243,7 @@ const FilmEdit: FC<FilmEditProps> = ({
                       active: "active:bg-sky-200",
                       border: "focus-visible:ring-sky-500",
                     }}
-                    onClick={onSubmit}
+                    onClick={submit}
                     disabled={!isValid}
                   >
                     Save

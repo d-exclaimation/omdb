@@ -51,6 +51,7 @@ const FilmsCaraousel: FC<FilmCaraouselProps> = ({
                 ),
                 action: ({ label, onClick }) => (
                   <button
+                    type="button"
                     onClick={onClick}
                     className="text-xs text-zinc-700 border-b-[1px] border-zinc-500 transition-all
                     hover:text-zinc-500 hover:border-zinc-500 active:text-zinc-500 active:border-zinc-500"

@@ -61,6 +61,7 @@ const FilmAgeRatingFilter: FC<FilmAgeRatingFilterProps> = ({
                 <Menu.Item key={rating}>
                   {({ active }) => (
                     <button
+                      type="button"
                       className="flex w-full items-center rounded px-2 py-2 text-sm 
                       data-selected:bg-red-600 data-selected:text-white text-red-600 md:text-black
                       disabled:cursor-not-allowed disabled:opacity-50"
@@ -82,6 +83,7 @@ const FilmAgeRatingFilter: FC<FilmAgeRatingFilterProps> = ({
                 <Menu.Item key={rating}>
                   {({ active }) => (
                     <button
+                      type="button"
                       className="flex w-full items-center rounded px-2 py-2 text-sm 
                         data-selected:bg-zinc-800 data-selected:text-white
                         disabled:cursor-not-allowed disabled:opacity-50"

@@ -12,6 +12,7 @@ const EditImage: FC<EditImageProps> = ({ onUpload, onRemove, className }) => {
   return (
     <Menu as="div" className={`min-w-max z-50 ${className ?? ""}`}>
       <Menu.Button
+        type="button"
         className="inline-flex items-center bg-white ring-1 ring-zinc-400/50 hover:bg-zinc-100
       active:bg-zinc-100 rounded px-3 py-1 text-sm"
       >
@@ -44,6 +45,7 @@ const EditImage: FC<EditImageProps> = ({ onUpload, onRemove, className }) => {
           <Menu.Item>
             {({ active }) => (
               <button
+                type="button"
                 className="flex w-full items-center rounded px-2 py-2 text-sm data-selected:bg-zinc-800 data-selected:text-white"
                 data-selected={active}
                 onClick={() => {
@@ -57,6 +59,7 @@ const EditImage: FC<EditImageProps> = ({ onUpload, onRemove, className }) => {
           <Menu.Item>
             {({ active }) => (
               <button
+                type="button"
                 className="flex w-full items-center rounded px-2 py-2
                 text-red-700 md:text-black text-sm 
                 md:data-selected:bg-red-500 md:data-selected:text-white"
