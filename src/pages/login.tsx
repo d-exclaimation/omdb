@@ -85,7 +85,7 @@ const LoginPage: FC = () => {
           }}
         >
           <div className="w-full flex justify-center items-center mb-2">
-            <h2 className="font-bold text-3xl">Log in to OMDb</h2>
+            <h2 className="font-bold text-2xl md:text-3xl">Log in to OMDb</h2>
           </div>
 
           <InputField
@@ -115,6 +115,7 @@ const LoginPage: FC = () => {
               active: "active:bg-zinc-50",
               border: "focus-visible:ring-zinc-500",
             }}
+            disabled={!isValid || isInitial}
           >
             Continue with email
           </Button>

@@ -54,7 +54,7 @@ type AuthResponse = Union<{
 
 export const register = mutation(
   ["users", "signup"],
-  async (arg: RegisterUser): Promise<AuthResponse> => {
+  async (arg: RegisterUser & { file?: File }): Promise<AuthResponse> => {
     try {
       const res1 = await fetch(`${api}/users/register`, {
         method: "POST",
@@ -100,6 +100,17 @@ export const register = mutation(
 
       setUserId(maybeLogin.data.userId.toString());
       setSession(maybeLogin.data.token);
+
+      if (arg.file) {
+        await fetch(`${api}/users/${maybeLogin.data.userId}/image`, {
+          method: "PUT",
+          headers: {
+            "X-Authorization": session() ?? "",
+            "Content-Type": arg.file.type,
+          },
+          body: arg.file,
+        });
+      }
 
       return {
         kind: "Ok",

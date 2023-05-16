@@ -75,8 +75,8 @@ function snakeReducer(state: SnakeState, action: SnakeAction): SnakeState {
       }
 
       const grow = newHead.x === state.food.x && newHead.y === state.food.y;
-      const newFood = grow ? generateFood(state.snake) : state.food;
       const newSnake = grow ? [tail, ...body, newHead] : [...body, newHead];
+      const newFood = grow ? generateFood(newSnake) : state.food;
 
       return {
         ...state,

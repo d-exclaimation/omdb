@@ -115,7 +115,7 @@ const EditDialog: FC<EditDialogProps> = ({ editing, close, ...user }) => {
                       alt="avatar"
                     />
                     <EditImage
-                      className="-translate-x-10 "
+                      className="-translate-x-10"
                       onUpload={(file) => {
                         const allowedTypes = [
                           "image/png",

@@ -3,24 +3,37 @@ import { Transition } from "@headlessui/react";
 import { useCallback, useEffect, useMemo, useState, type FC } from "react";
 import { Link, Navigate } from "react-router-dom";
 import useMutation from "swr/mutation";
-import { register, setAvatar } from "../../api/user";
+import { register } from "../../api/user";
 import { useAuth } from "../../auth/useAuth";
 import Button from "../../common/components/Button";
+import Img from "../../common/components/Image";
 import InputField from "../../common/components/InputField";
 import LoadingIndicator from "../../common/components/LoadingIndicator";
 import { useNotifcation } from "../../common/context/notification/useNotification";
 import { useForm } from "../../common/hooks/useForm";
 import { useToggle } from "../../common/hooks/useToggle";
 import { RegisterUser } from "../../types/user";
-import AvatarDialog from "./AvatarDialog";
+import AddImage from "./AddImage";
 
 const SignupPage: FC = () => {
   const [serverError, setServerError] = useState<string>();
   const { isLoggedIn, invalidate, isAuthenticating } = useAuth();
   const { notify } = useNotifcation();
-  const [isSubmitting, { open, close }] = useToggle();
   const [showPassword, { toggle }] = useToggle();
-  const { trigger, isMutating } = useMutation(register.keys, register.fn, {
+  const [preview, setPreview] = useState<string>(
+    "https://avatar.vercel.sh/cookie"
+  );
+  const [file, setFile] = useState<File | undefined>();
+  const [{ values, errors: e, isValid, isInitial }, updateForm] = useForm({
+    schema: RegisterUser,
+    initial: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+    },
+  });
+  const { trigger } = useMutation(register.keys, register.fn, {
     onSuccess: (res) => {
       match(res, {
         Ok: () => {
@@ -45,36 +58,16 @@ const SignupPage: FC = () => {
       });
     },
   });
-  const { trigger: uploadAvatar } = useMutation(setAvatar.keys, setAvatar.fn, {
-    onSuccess: () => {
-      invalidate();
-      notify({
-        kind: "info",
-        title: "Profile picture updated",
-      });
-      close();
-    },
-  });
-
-  const [{ values, errors: e, isValid, isInitial }, updateForm] = useForm({
-    schema: RegisterUser,
-    initial: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-    },
-  });
 
   // Make sure that min length errors are shown after the user has submitted
   const errors = useMemo(() => {
     return {
-      firstName: isSubmitting || values.firstName ? e.firstName : undefined,
-      lastName: isSubmitting || values.lastName ? e.lastName : undefined,
-      email: isSubmitting || values.email ? e.email : undefined,
-      password: isSubmitting || values.password ? e.password : undefined,
+      firstName: values.firstName ? e.firstName : undefined,
+      lastName: values.lastName ? e.lastName : undefined,
+      email: values.email ? e.email : undefined,
+      password: values.password ? e.password : undefined,
     } satisfies typeof e;
-  }, [isSubmitting, e, values]);
+  }, [e, values]);
 
   // Make sure that if the user updates the form, the submission is cancelled
   const update = useCallback<typeof updateForm>(
@@ -87,14 +80,11 @@ const SignupPage: FC = () => {
 
   const submit = useCallback(async () => {
     if (!isValid || isInitial) return;
-    open();
     trigger({
-      firstName: values.firstName,
-      lastName: values.lastName,
-      email: values.email,
-      password: values.password,
+      ...values,
+      file,
     });
-  }, [open, isValid, trigger, values]);
+  }, [isInitial, isValid, trigger, values, file]);
 
   // Make sure that it validates on mount
   useEffect(() => {
@@ -105,17 +95,12 @@ const SignupPage: FC = () => {
     return <LoadingIndicator />;
   }
 
-  if (isLoggedIn && !isSubmitting) {
+  if (isLoggedIn) {
     return <Navigate to="/profile" />;
   }
 
   return (
     <div className="min-h-screen w-full max-w-3xl px-5 h-max flex flex-col overflow-x-hidden items-center gap-4 justify-center pt-2 pb-20">
-      <AvatarDialog
-        show={isSubmitting && !isMutating && isValid}
-        onClose={close}
-        onSubmit={uploadAvatar}
-      />
       <Transition
         as="div"
         className="flex-1 w-full min-h-full h-max flex justify-center items-center"
@@ -137,8 +122,33 @@ const SignupPage: FC = () => {
           }}
         >
           <div className="w-full flex flex-col justify-center items-center mb-2">
-            <h2 className="font-bold text-3xl">Create Your</h2>
-            <h2 className="font-bold text-3xl">OMDb account</h2>
+            <h2 className="font-bold text-xl md:text-2xl">
+              Create Your OMDb Account
+            </h2>
+          </div>
+
+          <div className="w-full flex flex-col justify-center items-center mb-2">
+            <Img
+              src={preview}
+              alt="Avatar"
+              className="rounded-full w-20 h-20"
+              fallback="cookie"
+            />
+            <AddImage
+              className="absolute translate-y-8"
+              onUpload={(file) => {
+                const allowedTypes = ["image/png", "image/jpeg", "image/gif"];
+                if (!allowedTypes.includes(file.type)) {
+                  return;
+                }
+                setPreview(URL.createObjectURL(file));
+                setFile(file);
+              }}
+              onRemove={() => {
+                setPreview("https://avatar.vercel.sh/cookie");
+                setFile(undefined);
+              }}
+            />
           </div>
 
           <InputField
@@ -155,7 +165,6 @@ const SignupPage: FC = () => {
             error={errors.lastName}
             onChange={(lastName) => update((prev) => ({ ...prev, lastName }))}
           />
-
           <InputField
             label="Email"
             placeholder="Enter your email"
@@ -168,7 +177,7 @@ const SignupPage: FC = () => {
           />
           <InputField
             label="Password"
-            type={showPassword && !isSubmitting ? "text" : "password"}
+            type={showPassword ? "text" : "password"}
             placeholder="Enter your password"
             value={values.password}
             error={errors.password}
@@ -180,13 +189,12 @@ const SignupPage: FC = () => {
              bg-zinc-200 rounded z-10 active:bg-zinc-300 hover:bg-zinc-300
               disabled:opacity-50 disabled:cursor-not-allowed"
               onClick={toggle}
-              disabled={isSubmitting}
             >
               {showPassword ? "Hide" : "Show"}
             </button>
           </InputField>
           <Button
-            className="w-full hover:text-zinc-900 active:text-zinc-900 ring-1 ring-zinc-900"
+            className="w-full hover:text-zinc-900 active:text-zinc-900 ring-1 ring-zinc-900 disabled:brightness-90"
             color={{
               bg: "bg-zinc-900",
               text: "text-zinc-50",
@@ -194,6 +202,7 @@ const SignupPage: FC = () => {
               active: "active:bg-zinc-50",
               border: "focus-visible:ring-zinc-500",
             }}
+            disabled={!isValid || isInitial}
           >
             Continue with email
           </Button>
