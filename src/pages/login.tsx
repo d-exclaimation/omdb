@@ -103,7 +103,7 @@ const LoginPage: FC = () => {
             type="password"
             placeholder="Enter your password"
             value={values.password}
-            error={errors.password}
+            error={values.password ? errors.password : undefined}
             onChange={(password) => update((prev) => ({ ...prev, password }))}
           />
           <Button

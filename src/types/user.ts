@@ -23,8 +23,11 @@ export const LoginResponse = z.object({
 
 export type LoginUser = z.infer<typeof LoginUser>;
 export const LoginUser = z.object({
-  email: z.string().email("Must be a valid email"),
-  password: z.string(),
+  email: z
+    .string()
+    .email("Must be a valid email")
+    .min(1, "Please fill in your email"),
+  password: z.string().min(1, "Please fill in your password"),
 });
 
 export type RegisterUser = z.infer<typeof RegisterUser>;
