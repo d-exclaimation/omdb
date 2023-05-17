@@ -35,7 +35,7 @@ const ProfilePage: FC = () => {
   }
 
   return (
-    <Layout heading="Your profile" route="Profile">
+    <Layout key={user.id} heading="Your profile" route="Profile">
       <div className="w-full flex flex-col items-center gap-3 justify-start">
         <Profile
           user={user}

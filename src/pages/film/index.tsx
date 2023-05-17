@@ -23,7 +23,7 @@ const FilmPage: FC = () => {
   }
 
   return (
-    <Layout route="Film" heading={data.title ?? "Film"}>
+    <Layout key={data.filmId} route="Film" heading={data.title ?? "Film"}>
       <div className="w-full flex flex-col justify-start items-center gap-3">
         <FilmDetails {...data} />
         <FilmDirector
