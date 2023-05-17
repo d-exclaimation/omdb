@@ -49,39 +49,43 @@ const ReviewFilmDialog: FC<ReviewFilmProps> = ({
   }, [onClose, update, setServerError]);
 
   const { mutate } = useSWRConfig();
-  const { trigger } = useMutation([...review.keys, `${filmId}`], review.fn, {
-    onSuccess: (res) => {
-      match(res, {
-        Ok: () => {
-          close();
-          mutate(included("films"));
-          notify({
-            kind: "success",
-            title: "Film reviewed",
-          });
-        },
-        SelfReview: () => {
-          setServerError("Cannot rate a reviewed film or unreleased one");
-        },
-        "*": (e) => {
-          console.log("Error", e);
-          notify({
-            kind: "error",
-            title: "Unexpected error occurred",
-          });
-        },
-      });
-    },
-  });
+  const { trigger, isMutating } = useMutation(
+    [...review.keys, `${filmId}`],
+    review.fn,
+    {
+      onSuccess: (res) => {
+        match(res, {
+          Ok: () => {
+            close();
+            mutate(included("films"));
+            notify({
+              kind: "success",
+              title: "Film reviewed",
+            });
+          },
+          SelfReview: () => {
+            setServerError("Cannot rate a reviewed film or unreleased one");
+          },
+          "*": (e) => {
+            console.log("Error", e);
+            notify({
+              kind: "error",
+              title: "Unexpected error occurred",
+            });
+          },
+        });
+      },
+    }
+  );
 
   const submit = useCallback(() => {
-    if (!isValid) return;
+    if (!isValid || isMutating) return;
     setServerError(undefined);
     trigger({
       ...values,
       filmId,
     });
-  }, [values, filmId, setServerError]);
+  }, [isValid, isMutating, trigger, values, filmId, setServerError]);
 
   return (
     <Transition appear show={reviewing} as={Fragment}>
@@ -178,7 +182,7 @@ const ReviewFilmDialog: FC<ReviewFilmProps> = ({
                       active: "active:bg-sky-200",
                       border: "focus-visible:ring-sky-500",
                     }}
-                    disabled={!isValid}
+                    disabled={!isValid || isMutating}
                   >
                     Save
                   </Button>

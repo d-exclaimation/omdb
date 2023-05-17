@@ -59,7 +59,7 @@ const FilmEdit: FC<FilmEditProps> = ({
   }, [onClose, update, initial, setTitleError]);
 
   const { mutate } = useSWRConfig();
-  const { trigger } = useMutation(
+  const { trigger, isMutating } = useMutation(
     [...editFilm.keys, `${filmId}`],
     editFilm.fn,
     {
@@ -90,13 +90,13 @@ const FilmEdit: FC<FilmEditProps> = ({
   );
 
   const submit = useCallback(() => {
-    if (!isValid) return;
+    if (!isValid || isMutating) return;
     trigger({
       filmId,
       file: file ?? undefined,
       ...values,
     });
-  }, [isValid, values, filmId, trigger, file]);
+  }, [isValid, isMutating, values, filmId, trigger, file]);
 
   return (
     <Transition appear show={editing} as={Fragment}>
@@ -266,7 +266,7 @@ const FilmEdit: FC<FilmEditProps> = ({
                       active: "active:bg-sky-200",
                       border: "focus-visible:ring-sky-500",
                     }}
-                    disabled={!isValid}
+                    disabled={!isValid || isMutating}
                   >
                     Save
                   </Button>

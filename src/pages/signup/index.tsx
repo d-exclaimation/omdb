@@ -24,7 +24,7 @@ const SignupPage: FC = () => {
     "https://avatar.vercel.sh/cookie"
   );
   const [file, setFile] = useState<File | undefined>();
-  const [{ values, errors: e, isValid, isInitial }, updateForm] = useForm({
+  const [{ values, errors: e, isValid, isInitial }, update] = useForm({
     schema: RegisterUser,
     initial: {
       firstName: "",
@@ -33,7 +33,7 @@ const SignupPage: FC = () => {
       password: "",
     },
   });
-  const { trigger } = useMutation(register.keys, register.fn, {
+  const { trigger, isMutating } = useMutation(register.keys, register.fn, {
     onSuccess: (res) => {
       match(res, {
         Ok: () => {
@@ -69,22 +69,10 @@ const SignupPage: FC = () => {
     } satisfies typeof e;
   }, [e, values]);
 
-  // Make sure that if the user updates the form, the submission is cancelled
-  const update = useCallback<typeof updateForm>(
-    (arg) => {
-      close();
-      updateForm(arg);
-    },
-    [updateForm, close]
-  );
-
   const submit = useCallback(async () => {
-    if (!isValid || isInitial) return;
-    trigger({
-      ...values,
-      file,
-    });
-  }, [isInitial, isValid, trigger, values, file]);
+    if (!isValid || isInitial || isMutating) return;
+    trigger({ ...values, file });
+  }, [isInitial, isValid, isMutating, trigger, values, file]);
 
   // Make sure that it validates on mount
   useEffect(() => {
@@ -202,7 +190,7 @@ const SignupPage: FC = () => {
               active: "active:bg-zinc-50",
               border: "focus-visible:ring-zinc-500",
             }}
-            disabled={!isValid || isInitial}
+            disabled={!isValid || isInitial || isMutating}
           >
             Continue with email
           </Button>

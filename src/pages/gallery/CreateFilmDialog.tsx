@@ -53,13 +53,14 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
       genreId: 1,
       ageRating: "TBC",
     }));
-  }, [onClose, update, setFile, setTitleError]);
+  }, [onClose, update, setFile, setTitleError, setPreview]);
 
   const { mutate } = useSWRConfig();
-  const { trigger } = useMutation(createFilm.keys, createFilm.fn, {
+  const { trigger, isMutating } = useMutation(createFilm.keys, createFilm.fn, {
     onSuccess: (res) => {
       match(res, {
         Ok: () => {
+          onClose();
           mutate(included("films"));
           close();
           notify({
@@ -82,16 +83,15 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
   });
 
   const submit = useCallback(() => {
-    if (!isValid || isInitial) return;
+    if (!isValid || isInitial || isMutating) {
+      return;
+    }
     if (!file) {
       setTitleError("Image not provided");
       return;
     }
-    trigger({
-      ...values,
-      file: file ?? undefined,
-    });
-  }, [trigger, values, file]);
+    trigger({ ...values, file });
+  }, [trigger, values, file, isValid, isInitial, setTitleError]);
 
   // Make sure that it validates on mount
   useEffect(() => {
@@ -265,9 +265,9 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
                       active: "active:bg-sky-200",
                       border: "focus-visible:ring-sky-500",
                     }}
-                    disabled={!isValid}
+                    disabled={!isValid || isMutating}
                   >
-                    Save
+                    {isMutating ? "..." : "Create"}
                   </Button>
                 </div>
               </Dialog.Panel>

@@ -35,7 +35,7 @@ const EditDialog: FC<EditDialogProps> = ({ editing, close, ...user }) => {
       ...user,
     },
   });
-  const { trigger } = useMutation(edit.keys, edit.fn, {
+  const { trigger, isMutating } = useMutation(edit.keys, edit.fn, {
     onSuccess: (res) => {
       match(res, {
         Ok: () => {
@@ -70,11 +70,11 @@ const EditDialog: FC<EditDialogProps> = ({ editing, close, ...user }) => {
   }, [update, close, user]);
 
   const onSubmit = useCallback(() => {
-    if (!isValid) {
+    if (!isValid || isMutating) {
       return;
     }
     trigger({ ...values, file });
-  }, [values, isValid, trigger, file]);
+  }, [values, isValid, trigger, isMutating, file]);
 
   return (
     <Transition appear show={editing} as={Fragment}>
@@ -253,9 +253,9 @@ const EditDialog: FC<EditDialogProps> = ({ editing, close, ...user }) => {
                       active: "active:bg-sky-200",
                       border: "focus-visible:ring-sky-500",
                     }}
-                    disabled={!isValid}
+                    disabled={!isValid || isMutating}
                   >
-                    Save
+                    {isMutating ? "..." : "Save"}
                   </Button>
                 </div>
               </Dialog.Panel>
