@@ -1,4 +1,5 @@
 import { type FC, type ReactNode } from "react";
+import { datestring } from "../utils/date";
 
 type DateInputFieldProps = {
   label: string;
@@ -35,12 +36,17 @@ const DateInputField: FC<DateInputFieldProps> = ({
         </span>
       </label>
       <input
-        type="date"
+        type="datetime-local"
         className="w-full py-3 placeholder:text-slate-400 text-sm focus:outline-none disabled:cursor-not-allowed
         disabled:opacity-50 rounded border border-slate-300 bg-transparent px-3 data-[error='true']:border-red-700
-        [-webkit-appearance: none] [-moz-appearance: textfield]"
-        defaultValue={initialValue?.toISOString().split("T")[0]}
-        onChange={(e) => e.target.valueAsDate && onChange(e.target.valueAsDate)}
+        [-webkit-appearance:none] [-moz-appearance:textfield] min-h-[1.25rem]"
+        defaultValue={initialValue ? datestring(initialValue) : undefined}
+        onChange={(e) => {
+          const valueAsDate = new Date(e.target.value);
+          if (valueAsDate) {
+            onChange(valueAsDate);
+          }
+        }}
         data-error={!!error}
         disabled={disabled}
       />

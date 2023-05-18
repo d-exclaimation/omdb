@@ -34,7 +34,7 @@ const FilmDirector: FC<FilmDirectorProps> = ({
 
   const isYou = useMemo(() => user?.id === director.id, [user, director.id]);
   return (
-    <div className="w-full max-w-3xl h-max bg-white flex overflow-hidden flex-col rounded-lg p-6 py-4 md:p-8 md:py-6">
+    <div className="w-full max-w-3xl h-max bg-white flex flex-col rounded-lg p-6 py-4 md:p-8 md:py-6">
       <EditFilmDialog film={film} onClose={closeEdit} editing={editing} />
       <DeleteFilmDialog
         id={film.filmId}

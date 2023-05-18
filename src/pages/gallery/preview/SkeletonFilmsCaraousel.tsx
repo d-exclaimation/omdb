@@ -33,7 +33,7 @@ const SkeletonFilmsCaraousel: FC<SkeletonFilmsCaraouselProps> = ({ title }) => {
                 <span className="px-1 rounded bg-zinc-100">TBC</span>
               </div>
               <div className="flex flex-row justify-between text-zinc-400 gap-3 pr-1 text-xs">
-                <span>{new Date().toLocaleDateString("en-NZ")}</span>
+                <span>{new Date().toLocaleString("en-NZ")}</span>
                 <span className="flex items-center">
                   <img className="w-3 h-3 mr-[.125rem]" src="/icons/star.svg" />
                   {(0).toFixed(2)}
