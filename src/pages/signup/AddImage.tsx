@@ -63,7 +63,12 @@ const AddImage: FC<AddImageProps> = ({ className, onRemove, onUpload }) => {
                 text-red-700 md:text-black text-sm 
                 md:data-selected:bg-red-500 md:data-selected:text-white"
                 data-selected={active}
-                onClick={onRemove}
+                onClick={() => {
+                  if (fileInputRef.current) {
+                    fileInputRef.current.value = "";
+                  }
+                  onRemove();
+                }}
               >
                 Remove
               </button>
