@@ -4,6 +4,14 @@ type InputFieldProps = {
   label: string;
   type?: "text" | "password";
   placeholder?: string;
+  inputMode?:
+    | "text"
+    | "numeric"
+    | "decimal"
+    | "email"
+    | "search"
+    | "tel"
+    | "url";
   error?: string;
   value: string;
   onChange: (value: string) => void;
@@ -13,6 +21,7 @@ type InputFieldProps = {
 const InputField: FC<InputFieldProps> = ({
   label,
   error,
+  inputMode,
   value,
   onChange,
   type,
@@ -38,6 +47,7 @@ const InputField: FC<InputFieldProps> = ({
       </label>
       <input
         type={type ?? "text"}
+        inputMode={inputMode}
         placeholder={placeholder}
         className="w-full py-3 placeholder:text-slate-400 text-sm focus:outline-none disabled:cursor-not-allowed 
         disabled:opacity-50 rounded border border-slate-300 bg-transparent px-3 data-[error='true']:border-red-700 "

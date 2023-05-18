@@ -229,6 +229,7 @@ const FilmEdit: FC<FilmEditProps> = ({
 
                     <InputField
                       label="Runtime (minutes)"
+                      inputMode="numeric"
                       error={errors.runtime}
                       value={values.runtime?.toString() ?? ""}
                       placeholder="Optionally provide runtime"

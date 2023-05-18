@@ -17,7 +17,7 @@ const Settings: FC<SettingsProps> = ({
   return (
     <Menu
       as="div"
-      className={`relative inline-block text-left
+      className={`relative inline-block text-left z-40
       ${className ?? ""}`}
     >
       <Menu.Button
@@ -38,7 +38,7 @@ const Settings: FC<SettingsProps> = ({
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute p-1 right-0 origin-top-right rounded mt-2 w-36 bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="absolute p-1 z-40 right-0 origin-top-right rounded mt-2 w-36 bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <Menu.Item>
             {({ active }) => (
               <button

@@ -228,6 +228,7 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
 
                     <InputField
                       label="Runtime (minutes)"
+                      inputMode="numeric"
                       error={errors.runtime}
                       value={values.runtime?.toString() ?? ""}
                       placeholder="Optionally provide runtime"
