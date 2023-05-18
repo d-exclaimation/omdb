@@ -24,9 +24,14 @@ const FilmDetails: FC<FilmDetail> = (data) => {
           <h3 className="text-xl max-w-[60%] truncate font-semibold">
             {data.title}
           </h3>
-          <h3 className="text-xs md:text-sm font-light">
-            {data.releaseDate.toLocaleString("en-NZ")}
-          </h3>
+          <h4 className="text-xs md:text-sm font-light">
+            <span className="hidden md:inline-block">
+              {data.releaseDate.toLocaleString("en-NZ")}
+            </span>
+            <span className="md:hidden">
+              {data.releaseDate.toLocaleDateString("en-NZ")}
+            </span>
+          </h4>
         </div>
         <div className="flex flex-row w-full justify-start gap-3 my-2 text-xs">
           <span className="px-3 py-1 rounded-lg bg-zinc-200 text-zinc-900">
