@@ -28,9 +28,9 @@ const FilmPreview: FC<FilmPreviewProps> = ({
       to={`/film?id=${filmId}`}
       className="flex flex-col w-64 flex-shrink-0 h-full overflow-hidden bg-white rounded group"
     >
-      <div className="object-cover w-64 aspect-video rounded overflow-hidden">
+      <div className="object-cover w-64 aspect-[4/3] rounded overflow-hidden">
         <Img
-          className="object-cover w-64 aspect-video rounded transition-all group-hover:scale-110"
+          className="object-cover w-64 aspect-[4/3] rounded transition-all group-hover:scale-110"
           src={`${api}/films/${filmId}/image?${stamp}`}
           fallback={title}
           alt={title}

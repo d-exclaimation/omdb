@@ -44,7 +44,7 @@ const ReviewCaraousel: FC<ReviewCaraouselProps> = ({ reviews, isLoading }) => {
             </div>
             <div className="flex px-2 py-2 text-sm flex-wrap break-words w-full">
               {reviewContent ? (
-                <span>{reviewContent}</span>
+                <>{reviewContent}</>
               ) : (
                 <span className="text-zinc-600 italic">No comment</span>
               )}
