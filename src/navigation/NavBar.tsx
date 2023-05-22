@@ -36,8 +36,8 @@ const NavBar: FC = () => {
         <NavTab
           href="/"
           icons={{
-            deselected: "/icons/home.svg",
-            selected: "/icons/home-selected.svg",
+            deselected: "/icons/omdb.svg",
+            selected: "/icons/omdb-selected.svg",
           }}
         />
         <div className="h-4 w-[1px] mx-1 md:mx-2 bg-black/10"></div>
