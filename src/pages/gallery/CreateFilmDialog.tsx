@@ -131,7 +131,7 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
                 <div className="mt-4 flex flex-col w-full min-h-max transition-all">
                   <div className="flex w-full items-end justify-start">
                     <Img
-                      className="w-36 md:w-44 h-20 md:h-24 object-cover rounded-lg"
+                      className="w-20 md:w-24 h-20 md:h-24 object-cover rounded-lg"
                       src={preview}
                       fallback={values.title}
                       alt="avatar"

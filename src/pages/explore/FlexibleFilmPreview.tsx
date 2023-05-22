@@ -28,7 +28,7 @@ const FlexibleFilmPreview: FC<FlexibleFilmPreviewProps> = ({
       to={`/film?id=${filmId}`}
       className="flex flex-col w-full flex-shrink-0 h-full overflow-hidden bg-white rounded group"
     >
-      <div className="object-cover w-full aspect-videorounded overflow-hidden">
+      <div className="object-cover w-full aspect-video rounded overflow-hidden">
         <Img
           className="object-cover w-full aspect-video rounded transition-all group-hover:scale-110"
           src={`${api}/films/${filmId}/image?${stamp}`}
