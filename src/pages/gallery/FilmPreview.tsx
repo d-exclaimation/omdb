@@ -69,7 +69,7 @@ const FilmPreview: FC<FilmPreviewProps> = ({
           <span>{releaseDate.toLocaleString("en-NZ")}</span>
           <span className="flex items-center">
             <img className="w-3 h-3 mr-[.125rem]" src="/icons/star.svg" />
-            {rating.toFixed(2)}
+            {rating <= 0 ? "N/A" : rating.toFixed(2)}
           </span>
         </div>
       </div>
