@@ -44,11 +44,9 @@ const SignupPage: FC = () => {
           });
         },
         BadEmail: () => {
-          close();
           setServerError("Email is already in use");
         },
         "*": (e) => {
-          close();
           notify({
             kind: "error",
             title: "Unexcepted error occured",
