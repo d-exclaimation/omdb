@@ -7,10 +7,11 @@ on:
 jobs:
   zip:
     container:
-      image: node:alpine
+      image: node:latest
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - run: ls -l
       - run: npm run zip
       - uses: actions/upload-artifact@v2
         with:
