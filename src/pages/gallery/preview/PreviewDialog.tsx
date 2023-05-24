@@ -38,7 +38,7 @@ const PreviewDialog: FC<PreviewDialogProps> = ({ open }) => {
 
           <p className="mt-1">
             <Link
-              to="/signup?redirect=/gallery"
+              to={`/signup?redirect=${encodeURIComponent("/gallery")}`}
               className="text-zinc-500 hover:underline active:underline decoration-zinc-500"
             >
               Join
@@ -49,7 +49,7 @@ const PreviewDialog: FC<PreviewDialogProps> = ({ open }) => {
 
         <div className="mt-4 flex justify-end z-40">
           <Link
-            to="/login?redirect=/gallery"
+            to={`/login?redirect=${encodeURIComponent("/gallery")}`}
             className="text-xs text-zinc-50 bg-zinc-900 rounded px-3 py-2
             hover:bg-zinc-50 active:bg-zinc-50 transition-all
             hover:text-zinc-900 active:text-zinc-900 ring-1 ring-zinc-900"
