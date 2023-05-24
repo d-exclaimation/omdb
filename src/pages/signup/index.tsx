@@ -1,7 +1,7 @@
 import { match } from "@d-exclaimation/common/lib/union";
 import { Transition } from "@headlessui/react";
 import { useCallback, useEffect, useMemo, useState, type FC } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import useMutation from "swr/mutation";
 import { register } from "../../api/user";
 import { useAuth } from "../../auth/useAuth";
@@ -9,8 +9,9 @@ import Button from "../../common/components/Button";
 import Img from "../../common/components/Image";
 import InputField from "../../common/components/InputField";
 import LoadingIndicator from "../../common/components/LoadingIndicator";
-import { useNotifcation } from "../../common/context/notification/useNotification";
+import { useNotification } from "../../common/context/notification/useNotification";
 import { useForm } from "../../common/hooks/useForm";
+import { useSearchParam } from "../../common/hooks/useSearchParam";
 import { useToggle } from "../../common/hooks/useToggle";
 import { RegisterUser } from "../../types/user";
 import AddImage from "./AddImage";
@@ -18,7 +19,9 @@ import AddImage from "./AddImage";
 const SignupPage: FC = () => {
   const [serverError, setServerError] = useState<string>();
   const { isLoggedIn, invalidate, isAuthenticating } = useAuth();
-  const { notify } = useNotifcation();
+  const redirect = useSearchParam("redirect");
+  const nav = useNavigate();
+  const { notify } = useNotification();
   const [showPassword, { toggle }] = useToggle();
   const [preview, setPreview] = useState<string>(
     "https://avatar.vercel.sh/cookie"
@@ -42,6 +45,7 @@ const SignupPage: FC = () => {
             kind: "success",
             title: "Successfully signed up",
           });
+          nav(redirect ?? "/profile");
         },
         BadEmail: () => {
           setServerError("Email is already in use");
@@ -197,7 +201,11 @@ const SignupPage: FC = () => {
             Already have an account?{" "}
             <Link
               className="text-zinc-500 hover:underline active:underline decoration-zinc-500"
-              to="/login"
+              to={
+                redirect
+                  ? `/login?redirect=${encodeURIComponent(redirect)}`
+                  : "/login"
+              }
             >
               Log in
             </Link>

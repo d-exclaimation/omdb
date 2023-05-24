@@ -29,11 +29,13 @@ export const me = query(["me"], async () => {
       },
     });
     if (res.status !== 200) {
+      clearSession();
       return null;
     }
     const raw = await res.json();
     const maybeUser = await UserInfo.safeParseAsync(raw);
     if (!maybeUser.success) {
+      clearSession();
       return null;
     }
     return {

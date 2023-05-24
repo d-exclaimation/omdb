@@ -5,6 +5,7 @@ import { when } from "../../api/keys";
 import { useAuth } from "../../auth/useAuth";
 import Button from "../../common/components/Button";
 import LoadingIndicator from "../../common/components/LoadingIndicator";
+import { useSearchParam } from "../../common/hooks/useSearchParam";
 import { useToggle } from "../../common/hooks/useToggle";
 import Layout from "../layout";
 import CreateFilmDialog from "./CreateFilmDialog";
@@ -12,7 +13,8 @@ import FilmsCaraousel from "./FilmsCaraousel";
 import GalleryPagePreview from "./preview";
 
 const GalleryPage: FC = () => {
-  const [creating, { close, open }] = useToggle();
+  const immediate = useSearchParam("create");
+  const [creating, { close, open }] = useToggle(!!immediate);
   const { user, isAuthenticating } = useAuth();
   const { data: gallery, isLoading: isGalleryLoading } = useQuery(
     when(!isAuthenticating, filmGallery.key),
@@ -54,7 +56,7 @@ const GalleryPage: FC = () => {
           }}
           onClick={open}
         >
-          New film
+          Create film
         </Button>
         <FilmsCaraousel
           title="Known for"

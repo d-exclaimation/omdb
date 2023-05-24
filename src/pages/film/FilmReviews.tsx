@@ -1,4 +1,5 @@
 import { useMemo, type FC } from "react";
+import { useNavigate } from "react-router-dom";
 import useQuery from "swr";
 import { filmReviews } from "../../api/film";
 import { useAuth } from "../../auth/useAuth";
@@ -27,6 +28,7 @@ const FilmReviews: FC<FilmReviewsProps> = ({
   releaseDate,
 }) => {
   const { user } = useAuth();
+  const nav = useNavigate();
   const { data, isLoading } = useQuery(
     filmReviews.keys([`${id}`]),
     filmReviews.fn
@@ -38,10 +40,9 @@ const FilmReviews: FC<FilmReviewsProps> = ({
 
   const canReview = useMemo(
     () =>
-      user &&
-      user.id !== directorId &&
+      user?.id !== directorId &&
       releaseDate < new Date() &&
-      allReviews.every((review) => review.reviewerId !== user.id),
+      allReviews.every((review) => review.reviewerId !== user?.id),
     [user, directorId, releaseDate, allReviews]
   );
 
@@ -58,7 +59,13 @@ const FilmReviews: FC<FilmReviewsProps> = ({
             active: "active:bg-zinc-300",
             border: "focus-visible:ring-zinc-200",
           }}
-          onClick={open}
+          onClick={() => {
+            if (!user) {
+              nav(`/login?redirect=${encodeURIComponent(`/film?id=${id}`)}`);
+              return;
+            }
+            open();
+          }}
         >
           Review
         </Button>

@@ -8,14 +8,16 @@ import { useAuth } from "../auth/useAuth";
 import Button from "../common/components/Button";
 import InputField from "../common/components/InputField";
 import LoadingIndicator from "../common/components/LoadingIndicator";
-import { useNotifcation } from "../common/context/notification/useNotification";
+import { useNotification } from "../common/context/notification/useNotification";
 import { useForm } from "../common/hooks/useForm";
+import { useSearchParam } from "../common/hooks/useSearchParam";
 import { LoginUser } from "../types/user";
 
 const LoginPage: FC = () => {
   const { isLoggedIn, invalidate, isAuthenticating } = useAuth();
-  const { notify } = useNotifcation();
+  const { notify } = useNotification();
   const navigate = useNavigate();
+  const redirect = useSearchParam("redirect");
   const [serverError, setServerError] = useState<string>();
   const [{ values, isValid, isInitial, errors }, update] = useForm({
     schema: LoginUser,
@@ -33,7 +35,7 @@ const LoginPage: FC = () => {
             kind: "success",
             title: "Successfully logged in",
           });
-          navigate("/profile");
+          navigate(redirect ?? "/profile");
         },
         BadEmail: () => {
           setServerError("Invalid email or password");
@@ -124,7 +126,11 @@ const LoginPage: FC = () => {
             Don't have an account?{" "}
             <Link
               className="text-zinc-500 hover:underline active:underline decoration-zinc-500"
-              to="/signup"
+              to={
+                redirect
+                  ? `/signup?redirect=${encodeURIComponent(redirect)}`
+                  : "/signup"
+              }
             >
               Sign up
             </Link>
