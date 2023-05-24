@@ -15,7 +15,11 @@ const FilmPage: FC = () => {
   const { data, isLoading } = useQuery(id ? film.keys([id]) : null, film.fn);
 
   if (isLoading) {
-    return <LoadingIndicator />;
+    return (
+      <Layout key={id} route="Film" heading="Film">
+        <LoadingIndicator />
+      </Layout>
+    );
   }
 
   if (!id || !data) {

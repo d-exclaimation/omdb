@@ -1,9 +1,9 @@
 import { match, type Union } from "@d-exclaimation/common/union";
 import { type FC } from "react";
 import { Link } from "react-router-dom";
-import LoadingIndicator from "../../common/components/LoadingIndicator";
 import { type FilmSearch } from "../../types/film";
 import FilmPreview from "./FilmPreview";
+import SkeletonFilmPreview from "./SkeletonFilmPreview";
 
 type FilmCaraouselProps = {
   title: string;
@@ -33,7 +33,7 @@ const FilmsCaraousel: FC<FilmCaraouselProps> = ({
         {films.length ? (
           films.map((film) => <FilmPreview {...film} key={film.filmId} />)
         ) : isLoading ? (
-          <LoadingIndicator />
+          [1, 2, 3, 4, 5].map((i) => <SkeletonFilmPreview key={i} />)
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center pt-6 pb-4">
             <h3 className="font-bold text-base">No films here</h3>

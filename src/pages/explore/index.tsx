@@ -9,7 +9,6 @@ import {
 import { useSearchParams } from "react-router-dom";
 import useQuery, { preload } from "swr";
 import { searchFilms } from "../../api/film";
-import LoadingIndicator from "../../common/components/LoadingIndicator";
 import { maybeInt } from "../../common/utils/coerce";
 import { type Sorting } from "../../types/constants";
 import Layout from "../layout";
@@ -17,6 +16,7 @@ import FilmFilters from "./FilmFilters";
 import FilmSearchBar from "./FilmSearchBar";
 import FlexibleFilmPreview from "./FlexibleFilmPreview";
 import PageControls from "./PageControls";
+import SkeletonFlexibleFilmPreview from "./SkeletonFlexibleFilmPreview";
 
 const ExplorePage: FC = () => {
   const [params, setParams] = useSearchParams();
@@ -160,7 +160,11 @@ const ExplorePage: FC = () => {
               ))}
             </div>
           ) : isValidating ? (
-            <LoadingIndicator />
+            <div className="w-full grid grid-cols-1 sm:grid-cols-2 place-items-center gap-2">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <SkeletonFlexibleFilmPreview key={i} />
+              ))}
+            </div>
           ) : (
             <div className="w-full h-full flex flex-col items-center justify-center pt-6 pb-4">
               <h3 className="font-bold text-base">No films here</h3>
