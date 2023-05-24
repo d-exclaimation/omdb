@@ -22,6 +22,8 @@ cp tsconfig.json vno16/tsconfig.json
 cp tsconfig.node.json vno16/tsconfig.node.json
 cp vite.config.ts vno16/vite.config.ts
 cp .gitignore vno16/.gitignore
+cp README.md vno16/README.md
+cp omdb.png vno16/omdb.png
 
 # Zip
 zip -r vno16.zip vno16
