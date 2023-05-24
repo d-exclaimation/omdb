@@ -8,7 +8,7 @@ import { deleteFilm } from "../../api/film";
 import { included } from "../../api/keys";
 import Button from "../../common/components/Button";
 import Overlay from "../../common/components/Overlay";
-import { useNotifcation } from "../../common/context/notification/useNotification";
+import { useNotification } from "../../common/context/notification/useNotification";
 
 type DeleteFilmDialogProps = {
   id: number;
@@ -23,7 +23,7 @@ const DeleteFilmDialog: FC<DeleteFilmDialogProps> = ({
   title,
   onClose,
 }) => {
-  const { notify } = useNotifcation();
+  const { notify } = useNotification();
   const { mutate } = useSWRConfig();
   const nav = useNavigate();
   const { trigger } = useMutation(

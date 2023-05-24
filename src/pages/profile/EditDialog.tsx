@@ -9,7 +9,7 @@ import Button from "../../common/components/Button";
 import Img from "../../common/components/Image";
 import InputField from "../../common/components/InputField";
 import Overlay from "../../common/components/Overlay";
-import { useNotifcation } from "../../common/context/notification/useNotification";
+import { useNotification } from "../../common/context/notification/useNotification";
 import { useForm } from "../../common/hooks/useForm";
 import { EditUser } from "../../types/user";
 import EditImage from "./EditImage";
@@ -24,7 +24,7 @@ type EditDialogProps = {
 
 const EditDialog: FC<EditDialogProps> = ({ editing, close, ...user }) => {
   const { invalidate } = useAuth();
-  const { notify } = useNotifcation();
+  const { notify } = useNotification();
   const [preview, setPreview] = useState(`${api}/users/${user.id}/image`);
   const [emailError, setEmailError] = useState<string>();
   const [passwordError, setPasswordError] = useState<string>();

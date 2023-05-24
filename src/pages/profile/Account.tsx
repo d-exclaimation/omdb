@@ -5,7 +5,7 @@ import { logout } from "../../api/user";
 import { useAuth } from "../../auth/useAuth";
 import Img from "../../common/components/Image";
 import { useCacheControl } from "../../common/context/cache/useCacheControl";
-import { useNotifcation } from "../../common/context/notification/useNotification";
+import { useNotification } from "../../common/context/notification/useNotification";
 import Settings from "./Settings";
 
 type AccountProps = {
@@ -29,7 +29,7 @@ const Account: FC<AccountProps> = ({
 }) => {
   const { user: stamp } = useCacheControl();
   const { invalidate } = useAuth();
-  const { notify } = useNotifcation();
+  const { notify } = useNotification();
   const { trigger } = useMutation(logout.keys, logout.fn, {
     onSuccess: () => {
       invalidate();

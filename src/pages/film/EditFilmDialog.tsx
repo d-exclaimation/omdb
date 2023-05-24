@@ -16,7 +16,7 @@ import Overlay from "../../common/components/Overlay";
 import Textarea from "../../common/components/Textarea";
 import { useCacheControl } from "../../common/context/cache/useCacheControl";
 import { useGenres } from "../../common/context/genre/useGenres";
-import { useNotifcation } from "../../common/context/notification/useNotification";
+import { useNotification } from "../../common/context/notification/useNotification";
 import { useForm } from "../../common/hooks/useForm";
 import { maybeInt } from "../../common/utils/coerce";
 import { ageRatings } from "../../common/utils/constants";
@@ -37,7 +37,7 @@ const FilmEdit: FC<FilmEditProps> = ({
 }) => {
   const genres = useGenres();
   const { invalidate } = useCacheControl();
-  const { notify } = useNotifcation();
+  const { notify } = useNotification();
   const [titleError, setTitleError] = useState<string | null>(null);
   const [preview, setPreview] = useState(`${api}/films/${filmId}/image`);
   const [file, setFile] = useState<File | null>(null);
