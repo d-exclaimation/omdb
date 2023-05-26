@@ -45,7 +45,7 @@ const RatingOverview: FC<RatingOverviewProps> = ({ data }) => {
               ) : (
                 <>
                   <span className={ratingToColor(recentAverageRating)}>
-                    {recentAverageRating}
+                    {recentAverageRating.toFixed(3)}
                   </span>{" "}
                   / 10
                 </>
