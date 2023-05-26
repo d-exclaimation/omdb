@@ -1,5 +1,7 @@
 import { Transition } from "@headlessui/react";
 import { useEffect, useRef, useState, type FC } from "react";
+import { preload } from "swr";
+import { filmGallery } from "../api/film";
 import Signature from "../common/components/Signature";
 
 const SIZES = [
@@ -28,6 +30,7 @@ const HomePage: FC = () => {
   const [messageIndex, setIndex] = useState(0);
 
   useEffect(() => {
+    preload(filmGallery.key, filmGallery.fn);
     return () => {
       clearTimeout(timeoutRef.current);
     };
