@@ -87,7 +87,9 @@ const LoginPage: FC = () => {
           }}
         >
           <div className="w-full flex justify-center items-center mb-2">
-            <h2 className="font-bold text-2xl md:text-3xl">Log in to OMDb</h2>
+            <h2 className="font-bold text-2xl md:text-3xl dark:text-white">
+              Log in to OMDb
+            </h2>
           </div>
 
           <InputField
@@ -109,7 +111,9 @@ const LoginPage: FC = () => {
             onChange={(password) => update((prev) => ({ ...prev, password }))}
           />
           <Button
-            className="w-full hover:text-zinc-900 active:text-zinc-900 ring-1 ring-zinc-900"
+            className="w-full hover:text-zinc-900 active:text-zinc-900 ring-1 ring-zinc-900
+            dark:bg-zinc-100 dark:text-zinc-950 dark:hover:text-zinc-100 dark:active:text-zinc-100
+            dark:ring-zinc-100 dark:hover:bg-zinc-950 dark:active:bg-zinc-950 dark:focus-visible:ring-zinc-400"
             color={{
               bg: "bg-zinc-900",
               text: "text-zinc-50",
@@ -122,10 +126,11 @@ const LoginPage: FC = () => {
             Continue with email
           </Button>
 
-          <div className="w-full text-center text-xs py-2 text-zinc-800">
+          <div className="w-full text-center text-xs py-2 text-zinc-800 dark:text-zinc-200">
             Don't have an account?{" "}
             <Link
-              className="text-zinc-500 hover:underline active:underline decoration-zinc-500"
+              className="text-zinc-500 hover:underline active:underline decoration-zinc-500
+              dark:text-zinc-400 dark:decoration-zinc-400"
               to={
                 redirect
                   ? `/signup?redirect=${encodeURIComponent(redirect)}`

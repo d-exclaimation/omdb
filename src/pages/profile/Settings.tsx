@@ -16,6 +16,7 @@ const Settings: FC<SettingsProps> = ({ onEdit, onLogout }) => {
         hover:bg-zinc-200 active:bg-zinc-200 disabled:cursor-not-allowed
         focus:outline-none focus-visible:ring-2 disabled:opacity-50
         focus-visible:ring-zinc-500 focus-visible:ring-offset-2
+        dark:bg-zinc-800 dark:text-white dark:hover:bg-zinc-700 dark:active:bg-zinc-700
         "
       >
         Settings
@@ -29,15 +30,16 @@ const Settings: FC<SettingsProps> = ({ onEdit, onLogout }) => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute p-1 right-0 origin-top-right divide-y divide-zinc-200 rounded mt-2 w-40 bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="absolute p-1 right-0 origin-top-right divide-y divide-zinc-200 dark:divide-zinc-700 rounded mt-2 w-40 bg-white dark:bg-zinc-800 shadow-lg ring-1 ring-black/5 dark:ring-white/5 focus:outline-none">
           <div className="mb-1">
             <Menu.Item>
               {({ active }) => (
                 <Link
                   to="/gallery?create=true"
                   className="flex w-full items-center rounded px-2
-                  text-blue-700 md:text-black text-sm py-2
-                  md:data-selected:bg-blue-500 md:data-selected:text-white"
+                  text-blue-700 dark:text-blue-300 md:text-black dark:md:text-white text-sm py-2
+                  md:data-selected:bg-blue-500 md:data-selected:text-white
+                  dark:md:data-selected:bg-blue-400 dark:md:data-selected:text-black"
                   data-selected={active}
                 >
                   Create film
@@ -49,8 +51,9 @@ const Settings: FC<SettingsProps> = ({ onEdit, onLogout }) => {
                 <Link
                   to="/gallery"
                   className="flex w-full items-center rounded px-2
-                  text-purple-700 md:text-black text-sm py-2
-                  md:data-selected:bg-purple-500 md:data-selected:text-white"
+                  text-purple-700 dark:text-purple-300 md:text-black dark:md:text-white text-sm py-2
+                  md:data-selected:bg-purple-500 md:data-selected:text-white
+                  dark:md:data-selected:bg-purple-400 dark:md:data-selected:text-black"
                   data-selected={active}
                 >
                   Gallery
@@ -63,7 +66,8 @@ const Settings: FC<SettingsProps> = ({ onEdit, onLogout }) => {
               {({ active }) => (
                 <button
                   type="button"
-                  className="flex w-full items-center rounded px-2 py-2 text-sm data-selected:bg-zinc-800 data-selected:text-white"
+                  className="flex w-full items-center rounded px-2 py-2 text-sm dark:text-white data-selected:bg-zinc-800 
+                  dark:data-selected:bg-zinc-200 data-selected:text-white dark:data-selected:text-black"
                   data-selected={active}
                   onClick={onEdit}
                 >
@@ -77,8 +81,9 @@ const Settings: FC<SettingsProps> = ({ onEdit, onLogout }) => {
                 <button
                   type="button"
                   className="flex w-full items-center rounded px-2 py-2
-                text-red-700 md:text-black text-sm 
-                md:data-selected:bg-red-500 md:data-selected:text-white"
+                text-red-700 dark:text-red-300 md:text-black dark:md:text-white text-sm 
+                md:data-selected:bg-red-500 md:data-selected:text-white
+                dark:md:data-selected:bg-red-400 dark:md:data-selected:text-black"
                   data-selected={active}
                   onClick={onLogout}
                 >

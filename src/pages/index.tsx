@@ -58,7 +58,7 @@ const HomePage: FC = () => {
           show={show}
         >
           <h1
-            className={`flex flex-row gap-2 md:gap-3 font-semibold
+            className={`flex flex-row gap-2 md:gap-3 font-semibold dark:text-white
             ${SIZES[messageIndex].sm} ${SIZES[messageIndex].md}
             ${SIZES[messageIndex].lg}`}
           >

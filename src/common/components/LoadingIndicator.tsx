@@ -4,7 +4,7 @@ const LoadingIndicator: FC = () => {
   return (
     <div className="w-full flex flex-col items-center justify-center">
       <svg
-        className="animate-spin -ml-1 mr-3 h-12 w-12 text-zinc-900"
+        className="animate-spin -ml-1 mr-3 h-12 w-12 text-zinc-900 dark:text-zinc-100"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"

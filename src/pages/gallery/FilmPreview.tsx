@@ -26,9 +26,9 @@ const FilmPreview: FC<FilmPreviewProps> = ({
     <Link
       key={filmId}
       to={`/film?id=${filmId}`}
-      className="flex flex-col w-64 flex-shrink-0 h-full overflow-hidden bg-white rounded group"
+      className="flex flex-col w-64 flex-shrink-0 h-full overflow-hidden bg-white dark:bg-zinc-900 rounded group"
     >
-      <div className="object-cover w-64 aspect-[4/3] rounded overflow-hidden">
+      <div className="object-cover w-64 aspect-[4/3] dark:bg-zinc-900 rounded overflow-hidden">
         <Img
           className="object-cover w-64 aspect-[4/3] rounded transition-all group-hover:scale-110"
           src={`${api}/films/${filmId}/image?${stamp}`}
@@ -37,7 +37,7 @@ const FilmPreview: FC<FilmPreviewProps> = ({
         />
       </div>
       <div className="flex flex-col w-full gap-1 py-2">
-        <h3 className="max-w-[90%] font-semibold group-hover:text-zinc-500 group-hover:underline truncate text-sm">
+        <h3 className="max-w-[90%] dark:text-white font-semibold group-hover:text-zinc-500 group-hover:underline truncate text-sm">
           {title}
         </h3>
         <div className="flex flex-row w-full items-center justify-start">
@@ -68,7 +68,10 @@ const FilmPreview: FC<FilmPreviewProps> = ({
         <div className="flex flex-row justify-between text-zinc-400 gap-3 pr-1 text-xs">
           <span>{releaseDate.toLocaleString("en-NZ")}</span>
           <span className="flex items-center">
-            <img className="w-3 h-3 mr-[.125rem]" src="/icons/star.svg" />
+            <img
+              className="w-3 h-3 mr-[.125rem] dark:content-[url('icons/star-selected.svg')]"
+              src="/icons/star.svg"
+            />
             {rating <= 0 ? "N/A" : rating.toFixed(2)}
           </span>
         </div>

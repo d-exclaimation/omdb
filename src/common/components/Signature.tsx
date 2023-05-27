@@ -5,7 +5,7 @@ const Signature: FC = () => {
   return (
     <Link to="https://d-exclaimation.me">
       <svg
-        className="w-8 md:w-20 stroke-zinc-500/50 fixed bottom-4 right-4"
+        className="w-8 md:w-20 stroke-zinc-500/50 dark:stroke-zinc-400/50 fixed bottom-4 right-4"
         viewBox="0 0 588 373"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

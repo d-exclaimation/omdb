@@ -39,7 +39,8 @@ const DateInputField: FC<DateInputFieldProps> = ({
         type="datetime-local"
         className="w-full py-3 placeholder:text-slate-400 text-sm focus:outline-none disabled:cursor-not-allowed
         disabled:opacity-50 rounded border border-slate-300 bg-transparent px-3 data-[error='true']:border-red-700
-        [-webkit-appearance:none] [-moz-appearance:textfield] min-h-[1.25rem]"
+        [-webkit-appearance:none] [-moz-appearance:textfield] min-h-[1.25rem]
+        dark:placeholder:text-slate-700 dark:border-slate-600 dark:text-white dark:data-[error='true']:border-red-300"
         defaultValue={initialValue ? datestring(initialValue) : undefined}
         onChange={(e) => {
           const valueAsDate = new Date(e.target.value);

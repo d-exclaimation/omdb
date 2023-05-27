@@ -46,7 +46,9 @@ const GalleryPage: FC = () => {
     <Layout heading="Your gallery" route="Gallery">
       <div className="w-full flex flex-col justify-start items-center gap-3">
         <Button
-          className="absolute -top-[4.5rem] right-2 hover:text-zinc-900 active:text-zinc-900 ring-1 ring-zinc-900"
+          className="absolute -top-[4.5rem] right-2 hover:text-zinc-900 active:text-zinc-900 ring-1 ring-zinc-900
+          dark:bg-zinc-100 dark:text-zinc-950 dark:hover:bg-zinc-950 dark:active:bg-zinc-950 dark:ring-zinc-100
+          dark:hover:text-zinc-100 dark:active:text-zinc-100 transition-all"
           color={{
             bg: "bg-zinc-900",
             text: "text-zinc-50",

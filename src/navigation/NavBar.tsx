@@ -31,7 +31,8 @@ const NavBar: FC = () => {
         flex flex-row items-center justify-center
         w-max p-1 rounded-full backdrop-blur-sm 
         bg-white gap-1 shadow-lg overflow-hidden
-        ring-1 ring-zinc-300/50"
+        ring-1 ring-zinc-300/50 
+        dark:bg-zinc-900 dark:ring-zinc-700/50"
       >
         <NavTab
           href="/"
@@ -40,7 +41,7 @@ const NavBar: FC = () => {
             selected: "/icons/omdb-selected.svg",
           }}
         />
-        <div className="h-4 w-[1px] mx-1 md:mx-2 bg-black/10"></div>
+        <div className="h-4 w-[1px] mx-1 md:mx-2 bg-black/10 dark:bg-white/20"></div>
 
         <NavTab
           href="/explore"

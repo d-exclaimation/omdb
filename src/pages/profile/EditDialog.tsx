@@ -94,7 +94,7 @@ const EditDialog: FC<EditDialogProps> = ({ editing, close, ...user }) => {
               <Dialog.Panel
                 as="form"
                 className="w-full max-w-md z-40 transform overflow-hidden rounded-md bg-white 
-                p-6 text-left align-middle shadow-xl transition-all"
+                p-6 text-left align-middle shadow-xl transition-all dark:bg-zinc-900"
                 onSubmit={(e) => {
                   e.preventDefault();
                   onSubmit();
@@ -102,7 +102,7 @@ const EditDialog: FC<EditDialogProps> = ({ editing, close, ...user }) => {
               >
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
+                  className="text-lg font-medium leading-6 text-gray-900 dark:text-gray-100"
                 >
                   Edit profile
                 </Dialog.Title>
@@ -169,9 +169,9 @@ const EditDialog: FC<EditDialogProps> = ({ editing, close, ...user }) => {
                       {({ open }) => (
                         <>
                           <Disclosure.Button
-                            className="mt-1 flex w-full justify-between rounded-md bg-zinc-100 
-                            px-4 py-2 text-left text-sm font-medium text-zinc-900 
-                           hover:bg-zinc-200 focus:outline-none focus-visible:ring 
+                            className="mt-1 flex w-full justify-between rounded-md bg-zinc-100 dark:bg-zinc-900
+                            px-4 py-2 text-left text-sm font-medium text-zinc-900 dark:text-zinc-100
+                           hover:bg-zinc-200 focus:outline-none focus-visible:ring dark:hover:bg-zinc-800
                            focus-visible:ring-zinc-500 focus-visible:ring-opacity-75"
                           >
                             {open ? "Hide" : "Update password"}
@@ -234,6 +234,7 @@ const EditDialog: FC<EditDialogProps> = ({ editing, close, ...user }) => {
                 <div className="mt-4 flex justify-between z-60">
                   <Button
                     type="button"
+                    className="dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700 dark:active:bg-zinc-700"
                     color={{
                       bg: "bg-zinc-100",
                       text: "text-zinc-900",
@@ -246,6 +247,7 @@ const EditDialog: FC<EditDialogProps> = ({ editing, close, ...user }) => {
                     Cancel
                   </Button>
                   <Button
+                    className="dark:bg-indigo-800 dark:text-indigo-100 dark:hover:bg-indigo-700 dark:active:bg-indigo-700"
                     color={{
                       bg: "bg-sky-100",
                       text: "text-sky-900",

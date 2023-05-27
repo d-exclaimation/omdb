@@ -27,7 +27,7 @@ const RatingOverview: FC<RatingOverviewProps> = ({ data }) => {
   );
 
   return (
-    <div className="w-full max-w-3xl min-h-max gap-2 bg-white flex flex-col items-start overflow-x-hidden rounded-lg p-6 md:p-8">
+    <div className="w-full max-w-3xl min-h-max gap-2 bg-white dark:bg-zinc-900 dark:text-white flex flex-col items-start overflow-x-hidden rounded-lg p-6 md:p-8">
       <div className="flex flex-row items-center justify-start w-full mb-2">
         <h3 className="font-semibold text-xl">Recent performance</h3>
       </div>

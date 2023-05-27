@@ -112,7 +112,7 @@ const SignupPage: FC = () => {
           }}
         >
           <div className="w-full flex flex-col justify-center items-center mb-2">
-            <h2 className="font-bold text-xl md:text-2xl">
+            <h2 className="font-bold text-xl md:text-2xl dark:text-white">
               Create Your OMDb Account
             </h2>
           </div>
@@ -177,14 +177,17 @@ const SignupPage: FC = () => {
               type="button"
               className="absolute right-1 bottom-2 text-sm px-2 py-1 
              bg-zinc-200 rounded z-10 active:bg-zinc-300 hover:bg-zinc-300
-              disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled:opacity-50 disabled:cursor-not-allowed
+              dark:bg-zinc-800 dark:text-white dark:active:bg-zinc-700 dark:hover:bg-zinc-700"
               onClick={toggle}
             >
               {showPassword ? "Hide" : "Show"}
             </button>
           </InputField>
           <Button
-            className="w-full hover:text-zinc-900 active:text-zinc-900 ring-1 ring-zinc-900 disabled:brightness-90"
+            className="w-full hover:text-zinc-900 active:text-zinc-900 ring-1 ring-zinc-900
+            dark:bg-zinc-100 dark:text-zinc-950 dark:hover:text-zinc-100 dark:active:text-zinc-100
+            dark:ring-zinc-100 dark:hover:bg-zinc-950 dark:active:bg-zinc-950 dark:focus-visible:ring-zinc-400"
             color={{
               bg: "bg-zinc-900",
               text: "text-zinc-50",
@@ -197,10 +200,11 @@ const SignupPage: FC = () => {
             Continue with email
           </Button>
 
-          <div className="w-full text-center text-xs py-2 text-zinc-800">
+          <div className="w-full text-center text-xs py-2 text-zinc-800 dark:text-zinc-200">
             Already have an account?{" "}
             <Link
-              className="text-zinc-500 hover:underline active:underline decoration-zinc-500"
+              className="text-zinc-500 hover:underline active:underline decoration-zinc-500
+              dark:text-zinc-400 dark:decoration-zinc-400"
               to={
                 redirect
                   ? `/login?redirect=${encodeURIComponent(redirect)}`

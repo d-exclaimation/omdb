@@ -17,7 +17,7 @@ type ProfileProps = {
 const Profile: FC<ProfileProps> = ({ filmsDirected, filmsReviewed, user }) => {
   const [editing, { open, close }] = useToggle();
   return (
-    <div className="w-full max-w-3xl max-h-80 bg-white flex flex-row items-start overflow-x-hidden rounded-lg p-6 md:p-8">
+    <div className="w-full max-w-3xl max-h-80 bg-white dark:bg-zinc-900 flex flex-row items-start overflow-x-hidden rounded-lg p-6 md:p-8">
       <Account
         {...user}
         filmsDirected={filmsDirected}

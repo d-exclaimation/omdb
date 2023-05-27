@@ -11,7 +11,8 @@ export default {
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: {
-        chart: "rgb(173, 250, 29)"
+        chart: "rgb(173, 250, 29)",
+        "chart-dark": "#9333ea"
       },
       minWidth: {
         screen: "100vw",

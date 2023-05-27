@@ -29,7 +29,7 @@ const InputField: FC<InputFieldProps> = ({
   children,
 }) => {
   return (
-    <div className="flex relative flex-col items-start justify-center text-zinc-500 w-full">
+    <div className="flex relative flex-col items-start justify-center text-zinc-500 dark:text-zinc-500 w-full">
       <label className="flex w-full group" data-error={!!error}>
         <span
           className="text-sm p-1 font-medium transition-all group-data-[error='true']:translate-y-full 
@@ -38,7 +38,7 @@ const InputField: FC<InputFieldProps> = ({
           {label}
         </span>
         <span
-          className="absolute w-full text-red-700 p-1 font-medium text-xs
+          className="absolute w-full text-red-700 dark:text-red-300 p-1 font-medium text-xs
           transition-all translate-y-full -z-10 opacity-0 group-data-[error='true']:translate-y-0 
           group-data-[error='true']:-z-0 group-data-[error='true']:opacity-100"
         >
@@ -50,7 +50,8 @@ const InputField: FC<InputFieldProps> = ({
         inputMode={inputMode}
         placeholder={placeholder}
         className="w-full py-3 placeholder:text-slate-400 text-sm focus:outline-none disabled:cursor-not-allowed 
-        disabled:opacity-50 rounded border border-slate-300 bg-transparent px-3 data-[error='true']:border-red-700 "
+        disabled:opacity-50 rounded border border-slate-300 bg-transparent px-3 data-[error='true']:border-red-700
+        dark:placeholder:text-slate-700 dark:border-slate-600 dark:text-white dark:data-[error='true']:border-red-300"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         data-error={!!error}
