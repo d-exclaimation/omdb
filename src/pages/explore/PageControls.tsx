@@ -42,7 +42,7 @@ const PageControls: FC<PageControlsProps> = ({ current, setPage, last }) => {
         }}
       >
         <img
-          className="w-5 h-5 content-[url('/icons/start-selected.svg')]"
+          className="w-5 h-5 dark:dark:content-[url('/icons/start-selected.svg')]"
           src="/icons/start.svg"
         />
       </button>
@@ -60,7 +60,7 @@ const PageControls: FC<PageControlsProps> = ({ current, setPage, last }) => {
         }}
       >
         <img
-          className="w-5 h-5 content-[url('/icons/arrow-left-selected.svg')]"
+          className="w-5 h-5 dark:content-[url('/icons/arrow-left-selected.svg')]"
           src="/icons/arrow-left.svg"
         />
       </button>
@@ -92,7 +92,7 @@ const PageControls: FC<PageControlsProps> = ({ current, setPage, last }) => {
         }}
       >
         <img
-          className="w-5 h-5 content-[url('/icons/arrow-right-selected.svg')]"
+          className="w-5 h-5 dark:content-[url('/icons/arrow-right-selected.svg')]"
           src="/icons/arrow-right.svg"
         />
       </button>
@@ -110,7 +110,7 @@ const PageControls: FC<PageControlsProps> = ({ current, setPage, last }) => {
         }}
       >
         <img
-          className="w-5 h-5 content-[url('/icons/end-selected.svg')]"
+          className="w-5 h-5 dark:content-[url('/icons/end-selected.svg')]"
           src="/icons/end.svg"
         />
       </button>
