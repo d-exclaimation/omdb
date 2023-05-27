@@ -22,10 +22,11 @@ const Settings: FC<SettingsProps> = ({
     >
       <Menu.Button
         className="inline-flex justify-center items-center rounded border border-transparent 
-      bg-zinc-100 px-3 py-2 text-xs font-medium text-zinc-900
-      hover:bg-zinc-200 active:bg-zinc-200 disabled:cursor-not-allowed
+        bg-zinc-100 px-3 py-2 text-xs font-medium text-zinc-900
+        hover:bg-zinc-200 active:bg-zinc-200 disabled:cursor-not-allowed
         focus:outline-none focus-visible:ring-2 disabled:opacity-50
-      focus-visible:ring-zinc-500 focus-visible:ring-offset-2"
+        focus-visible:ring-zinc-500 focus-visible:ring-offset-2
+        dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700 dark:active:bg-zinc-700"
       >
         Settings
       </Menu.Button>
@@ -38,14 +39,19 @@ const Settings: FC<SettingsProps> = ({
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute p-1 z-40 right-0 origin-top-right rounded mt-2 w-36 bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items
+          className="absolute p-1 z-40 right-0 origin-top-right rounded mt-2 w-36 bg-white shadow-lg 
+        ring-1 ring-black/5 focus:outline-none dark:bg-zinc-800 dark:ring-white/5"
+        >
           <Menu.Item>
             {({ active }) => (
               <button
                 type="button"
                 className="flex w-full items-center rounded px-2 py-2 text-sm 
                 data-selected:bg-zinc-800 data-selected:text-white
-                disabled:cursor-not-allowed disabled:opacity-50"
+                disabled:cursor-not-allowed disabled:opacity-50
+                dark:data-selected:bg-zinc-200 dark:text-white 
+                dark:data-selected:text-black"
                 data-selected={!disabled && active}
                 onClick={onEdit}
                 disabled={disabled}
@@ -59,8 +65,9 @@ const Settings: FC<SettingsProps> = ({
               <button
                 type="button"
                 className="flex w-full items-center rounded px-2 py-2
-              text-red-700 md:text-black text-sm 
-              md:data-selected:bg-red-500 md:data-selected:text-white"
+                text-red-700 dark:text-red-300 md:text-black dark:md:text-white text-sm 
+                md:data-selected:bg-red-500 md:data-selected:text-white
+                dark:md:data-selected:bg-red-400 dark:md:data-selected:text-black"
                 data-selected={active}
                 onClick={onDelete}
               >

@@ -115,8 +115,8 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
             >
               <Dialog.Panel
                 as="form"
-                className="w-full max-w-md z-40 transform rounded-md bg-white 
-                p-6 text-left align-middle shadow-xl transition-all"
+                className="w-full max-w-md z-40 transform overflow-hidden rounded-md bg-white 
+                p-6 text-left align-middle shadow-xl transition-all dark:bg-zinc-900"
                 onSubmit={(e) => {
                   e.preventDefault();
                   submit();
@@ -124,7 +124,7 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
               >
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
+                  className="text-lg font-medium leading-6 text-gray-900 dark:text-gray-100"
                 >
                   Create film
                 </Dialog.Title>
@@ -247,6 +247,7 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
                 <div className="mt-4 flex justify-between z-60">
                   <Button
                     type="button"
+                    className="dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700 dark:active:bg-zinc-700"
                     color={{
                       bg: "bg-zinc-100",
                       text: "text-zinc-900",
@@ -259,6 +260,7 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
                     Cancel
                   </Button>
                   <Button
+                    className="dark:bg-indigo-800 dark:text-indigo-100 dark:hover:bg-indigo-700 dark:active:bg-indigo-700"
                     color={{
                       bg: "bg-sky-100",
                       text: "text-sky-900",

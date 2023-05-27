@@ -152,7 +152,7 @@ const ExplorePage: FC = () => {
           }
         />
 
-        <div className="w-full max-h-max bg-white flex items-center flex-col rounded-lg p-6 md:p-8 max-w-3xl">
+        <div className="w-full max-h-max bg-white dark:bg-zinc-900 flex items-center flex-col rounded-lg p-6 md:p-8 max-w-3xl">
           {data?.films?.length ? (
             <div className="w-full grid grid-cols-1 sm:grid-cols-2 place-items-center gap-2">
               {data?.films.map((film) => (
@@ -177,7 +177,7 @@ const ExplorePage: FC = () => {
           )}
         </div>
 
-        <div className="w-full max-w-3xl max-h-max bg-white flex items-center flex-col rounded-lg p-2">
+        <div className="w-full max-w-3xl max-h-max bg-white dark:bg-zinc-900 flex items-center flex-col rounded-lg p-2">
           <PageControls
             current={page}
             last={data ? finalPage : page}

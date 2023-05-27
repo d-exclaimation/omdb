@@ -64,21 +64,22 @@ const DeleteFilmDialog: FC<DeleteFilmDialogProps> = ({
             >
               <Dialog.Panel
                 className="w-full max-w-md z-40 transform rounded-md bg-white 
-                p-6 text-left align-middle shadow-xl transition-all"
+                p-6 text-left align-middle shadow-xl transition-all dark:bg-zinc-900"
               >
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 max-w-full truncate text-gray-900"
+                  className="text-lg font-medium leading-6 max-w-full truncate text-gray-900 dark:text-gray-100"
                 >
                   Delete {title}
                 </Dialog.Title>
-                <div className="mt-4 flex flex-col w-full min-h-max text-sm transition-all">
+                <div className="mt-4 flex flex-col w-full min-h-max text-sm transition-all dark:text-white">
                   Are you sure you want to delete {title}?
                 </div>
 
                 <div className="mt-4 flex justify-between z-60">
                   <Button
                     type="button"
+                    className="dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700 dark:active:bg-zinc-700"
                     color={{
                       bg: "bg-zinc-100",
                       text: "text-zinc-900",
@@ -91,6 +92,7 @@ const DeleteFilmDialog: FC<DeleteFilmDialogProps> = ({
                     Cancel
                   </Button>
                   <Button
+                    className="dark:bg-red-900 dark:text-red-100 dark:hover:bg-red-800 dark:active:bg-red-800"
                     color={{
                       bg: "bg-red-100",
                       text: "text-red-900",

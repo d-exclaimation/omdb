@@ -34,7 +34,7 @@ const FilmDirector: FC<FilmDirectorProps> = ({
 
   const isYou = useMemo(() => user?.id === director.id, [user, director.id]);
   return (
-    <div className="w-full max-w-3xl h-max bg-white flex flex-col rounded-lg p-6 py-4 md:p-8 md:py-6">
+    <div className="w-full max-w-3xl h-max bg-white dark:bg-zinc-900 flex flex-col rounded-lg p-6 py-4 md:p-8 md:py-6">
       <EditFilmDialog film={film} onClose={closeEdit} editing={editing} />
       <DeleteFilmDialog
         id={film.filmId}
@@ -43,7 +43,7 @@ const FilmDirector: FC<FilmDirectorProps> = ({
         deleting={deleting}
       />
       <div className="w-full flex justify-between items-center">
-        <h3 className="text-lg font-semibold">
+        <h3 className="text-lg font-semibold dark:text-white">
           Directed by{isYou ? " (You)" : ""}
         </h3>
         <Settings
@@ -60,12 +60,13 @@ const FilmDirector: FC<FilmDirectorProps> = ({
           fallback={`${director.firstName}${director.lastName}`}
           alt="avatar"
         />
-        <div className="flex flex-col text-start mx-2 w-full">
+        <div className="flex flex-col text-start mx-2 w-full dark:text-white">
           {isYou ? (
             <Link
               to="/profile"
               className="flex flex-row justify-start gap-1 font-medium
-            text-zinc-900 hover:underline active:underline max-w-[80%]"
+              text-zinc-900 hover:underline active:underline max-w-[80%]
+              dark:text-zinc-100"
             >
               <span className="truncate max-w-full">
                 {director.firstName} {director.lastName}

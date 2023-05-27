@@ -105,7 +105,7 @@ const ReviewFilmDialog: FC<ReviewFilmProps> = ({
               <Dialog.Panel
                 as="form"
                 className="w-full max-w-md z-40 transform rounded-md bg-white 
-                p-6 text-left align-middle shadow-xl transition-all"
+                p-6 text-left align-middle shadow-xl transition-all dark:bg-zinc-800"
                 onSubmit={(e) => {
                   e.preventDefault();
                   submit();
@@ -113,7 +113,7 @@ const ReviewFilmDialog: FC<ReviewFilmProps> = ({
               >
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 max-w-full truncate text-gray-900"
+                  className="text-lg font-medium leading-6 max-w-full truncate text-gray-900 dark:text-gray-100"
                 >
                   Review for {title}
                 </Dialog.Title>
@@ -163,6 +163,7 @@ const ReviewFilmDialog: FC<ReviewFilmProps> = ({
                 <div className="mt-4 flex justify-between z-60">
                   <Button
                     type="button"
+                    className="dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700 dark:active:bg-zinc-700"
                     color={{
                       bg: "bg-zinc-100",
                       text: "text-zinc-900",
@@ -175,6 +176,7 @@ const ReviewFilmDialog: FC<ReviewFilmProps> = ({
                     Cancel
                   </Button>
                   <Button
+                    className="dark:bg-indigo-800 dark:text-indigo-100 dark:hover:bg-indigo-700 dark:active:bg-indigo-700"
                     color={{
                       bg: "bg-sky-100",
                       text: "text-sky-900",

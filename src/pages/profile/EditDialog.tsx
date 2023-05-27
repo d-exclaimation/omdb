@@ -169,9 +169,9 @@ const EditDialog: FC<EditDialogProps> = ({ editing, close, ...user }) => {
                       {({ open }) => (
                         <>
                           <Disclosure.Button
-                            className="mt-1 flex w-full justify-between rounded-md bg-zinc-100 dark:bg-zinc-900
+                            className="mt-1 flex w-full justify-between rounded-md bg-zinc-100 dark:bg-zinc-800
                             px-4 py-2 text-left text-sm font-medium text-zinc-900 dark:text-zinc-100
-                           hover:bg-zinc-200 focus:outline-none focus-visible:ring dark:hover:bg-zinc-800
+                           hover:bg-zinc-200 focus:outline-none focus-visible:ring dark:hover:bg-zinc-700
                            focus-visible:ring-zinc-500 focus-visible:ring-opacity-75"
                           >
                             {open ? "Hide" : "Update password"}

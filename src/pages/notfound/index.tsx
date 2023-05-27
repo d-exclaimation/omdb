@@ -20,14 +20,19 @@ const NotFoundPage: FC = () => {
         leaveTo="opacity-0 translate-y-10"
       >
         <div className="flex flex-row items-center gap-4 mb-5 justify-center">
-          <h2 className="font-bold text-4xl">404</h2>
-          <span className="w-[1px] h-8 my-4 bg-black/30" />
-          <h3 className="font-medium text-lg">Page not found</h3>
+          <h2 className="font-bold text-4xl dark:text-white">404</h2>
+          <span className="w-[1px] h-8 my-4 bg-black/30 dark:bg-white/30" />
+          <h3 className="font-medium text-lg dark:text-white">
+            Page not found
+          </h3>
         </div>
         <SnakePage />
         <div className="text-base h-4 mt-4">
           <Link to="/">
-            <span className="text-zinc-800 border-b border-zinc-800 hover:text-zinc-700 active:text-zinc-700">
+            <span
+              className="text-zinc-800 dark:text-zinc-200 border-b border-zinc-800 dark:border-zinc-200
+              hover:text-zinc-700 active:text-zinc-700 dark:hover:text-zinc-300 dark:active:text-zinc-300"
+            >
               Go back to home
             </span>
           </Link>

@@ -17,12 +17,16 @@ const EditFilmImage: FC<EditFilmImageProps> = ({
       <button
         type="button"
         className="inline-flex items-center bg-white ring-1 ring-zinc-400/50 hover:bg-zinc-100
-      active:bg-zinc-100 rounded px-3 py-1 text-sm"
+      active:bg-zinc-100 rounded px-3 py-1 text-sm dark:bg-zinc-800 dark:ring-zinc-600/50 
+      dark:hover:bg-zinc-700 dark:active:bg-zinc-700 dark:text-white"
         onClick={() => {
           fileInputRef.current?.click();
         }}
       >
-        <img className="w-3 h-3 mr-1" src="/icons/edit.svg" />
+        <img
+          className="w-3 h-3 mr-1 dark:content-[url('/icons/edit-selected.svg')]"
+          src="/icons/edit.svg"
+        />
         {label ?? "Add"}
         <input
           type="file"

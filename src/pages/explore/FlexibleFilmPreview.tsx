@@ -26,7 +26,7 @@ const FlexibleFilmPreview: FC<FlexibleFilmPreviewProps> = ({
     <Link
       key={filmId}
       to={`/film?id=${filmId}`}
-      className="flex flex-col w-full flex-shrink-0 h-full overflow-hidden bg-white rounded group"
+      className="flex flex-col w-full flex-shrink-0 h-full overflow-hidden bg-white dark:bg-zinc-900 rounded group"
     >
       <div className="object-cover w-full aspect-video rounded overflow-hidden">
         <Img
@@ -37,7 +37,7 @@ const FlexibleFilmPreview: FC<FlexibleFilmPreviewProps> = ({
         />
       </div>
       <div className="flex flex-col w-full gap-1 py-2">
-        <h3 className="max-w-[90%] font-semibold group-hover:text-zinc-500 group-hover:underline truncate text-sm">
+        <h3 className="max-w-[90%] dark:text-white font-semibold group-hover:text-zinc-500 group-hover:underline truncate text-sm">
           {title}
         </h3>
         <div className="flex flex-row w-full items-center justify-start">

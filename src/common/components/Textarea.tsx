@@ -35,8 +35,8 @@ const Textarea: FC<TextareaProps> = ({
       <textarea
         placeholder={placeholder}
         className="flex w-full h-28 rounded bg-transparent px-3 border border-slate-300
-        py-3 text-sm placeholder:text-slate-400 focus:outline-none data-[error='true']:border-red-700
-        disabled:cursor-not-allowed disabled:opacity-50"
+        py-3 text-sm placeholder:text-slate-400 focus:outline-none data-[error='true']:border-red-700 disabled:cursor-not-allowed disabled:opacity-50
+        dark:placeholder:text-slate-700 dark:border-slate-600 dark:text-white dark:data-[error='true']:border-red-300"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         data-error={!!error}

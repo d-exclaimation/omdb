@@ -28,7 +28,9 @@ const Img: FC<ImageProps> = ({ src, fallback, alt, className }) => {
 
   return (
     <img
-      className={`data-[loading='true']:bg-zinc-200 data-[loading='true']:animate-pulse
+      className={`data-[loading='true']:bg-zinc-200 
+      data-[loading='true']:animate-pulse
+      dark:data-[loading='true']:bg-zinc-800 
       ${className ?? ""}`}
       src={href}
       loading="lazy"

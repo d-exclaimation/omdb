@@ -39,7 +39,9 @@ const ListSelect = <T extends string | number>({
             className="w-full py-3 placeholder:text-slate-400 text-sm
             focus:outline-none disabled:cursor-not-allowed text-start
             disabled:opacity-50 rounded border border-slate-300 bg-transparent 
-            px-3 data-[error='true']:border-red-700 truncate"
+            px-3 data-[error='true']:border-red-700 truncate
+            dark:border-slate-600 dark:text-white 
+            dark:data-[error='true']:border-red-300"
           >
             {selected.name}
           </Listbox.Button>
@@ -49,18 +51,18 @@ const ListSelect = <T extends string | number>({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="absolute mt-1 h-max w-full z-50 max-w-md overflow-hidden rounded bg-white shadow-lg ring-1 ring-black ring-opacity-5">
-              <Listbox.Options className="mt-1 max-h-24 md:max-h-32 z-50 w-full overflow-auto rounded bg-white py-1 text-base focus:outline-none sm:text-sm">
+            <div className="absolute mt-1 h-max w-full z-50 max-w-md overflow-hidden rounded bg-white dark:bg-zinc-800 shadow-lg ring-1 ring-black/5 dark:ring-white/5">
+              <Listbox.Options className="mt-1 max-h-24 md:max-h-32 z-50 w-full overflow-auto rounded bg-white dark:bg-zinc-800 py-1 text-base focus:outline-none sm:text-sm">
                 {options.map((option) => (
                   <Listbox.Option
                     key={option.value}
                     className={({ active }) =>
                       `relative cursor-default select-none py-2 pl-10 ${
                         selected.value === option.value
-                          ? "bg-zinc-200 text-zinc-800"
+                          ? "bg-zinc-200 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200"
                           : active
-                          ? "bg-zinc-100 text-zinc-900"
-                          : "text-gray-900"
+                          ? "bg-zinc-100 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100"
+                          : "text-gray-900 dark:text-gray-100"
                       }`
                     }
                     value={option}
@@ -75,10 +77,10 @@ const ListSelect = <T extends string | number>({
                       {option.name}
                     </span>
                     {selected.value === option.value ? (
-                      <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-zinc-600">
+                      <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-zinc-600 dark:text-zinc-400">
                         <img
                           src="/icons/checked.svg"
-                          className="h-5 w-5"
+                          className="h-5 w-5 dark:content-[url('/icons/checked-selected.svg')]"
                           aria-hidden="true"
                         />
                       </span>

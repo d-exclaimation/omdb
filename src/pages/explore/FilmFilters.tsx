@@ -56,7 +56,7 @@ const FilmFilters: FC<FilmFiltersProps> = ({
           <button
             type="button"
             key={genreId}
-            className="px-4 py-2 rounded-full text-sm bg-white text-zinc-600 w-max flex-shrink-0 animate-slide-right"
+            className="px-4 py-2 rounded-full text-sm bg-white dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 w-max flex-shrink-0 animate-slide-right"
             onClick={() => onRemoveGenre(genreId)}
           >
             {genres.get(genreId)?.name} <span className="ml-2">✕</span>
@@ -66,8 +66,10 @@ const FilmFilters: FC<FilmFiltersProps> = ({
           <button
             type="button"
             key={rating}
-            className={`px-4 py-2 rounded-full text-sm bg-white font-medium w-max flex-shrink-0 
-            ${ageRatingToColor(rating).text} animate-slide-right`}
+            className={`px-4 py-2 rounded-full text-smfont-medium w-max flex-shrink-0 
+            ${ageRatingToColor(rating).text} 
+            ${ageRatingToColor(rating).bg} 
+            animate-slide-right`}
             onClick={() => onRemoveAgeRating(rating)}
           >
             {rating} <span className="ml-2">✕</span>

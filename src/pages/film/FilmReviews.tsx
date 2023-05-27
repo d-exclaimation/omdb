@@ -47,9 +47,11 @@ const FilmReviews: FC<FilmReviewsProps> = ({
   );
 
   return (
-    <div className="w-full max-w-3xl h-max bg-white flex overflow-hidden flex-col rounded-lg p-6 py-4 md:p-8 md:py-6">
+    <div className="w-full max-w-3xl h-max bg-white dark:bg-zinc-900 flex overflow-hidden flex-col rounded-lg p-6 py-4 md:p-8 md:py-6">
       <div className="w-full flex items-center justify-between mb-2">
-        <h3 className="text-lg font-semibold">Reviews and Ratings</h3>
+        <h3 className="text-lg font-semibold dark:text-white">
+          Reviews and Ratings
+        </h3>
         <Button
           className={!canReview ? "hidden" : ""}
           color={{
@@ -73,10 +75,12 @@ const FilmReviews: FC<FilmReviewsProps> = ({
       <div className="w-full rounded-lg shadow-sm border flex flex-col md:flex-row justify-center md:justify-between md:items-center overflow-x-auto md:h-28 md:gap-3">
         <div className="h-[6.5rem] w-full md:w-48 flex-shrink-0">
           <div className="p-4 flex flex-row items-center justify-between space-y-0 pb-1">
-            <h3 className="tracking-tight text-sm font-medium">Rating</h3>
+            <h3 className="tracking-tight text-sm font-medium dark:text-white">
+              Rating
+            </h3>
           </div>
           <div className="p-4 pt-0">
-            <div className="text-xl max-w-full truncate font-bold">
+            <div className="text-xl max-w-full truncate font-bold dark:text-white">
               {reviews === 0 ? (
                 "N/A"
               ) : (
@@ -85,7 +89,7 @@ const FilmReviews: FC<FilmReviewsProps> = ({
                 </>
               )}
             </div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-muted-foreground dark:text-white">
               from {reviews} review(s)
             </p>
           </div>
@@ -113,7 +117,7 @@ const FilmReviews: FC<FilmReviewsProps> = ({
             )}
           </div>
           {reviews <= 0 ? (
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-sm font-medium">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-sm dark:text-white font-medium">
               No reviews yet
             </div>
           ) : null}

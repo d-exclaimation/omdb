@@ -34,13 +34,17 @@ const PageControls: FC<PageControlsProps> = ({ current, setPage, last }) => {
         className="flex items-center justify-center rounded-full 
        hover:bg-slate-100 active:bg-slate-100 p-2 transition-all
         disabled:opacity-0 disabled:hover:bg-transparent
-        disabled:translate-x-12 disabled:active:bg-transparent"
+        disabled:translate-x-12 disabled:active:bg-transparent
+        dark:hover:bg-zinc-800 dark:active:bg-zinc-800"
         disabled={current === 1}
         onClick={() => {
           change(1);
         }}
       >
-        <img className="w-5 h-5" src="/icons/start.svg" />
+        <img
+          className="w-5 h-5 content-[url('/icons/start-selected.svg')]"
+          src="/icons/start.svg"
+        />
       </button>
 
       <button
@@ -48,26 +52,31 @@ const PageControls: FC<PageControlsProps> = ({ current, setPage, last }) => {
         className="flex items-center justify-center rounded-full
        hover:bg-slate-100 active:bg-slate-100 p-2 transition-all
         disabled:opacity-0 disabled:hover:bg-transparent
-        disabled:translate-x-12 disabled:active:bg-transparent"
+        disabled:translate-x-12 disabled:active:bg-transparent
+        dark:hover:bg-zinc-800 dark:active:bg-zinc-800"
         disabled={current === 1}
         onClick={() => {
           change((prev) => Math.max(prev - 1, 1));
         }}
       >
-        <img className="w-5 h-5" src="/icons/arrow-left.svg" />
+        <img
+          className="w-5 h-5 content-[url('/icons/arrow-left-selected.svg')]"
+          src="/icons/arrow-left.svg"
+        />
       </button>
 
       <div className="flex flex-row justify-end gap-1 items-end min-w-12 w-max mx-2">
         <span
           className="-translate-y-1 text-2xl font-semibold hover:underline
           data-[animating='true']:opacity-0 data-[animating='false']:duration-400
-          data-[animating='true']:translate-y-1 transition-all duration-0"
+          data-[animating='true']:translate-y-1 transition-all duration-0
+          dark:text-white"
           data-animating={animating}
         >
           {current}
         </span>
-        <span className="h-6 ml-1 mr-[0.125rem] w-[1px] bg-black rotate-[30deg]"></span>
-        <span className="text-sm hover:underline"> {last}</span>
+        <span className="h-6 ml-1 mr-[0.125rem] w-[1px] bg-black dark:bg-white rotate-[30deg]"></span>
+        <span className="text-sm dark:text-white hover:underline"> {last}</span>
       </div>
 
       <button
@@ -75,13 +84,17 @@ const PageControls: FC<PageControlsProps> = ({ current, setPage, last }) => {
         className="flex items-center justify-center rounded-full
         hover:bg-slate-100 active:bg-slate-100 p-2 transition-all
         disabled:opacity-0 disabled:hover:bg-transparent
-        disabled:-translate-x-12 disabled:active:bg-transparent"
+        disabled:-translate-x-12 disabled:active:bg-transparent
+        dark:hover:bg-zinc-800 dark:active:bg-zinc-800"
         disabled={current === last}
         onClick={() => {
           change((prev) => Math.min(prev + 1, last));
         }}
       >
-        <img className="w-5 h-5" src="/icons/arrow-right.svg" />
+        <img
+          className="w-5 h-5 content-[url('/icons/arrow-right-selected.svg')]"
+          src="/icons/arrow-right.svg"
+        />
       </button>
 
       <button
@@ -89,13 +102,17 @@ const PageControls: FC<PageControlsProps> = ({ current, setPage, last }) => {
         className="flex items-center justify-center rounded-full
       hover:bg-slate-100 active:bg-slate-100 p-2 transition-all
         disabled:opacity-0 disabled:hover:bg-transparent
-        disabled:-translate-x-12 disabled:active:bg-transparent"
+        disabled:-translate-x-12 disabled:active:bg-transparent
+        dark:hover:bg-zinc-800 dark:active:bg-zinc-800"
         disabled={current === last}
         onClick={() => {
           change(last);
         }}
       >
-        <img className="w-5 h-5" src="/icons/end.svg" />
+        <img
+          className="w-5 h-5 content-[url('/icons/end-selected.svg')]"
+          src="/icons/end.svg"
+        />
       </button>
     </div>
   );

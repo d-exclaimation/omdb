@@ -36,7 +36,7 @@ const FilmPosterDialog: FC<FilmPosterDialogProps> = ({
             >
               <Dialog.Panel
                 className="w-full max-w-md z-40 transform rounded-md bg-white 
-                p-2 text-left align-middle shadow-xl transition-all"
+                p-2 text-left align-middle shadow-xl transition-all dark:bg-zinc-800"
               >
                 <Img
                   className="aspect-square w-full object-cover rounded-md"

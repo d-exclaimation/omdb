@@ -15,7 +15,7 @@ const FilmDetails: FC<FilmDetail> = (data) => {
   const [show, { open, close }] = useToggle();
 
   return (
-    <div className="w-full max-w-3xl h-max bg-white flex overflow-hidden flex-col rounded-lg">
+    <div className="w-full max-w-3xl h-max bg-white dark:bg-zinc-900 flex overflow-hidden flex-col rounded-lg">
       <FilmPosterDialog
         previewing={show}
         filmId={data.filmId}
@@ -32,14 +32,14 @@ const FilmDetails: FC<FilmDetail> = (data) => {
       </button>
       <div className="flex w-full flex-col p-6 md:p-8">
         <div className="w-full flex flex-row justify-between">
-          <h3 className="text-xl max-w-[60%] truncate font-semibold">
+          <h3 className="text-xl max-w-[60%] truncate font-semibold dark:text-white">
             {data.title}
           </h3>
           <h4 className="text-xs md:text-sm font-light">
-            <span className="hidden md:inline-block">
+            <span className="hidden md:inline-block dark:text-white">
               {data.releaseDate.toLocaleString("en-NZ")}
             </span>
-            <span className="md:hidden">
+            <span className="md:hidden dark:text-white">
               {data.releaseDate.toLocaleDateString("en-NZ")}
             </span>
           </h4>
@@ -56,11 +56,13 @@ const FilmDetails: FC<FilmDetail> = (data) => {
             {ageRatings[data.ageRating as keyof typeof ageRatings]}
           </span>
         </div>
-        <div className="flex flex-wrap break-words text-sm my-2 text-zinc-600">
+        <div className="flex flex-wrap break-words text-sm my-2 text-zinc-600 dark:text-zinc-400">
           {data.description ? (
             data.description
           ) : (
-            <span className="italic text-zinc-400">No description given</span>
+            <span className="italic text-zinc-400 dark:text-zinc-600">
+              No description given
+            </span>
           )}
         </div>
       </div>

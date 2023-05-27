@@ -33,7 +33,7 @@ const ReviewCaraousel: FC<ReviewCaraouselProps> = ({ reviews, isLoading }) => {
                 fallback={`${reviewerFirstName}${reviewerLastName}`}
                 alt={reviewerFirstName}
               />
-              <div className="flex flex-col items-start max-w-[70%]">
+              <div className="flex flex-col items-start max-w-[70%] dark:text-white">
                 <span className="font-semibold max-w-full truncate text-sm">
                   {reviewerFirstName} {reviewerLastName}
                 </span>
@@ -42,15 +42,20 @@ const ReviewCaraousel: FC<ReviewCaraouselProps> = ({ reviews, isLoading }) => {
                 </span>
               </div>
             </div>
-            <div className="flex px-2 py-2 text-sm flex-wrap break-words w-full">
+            <div className="flex px-2 py-2 text-sm flex-wrap break-words w-full dark:text-white">
               {reviewContent ? (
                 <>{reviewContent}</>
               ) : (
-                <span className="text-zinc-600 italic">No comment</span>
+                <span className="text-zinc-600 dark:text-zinc-400 italic">
+                  No comment
+                </span>
               )}
             </div>
-            <div className="flex mt-auto px-2 py-1 justify-end items-center text-xs flex-wrap break-words truncate w-full">
-              <img className="w-3 h-3 mr-[.125rem]" src="/icons/star.svg" />
+            <div className="flex mt-auto px-2 py-1 justify-end items-center text-xs flex-wrap break-words truncate w-full dark:text-white">
+              <img
+                className="w-3 h-3 mr-[.125rem] content-[url('/icons/star-selected.svg')]"
+                src="/icons/star.svg"
+              />
               {rating.toFixed(2)}
             </div>
           </div>
