@@ -27,8 +27,8 @@ const Notification: FC<NotificationProps> = ({
   return (
     <Toast.Root
       duration={2_000}
-      className="bg-white rounded-md shadow-xl md:shadow-md p-4 flex flex-row items-center 
-      data-[state=open]:animate-slide-in data-[state=closed]:animate-swipe-out
+      className="bg-white dark:bg-zinc-900 rounded-md shadow-xl md:shadow-md p-4 flex flex-row items-center 
+      data-[state=open]:animate-slide-in data-[state=closed]:animate-swipe-out gap-2
       data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=end]:animate-swipe-out
       data-[swipe=cancel]:translate-x-0 data-[swipe=cancel]:transition-[transform_200ms_ease-out]"
       open={open}
@@ -41,12 +41,12 @@ const Notification: FC<NotificationProps> = ({
       }}
     >
       <div className="flex flex-1 flex-col">
-        <Toast.Title className="mb-1 font-bold text-zinc-800 text-sm flex items-center w-full">
+        <Toast.Title className="mb-1 font-bold text-zinc-800 dark:text-zinc-200 text-sm flex items-center w-full">
           <span className="max-w-full truncate">{title}</span>
         </Toast.Title>
         <Toast.Description asChild>
           <time
-            className="m-0 text-zinc-600 text-xs leading-[1.3]"
+            className="m-0 text-zinc-600 dark:text-zinc-400 text-xs leading-[1.3]"
             dateTime={date.toISOString()}
           >
             {prettyDate(date)}
