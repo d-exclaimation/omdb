@@ -105,7 +105,7 @@ const ReviewFilmDialog: FC<ReviewFilmProps> = ({
               <Dialog.Panel
                 as="form"
                 className="w-full max-w-md z-40 transform rounded-md bg-white 
-                p-6 text-left align-middle shadow-xl transition-all dark:bg-zinc-800"
+                p-6 text-left align-middle shadow-xl transition-all dark:bg-zinc-900"
                 onSubmit={(e) => {
                   e.preventDefault();
                   submit();
