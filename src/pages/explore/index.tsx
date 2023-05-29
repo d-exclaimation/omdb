@@ -15,15 +15,20 @@ import Layout from "../layout";
 import FilmFilters from "./FilmFilters";
 import FilmSearchBar from "./FilmSearchBar";
 import FlexibleFilmPreview from "./FlexibleFilmPreview";
+import ListFilmPreview from "./ListFilmPreview";
 import PageControls from "./PageControls";
 import SkeletonFlexibleFilmPreview from "./SkeletonFlexibleFilmPreview";
 
 const ExplorePage: FC = () => {
   const [params, setParams] = useSearchParams();
   const [q, setQ] = useState(params.get("q") ?? "");
+  const mode = useMemo(
+    () => (params.get("mode") ?? "grid") as "grid" | "list",
+    [params]
+  );
   const page = useMemo(() => maybeInt.parse(params.get("page")) ?? 1, [params]);
   const sort = useMemo<Sorting>(
-    () => (params.get("sort") as Sorting) ?? "RELEASED_ASC",
+    () => (params.get("sort") as Sorting) ?? "RELEASED_DESC",
     [params]
   );
   const genreIds = useMemo(
@@ -83,6 +88,19 @@ const ExplorePage: FC = () => {
     [setQ, setParams]
   );
 
+  const setMode = useCallback(
+    (value: "grid" | "list") => {
+      setParams((curr) => {
+        if (curr.has("mode")) {
+          curr.delete("mode");
+        }
+        curr.append("mode", value);
+        return curr;
+      });
+    },
+    [setParams]
+  );
+
   const setParamByKey = useCallback(
     (key: string, value: string) => {
       setParams((curr) => {
@@ -121,7 +139,12 @@ const ExplorePage: FC = () => {
   return (
     <Layout route="Explore" heading="Discover films">
       <div className="w-full flex flex-col justify-start items-center gap-3">
-        <FilmSearchBar value={q} onUpdate={setSearch} />
+        <FilmSearchBar
+          value={q}
+          onUpdate={setSearch}
+          mode={mode}
+          onToggleMode={(prev) => setMode(prev === "grid" ? "list" : "grid")}
+        />
         <FilmFilters
           sort={sort}
           onSortChange={(sort) => setParamByKey("sort", sort)}
@@ -154,11 +177,19 @@ const ExplorePage: FC = () => {
 
         <div className="w-full max-h-max bg-white dark:bg-zinc-900 flex items-center flex-col rounded-lg p-6 md:p-8 max-w-3xl">
           {data?.films?.length ? (
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 place-items-center gap-2">
-              {data?.films.map((film) => (
-                <FlexibleFilmPreview key={film.filmId} {...film} />
-              ))}
-            </div>
+            mode === "list" ? (
+              <div className="w-full flex flex-col items-center gap-2">
+                {data?.films.map((film) => (
+                  <ListFilmPreview key={film.filmId} {...film} />
+                ))}
+              </div>
+            ) : (
+              <div className="w-full grid grid-cols-1 sm:grid-cols-2 place-items-center gap-2">
+                {data?.films.map((film) => (
+                  <FlexibleFilmPreview key={film.filmId} {...film} />
+                ))}
+              </div>
+            )
           ) : isValidating ? (
             <div className="w-full grid grid-cols-1 sm:grid-cols-2 place-items-center gap-2">
               {[1, 2, 3, 4, 5, 6].map((i) => (
