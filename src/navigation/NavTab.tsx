@@ -16,9 +16,9 @@ const NavTab: FC<NavTabProps> = ({ href, icons }) => {
       {({ selected }) => (
         <>
           <span
-            className="absolute -z-10 -translate-y-8 opacity-0 px-2 py-1 rounded-lg text-xs bg-black text-white
-            group-hover:z-10 group-hover:-translate-y-12 group-hover:opacity-100 transition-all capitalize
-            data-selected:hidden dark:bg-white dark:text-black group-hover:duration-500"
+            className="absolute -z-10 -translate-y-8 opacity-0 px-2 py-1 rounded-lg text-[0.675rem] leading-3 
+            md:group-hover:z-10 md:group-hover:-translate-y-12 md:group-hover:opacity-100 transition-all capitalize
+            bg-black text-white dark:bg-white dark:text-black group-hover:duration-500"
             data-selected={selected}
           >
             {href.substring(1) || "home"}
