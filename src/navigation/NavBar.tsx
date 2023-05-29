@@ -30,8 +30,8 @@ const NavBar: FC = () => {
         className="z-30 fixed bottom-4 mx-auto 
         flex flex-row items-center justify-center
         w-max p-1 rounded-full backdrop-blur-sm 
-        bg-white gap-1 shadow-lg overflow-hidden
-        ring-1 ring-zinc-300/50 
+        bg-white gap-1 shadow-lg 
+        ring-1 ring-zinc-300/50 overflow-visible
         dark:bg-zinc-900 dark:ring-zinc-700/50"
       >
         <NavTab
