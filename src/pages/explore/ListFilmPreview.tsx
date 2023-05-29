@@ -55,18 +55,6 @@ const ListFilmPreview: FC<FlexibleFilmPreviewProps> = ({
           </div>
         </div>
         <div className="flex flex-row justify-between text-zinc-400 h-max gap-3 pr-1 text-xs">
-          <span className="flex items-center">
-            <img className="w-3 h-3 mr-[.125rem]" src="/icons/star.svg" />
-            {rating <= 0 ? "N/A" : rating.toFixed(2)}
-          </span>
-        </div>
-        <div className="flex flex-row justify-between text-zinc-400 gap-3 pr-1 text-xs">
-          <span className="md:hidden">
-            {releaseDate.toLocaleDateString("en-NZ")}
-          </span>
-          <span className="hidden md:inline">
-            {releaseDate.toLocaleString("en-NZ")}
-          </span>
           <div className="flex items-center justify-end text-xs gap-2">
             <span className="px-1 rounded bg-zinc-200 text-zinc-900">
               {genres.get(genreId)?.name ?? "Unknown"}
@@ -79,6 +67,18 @@ const ListFilmPreview: FC<FlexibleFilmPreviewProps> = ({
               {ageRating}
             </span>
           </div>
+        </div>
+        <div className="flex flex-row justify-between text-zinc-400 gap-3 pr-1 text-xs">
+          <span className="md:hidden">
+            {releaseDate.toLocaleDateString("en-NZ")}
+          </span>
+          <span className="hidden md:inline">
+            {releaseDate.toLocaleString("en-NZ")}
+          </span>
+          <span className="flex items-center">
+            <img className="w-3 h-3 mr-[.125rem]" src="/icons/star.svg" />
+            {rating <= 0 ? "N/A" : rating.toFixed(2)}
+          </span>
         </div>
       </div>
     </Link>
