@@ -8,7 +8,7 @@ type OverlayProps = {
 const OverlayRoot: FC<OverlayProps> = ({ className }) => {
   return (
     <div
-      className={`fixed inset-0 bg-black/25 dark:bg-white/25 backdrop-blur-sm
+      className={`fixed inset-0 bg-black/25 dark:bg-zinc-900/50 backdrop-blur-sm
         ${className ?? ""}`}
     />
   );
@@ -26,7 +26,7 @@ const OverlayChild: FC<OverlayProps> = ({ className }) => {
       leaveTo="opacity-0"
     >
       <div
-        className={`fixed inset-0 bg-black/25 dark:bg-white/25 backdrop-blur-sm
+        className={`fixed inset-0 bg-black/25 dark:bg-zinc-900/50 backdrop-blur-sm
       ${className ?? ""}`}
       />
     </Transition.Child>

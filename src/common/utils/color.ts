@@ -4,6 +4,7 @@ type Colors = {
   bg: Palette["bg"];
   text: Palette["text"];
 };
+
 export function ageRatingToColor(ageRating: string): Colors {
   switch (ageRating.trim().toUpperCase()) {
     case "G":

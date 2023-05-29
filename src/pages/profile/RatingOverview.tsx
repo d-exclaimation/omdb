@@ -31,7 +31,7 @@ const RatingOverview: FC<RatingOverviewProps> = ({ data }) => {
       <div className="flex flex-row items-center justify-start w-full mb-2">
         <h3 className="font-semibold text-xl">Recent performance</h3>
       </div>
-      <div className="w-full rounded-lg shadow-sm border flex flex-col md:flex-row justify-center md:justify-between md:items-center overflow-x-auto md:h-28 md:gap-3">
+      <div className="w-full rounded-lg shadow-sm border dark:border-white/30 flex flex-col md:flex-row justify-center md:justify-between md:items-center overflow-x-auto md:h-28 md:gap-3">
         <div className="h-[6.5rem] w-full md:w-48 flex-shrink-0">
           <div className="p-4 flex flex-row items-center justify-between space-y-0 pb-1">
             <h3 className="tracking-tight text-sm font-medium">

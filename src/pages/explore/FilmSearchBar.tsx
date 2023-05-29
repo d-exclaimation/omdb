@@ -37,17 +37,18 @@ const FilmSearchBar: FC<FilmSearchBarProps> = ({
         <button
           type="button"
           className="h-full px-3 py-1 rounded-r-lg focus:outline-none
-          hover:bg-zinc-50 active:bg-zinc-50 flex items-center justify-center w-max"
+          hover:bg-zinc-50 active:bg-zinc-50 flex items-center justify-center w-max
+          dark:hover:bg-zinc-800 dark:active:bg-zinc-800"
           onClick={() => onToggleMode(mode)}
         >
           <img
-            className="w-6 h-6 dark:content-[url('/icons/telescope-selected.svg')]
+            className="w-6 h-6 dark:content-[url('/icons/grid-selected.svg')]
             transition-all translate-x-5 opacity-0 data-selected:opacity-100 data-selected:translate-x-0"
             src="/icons/grid.svg"
             data-selected={mode === "grid"}
           />
           <img
-            className="absolute w-6 h-6 dark:content-[url('/icons/telescope-selected.svg')]
+            className="absolute w-6 h-6 dark:content-[url('/icons/list-selected.svg')]
             transition-all -translate-x-5 opacity-0 data-selected:opacity-100 data-selected:translate-x-0"
             src="/icons/list.svg"
             data-selected={mode === "list"}

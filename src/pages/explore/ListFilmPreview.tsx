@@ -26,7 +26,8 @@ const ListFilmPreview: FC<FlexibleFilmPreviewProps> = ({
     <Link
       key={filmId}
       to={`/film?id=${filmId}`}
-      className="flex flex-row w-full items-center flex-shrink-0 overflow-hidden gap-2 bg-white dark:bg-zinc-900 rounded group shadow-sm"
+      className="flex flex-row w-full items-center flex-shrink-0 overflow-hidden gap-2 bg-white dark:bg-zinc-900 rounded group 
+      border border-zinc-500/10 hover:border-zinc-500/25"
     >
       <div className="object-cover h-28 md:h-32 w-24 md:w-[unset] md:aspect-square rounded-l overflow-hidden">
         <Img
@@ -76,7 +77,10 @@ const ListFilmPreview: FC<FlexibleFilmPreviewProps> = ({
             {releaseDate.toLocaleString("en-NZ")}
           </span>
           <span className="flex items-center">
-            <img className="w-3 h-3 mr-[.125rem]" src="/icons/star.svg" />
+            <img
+              className="w-3 h-3 mr-[.125rem] dark:content-[url('/icons/star-selected.svg')]"
+              src="/icons/star.svg"
+            />
             {rating <= 0 ? "N/A" : rating.toFixed(2)}
           </span>
         </div>

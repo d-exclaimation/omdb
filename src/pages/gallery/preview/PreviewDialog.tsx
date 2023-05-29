@@ -13,7 +13,7 @@ const PreviewDialog: FC<PreviewDialogProps> = ({ open }) => {
       key="login-dialog"
       show
       appear
-      className="fixed inset-0 w-screen h-screen z-10 bg-zinc-900/5 dark:bg-zinc-100/5 backdrop-blur-[2px]"
+      className="fixed inset-0 w-screen h-screen z-10 bg-zinc-900/5 dark:bg-zinc-900/50 backdrop-blur-[2px]"
       enter="ease-out duration-300"
       enterFrom="opacity-0 scale-95"
       enterTo="opacity-100 scale-100"

@@ -23,7 +23,7 @@ const ReviewCaraousel: FC<ReviewCaraouselProps> = ({ reviews, isLoading }) => {
           timestamp,
         }) => (
           <div
-            className="flex flex-shrink-0 w-64 h-full flex-col p-2 border shadow-sm gap-1 rounded-lg"
+            className="flex flex-shrink-0 w-64 h-full flex-col p-2 border dark:border-white/30 shadow-sm gap-1 rounded-lg"
             key={`review-${reviewerId}`}
           >
             <div className="flex w-full flex-row gap-2 items-center">

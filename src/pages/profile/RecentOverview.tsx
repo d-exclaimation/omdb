@@ -56,7 +56,7 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
         <h3 className="font-semibold text-xl">Dashboard</h3>
       </div>
       <div className="w-full flex flex-col md:flex-row justify-center md:justify-start md:items-center overflow-x-auto md:h-28 gap-3">
-        <div className="rounded-lg border h-[6.5rem] w-full md:w-52 flex-shrink-0 shadow-sm">
+        <div className="rounded-lg border dark:border-white/30 h-[6.5rem] w-full md:w-52 flex-shrink-0 shadow-sm">
           <div className="p-4 flex flex-row items-center justify-between space-y-0 pb-1">
             <h3 className="tracking-tight text-sm font-medium">
               Most popular genre
@@ -72,7 +72,7 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
           </div>
         </div>
 
-        <div className="rounded-lg border h-[6.5rem] w-full md:w-52 flex-shrink-0 shadow-sm truncate">
+        <div className="rounded-lg border dark:border-white/30 h-[6.5rem] w-full md:w-52 flex-shrink-0 shadow-sm truncate">
           <div className="p-4 flex flex-row items-center justify-between space-y-0 pb-1 w-full">
             <h3 className="tracking-tight text-sm font-medium">
               Most recent release
@@ -83,7 +83,10 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
               <>
                 <Link
                   to={`/film?id=${mostRecent.filmId}`}
-                  className="block text-xl max-w-full truncate font-bold bg-gradient-to-r from-purple-600 via-indigo-500 to-blue-500 text-transparent bg-clip-text"
+                  className="block text-xl max-w-full truncate font-bold bg-gradient-to-r 
+                  from-purple-600 via-indigo-500 to-blue-500 
+                  dark:from-lime-400 dark:via-green-300 dark:to-emerald-300
+                  text-transparent bg-clip-text"
                 >
                   {mostRecent.title}
                 </Link>
@@ -104,7 +107,7 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
           </div>
         </div>
 
-        <div className="rounded-lg border h-[6.5rem] w-full md:w-52 flex-shrink-0 shadow-sm">
+        <div className="rounded-lg border dark:border-white/30 h-[6.5rem] w-full md:w-52 flex-shrink-0 shadow-sm">
           <div className="p-4 flex flex-row items-center justify-between space-y-0 pb-1">
             <h3 className="tracking-tight text-sm font-medium">
               Most popular age rating
@@ -112,9 +115,8 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
           </div>
           <div className="p-4 pt-0">
             <div
-              className={`text-xl max-w-full truncate font-bold ${
-                ageRatingToColor(mostAgeRating.name).text
-              }`}
+              className={`text-xl max-w-full truncate font-bold brightness-200
+              ${ageRatingToColor(mostAgeRating.name).text}`}
             >
               {mostAgeRating.name}
             </div>
@@ -126,7 +128,7 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
       </div>
 
       <div className="w-full flex flex-col md:flex-row justify-center md:justify-start md:items-center overflow-x-auto md:h-28 gap-3">
-        <div className="rounded-lg border h-[6.5rem] w-full md:w-[26.75rem] flex-shrink-0 shadow-sm">
+        <div className="rounded-lg border dark:border-white/30 h-[6.5rem] w-full md:w-[26.75rem] flex-shrink-0 shadow-sm">
           <div className="p-4 flex flex-row items-center justify-between space-y-0 pb-1">
             <h3 className="tracking-tight text-sm font-medium">
               Highest rated film
@@ -137,7 +139,10 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
               <>
                 <Link
                   to={`/film?id=${highestRated.filmId}`}
-                  className="block text-xl max-w-full truncate font-bold bg-gradient-to-r from-purple-600 via-indigo-500 to-blue-500 text-transparent bg-clip-text"
+                  className="block text-xl max-w-full truncate font-bold bg-gradient-to-r 
+                  from-purple-600 via-indigo-500 to-blue-500 
+                  dark:from-lime-400 dark:via-green-300 dark:to-emerald-300
+                  text-transparent bg-clip-text"
                 >
                   {highestRated.title}
                 </Link>
@@ -158,7 +163,7 @@ const RecentOverview: FC<RecentOverviewProps> = ({ data }) => {
           </div>
         </div>
 
-        <div className="rounded-lg border h-[6.5rem] w-full md:w-52 flex-shrink-0 shadow-sm">
+        <div className="rounded-lg border dark:border-white/30 h-[6.5rem] w-full md:w-52 flex-shrink-0 shadow-sm">
           <div className="p-4 flex flex-row items-center justify-between space-y-0 pb-1">
             <h3 className="tracking-tight text-sm font-medium">
               Total films directed

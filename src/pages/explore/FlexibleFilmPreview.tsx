@@ -68,7 +68,10 @@ const FlexibleFilmPreview: FC<FlexibleFilmPreviewProps> = ({
         <div className="flex flex-row justify-between text-zinc-400 gap-3 pr-1 text-xs">
           <span>{releaseDate.toLocaleString("en-NZ")}</span>
           <span className="flex items-center">
-            <img className="w-3 h-3 mr-[.125rem]" src="/icons/star.svg" />
+            <img
+              className="w-3 h-3 mr-[.125rem] dark:content-[url('/icons/star-selected.svg')]"
+              src="/icons/star.svg"
+            />
             {rating <= 0 ? "N/A" : rating.toFixed(2)}
           </span>
         </div>

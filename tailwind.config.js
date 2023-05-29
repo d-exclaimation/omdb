@@ -12,7 +12,7 @@ export default {
       },
       colors: {
         chart: "rgb(173, 250, 29)",
-        "chart-dark": "#9333ea"
+        "chart-dark": "rgb(167, 71, 254)"
       },
       minWidth: {
         screen: "100vw",
