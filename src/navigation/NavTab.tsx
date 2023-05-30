@@ -12,7 +12,10 @@ type NavTabProps = {
 
 const NavTab: FC<NavTabProps> = ({ href, icons }) => {
   return (
-    <Tab as="div" className="relative flex items-center group justify-center">
+    <Tab
+      as="div"
+      className="relative flex items-center group justify-center select-none rounded-full"
+    >
       {({ selected }) => (
         <>
           <span
