@@ -16,6 +16,7 @@ import { useNotification } from "../../common/context/notification/useNotificati
 import { useForm } from "../../common/hooks/useForm";
 import { int } from "../../common/utils/coerce";
 import { ratings } from "../../common/utils/constants";
+import { tw } from "../../common/utils/tailwind";
 import { ReviewFilm } from "../../types/film";
 
 type ReviewFilmProps = {
@@ -104,8 +105,8 @@ const ReviewFilmDialog: FC<ReviewFilmProps> = ({
             >
               <Dialog.Panel
                 as="form"
-                className="w-full max-w-md z-40 transform rounded-md bg-white 
-                p-6 text-left align-middle shadow-xl transition-all dark:bg-zinc-900"
+                className={tw(`z-40 w-full max-w-md transform rounded-md bg-white 
+                p-6 text-left align-middle shadow-xl transition-all dark:bg-zinc-900`)}
                 onSubmit={(e) => {
                   e.preventDefault();
                   submit();
@@ -113,21 +114,21 @@ const ReviewFilmDialog: FC<ReviewFilmProps> = ({
               >
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 max-w-full truncate text-gray-900 dark:text-gray-100"
+                  className="max-w-full truncate text-lg font-medium leading-6 text-gray-900 dark:text-gray-100"
                 >
                   Review for {title}
                 </Dialog.Title>
-                <div className="mt-4 flex flex-col w-full min-h-max transition-all">
+                <div className="mt-4 flex min-h-max w-full flex-col transition-all">
                   <div className="flex w-full items-end justify-start">
                     <Img
-                      className="w-full h-32 md:h-40 object-cover rounded-lg"
+                      className="h-32 w-full rounded-lg object-cover md:h-40"
                       src={`${api}/films/${filmId}/image`}
                       fallback={title}
                       alt="avatar"
                     />
                   </div>
 
-                  <div className="flex relative flex-col items-start justify-center w-full mt-4 gap-1">
+                  <div className="relative mt-4 flex w-full flex-col items-start justify-center gap-1">
                     <ListSelect
                       label="Rating"
                       error={serverError ?? errors.rating}
@@ -160,7 +161,7 @@ const ReviewFilmDialog: FC<ReviewFilmProps> = ({
                   </div>
                 </div>
 
-                <div className="mt-4 flex justify-between z-60">
+                <div className="z-60 mt-4 flex justify-between">
                   <Button
                     type="button"
                     className="dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700 dark:active:bg-zinc-700"

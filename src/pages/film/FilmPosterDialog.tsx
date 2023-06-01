@@ -4,6 +4,7 @@ import { api } from "../../api/url";
 import Img from "../../common/components/Image";
 import Overlay from "../../common/components/Overlay";
 import { useCacheControl } from "../../common/context/cache/useCacheControl";
+import { tw } from "../../common/utils/tailwind";
 
 type FilmPosterDialogProps = {
   filmId: number;
@@ -35,11 +36,11 @@ const FilmPosterDialog: FC<FilmPosterDialogProps> = ({
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel
-                className="w-full max-w-md z-40 transform rounded-md bg-white 
-                p-2 text-left align-middle shadow-xl transition-all dark:bg-zinc-800"
+                className={tw(`z-40 w-full max-w-md transform rounded-md bg-white 
+                p-2 text-left align-middle shadow-xl transition-all dark:bg-zinc-800`)}
               >
                 <Img
-                  className="aspect-square w-full object-cover rounded-md"
+                  className="aspect-square w-full rounded-md object-cover"
                   src={`${api}/films/${filmId}/image?${stamp}`}
                   fallback={fallback}
                   alt="avatar"

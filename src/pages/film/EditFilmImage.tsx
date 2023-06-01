@@ -1,4 +1,5 @@
 import { useRef, type FC } from "react";
+import { tw } from "../../common/utils/tailwind";
 
 type EditFilmImageProps = {
   className?: string;
@@ -13,18 +14,19 @@ const EditFilmImage: FC<EditFilmImageProps> = ({
 }) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   return (
-    <div className={`min-w-max z-50 ${className ?? ""}`}>
+    <div className={tw("z-50 min-w-max", className)}>
       <button
         type="button"
-        className="inline-flex items-center bg-white ring-1 ring-zinc-400/50 hover:bg-zinc-100
-      active:bg-zinc-100 rounded px-3 py-1 text-sm dark:bg-zinc-800 dark:ring-zinc-600/50 
-      dark:hover:bg-zinc-700 dark:active:bg-zinc-700 dark:text-white"
+        className={tw(`inline-flex items-center rounded bg-white 
+        px-3 py-1 text-sm ring-1 ring-zinc-400/50 hover:bg-zinc-100 
+        active:bg-zinc-100 dark:bg-zinc-800 dark:text-white 
+        dark:ring-zinc-600/50 dark:hover:bg-zinc-700 dark:active:bg-zinc-700`)}
         onClick={() => {
           fileInputRef.current?.click();
         }}
       >
         <img
-          className="w-3 h-3 mr-1 dark:content-[url('/icons/edit-selected.svg')]"
+          className="mr-1 h-3 w-3 dark:content-[url('/icons/edit-selected.svg')]"
           src="/icons/edit.svg"
         />
         {label ?? "Add"}

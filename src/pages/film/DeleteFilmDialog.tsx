@@ -9,6 +9,7 @@ import { included } from "../../api/keys";
 import Button from "../../common/components/Button";
 import Overlay from "../../common/components/Overlay";
 import { useNotification } from "../../common/context/notification/useNotification";
+import { tw } from "../../common/utils/tailwind";
 
 type DeleteFilmDialogProps = {
   id: number;
@@ -63,20 +64,20 @@ const DeleteFilmDialog: FC<DeleteFilmDialogProps> = ({
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel
-                className="w-full max-w-md z-40 transform rounded-md bg-white 
-                p-6 text-left align-middle shadow-xl transition-all dark:bg-zinc-900"
+                className={tw(`z-40 w-full max-w-md transform rounded-md bg-white 
+                p-6 text-left align-middle shadow-xl transition-all dark:bg-zinc-900`)}
               >
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 max-w-full truncate text-gray-900 dark:text-gray-100"
+                  className="max-w-full truncate text-lg font-medium leading-6 text-gray-900 dark:text-gray-100"
                 >
                   Delete {title}
                 </Dialog.Title>
-                <div className="mt-4 flex flex-col w-full min-h-max text-sm transition-all dark:text-white">
+                <div className="mt-4 flex min-h-max w-full flex-col text-sm transition-all dark:text-white">
                   Are you sure you want to delete {title}?
                 </div>
 
-                <div className="mt-4 flex justify-between z-60">
+                <div className="z-60 mt-4 flex justify-between">
                   <Button
                     type="button"
                     className="dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700 dark:active:bg-zinc-700"

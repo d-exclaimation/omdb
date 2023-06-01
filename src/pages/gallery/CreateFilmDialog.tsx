@@ -20,6 +20,7 @@ import { maybeInt } from "../../common/utils/coerce";
 import { ageRatings } from "../../common/utils/constants";
 import { CreateFilm } from "../../types/film";
 import EditFilmImage from "../film/EditFilmImage";
+import { tw } from "../../common/utils/tailwind";
 
 type CreateFilmDialogProps = {
   creating: boolean;
@@ -115,8 +116,8 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
             >
               <Dialog.Panel
                 as="form"
-                className="w-full max-w-md z-40 transform overflow-hidden rounded-md bg-white 
-                p-6 text-left align-middle shadow-xl transition-all dark:bg-zinc-900"
+                className={tw(`z-40 w-full max-w-md transform overflow-hidden rounded-md bg-white 
+                p-6 text-left align-middle shadow-xl transition-all dark:bg-zinc-900`)}
                 onSubmit={(e) => {
                   e.preventDefault();
                   submit();
@@ -128,10 +129,10 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
                 >
                   Create film
                 </Dialog.Title>
-                <div className="mt-4 flex flex-col w-full min-h-max transition-all">
+                <div className="mt-4 flex min-h-max w-full flex-col transition-all">
                   <div className="flex w-full items-end justify-start">
                     <Img
-                      className="w-20 md:w-24 h-20 md:h-24 object-cover rounded-lg"
+                      className="h-20 w-20 rounded-lg object-cover md:h-24 md:w-24"
                       src={preview}
                       fallback={values.title}
                       alt="avatar"
@@ -156,7 +157,7 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
                     />
                   </div>
 
-                  <div className="flex relative flex-col items-start justify-center w-full mt-4 gap-1">
+                  <div className="relative mt-4 flex w-full flex-col items-start justify-center gap-1">
                     <InputField
                       label="Title"
                       error={
@@ -244,7 +245,7 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
                   </div>
                 </div>
 
-                <div className="mt-4 flex justify-between z-60">
+                <div className="z-60 mt-4 flex justify-between">
                   <Button
                     type="button"
                     className="dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700 dark:active:bg-zinc-700"

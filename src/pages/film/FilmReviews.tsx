@@ -7,6 +7,7 @@ import Button from "../../common/components/Button";
 import ChartBar from "../../common/components/ChartBar";
 import { useToggle } from "../../common/hooks/useToggle";
 import { ratingToColor } from "../../common/utils/color";
+import { tw } from "../../common/utils/tailwind";
 import ReviewCaraousel from "./ReviewCaraousel";
 import ReviewFilmDialog from "./ReviewFilmDialog";
 
@@ -47,8 +48,11 @@ const FilmReviews: FC<FilmReviewsProps> = ({
   );
 
   return (
-    <div className="w-full max-w-3xl h-max bg-white dark:bg-zinc-900 flex overflow-hidden flex-col rounded-lg p-6 py-4 md:p-8 md:py-6">
-      <div className="w-full flex items-center justify-between mb-2">
+    <div
+      className={tw(`flex h-max w-full max-w-3xl flex-col overflow-hidden 
+      rounded-lg bg-white p-6 py-4 dark:bg-zinc-900 md:p-8 md:py-6`)}
+    >
+      <div className="mb-2 flex w-full items-center justify-between">
         <h3 className="text-lg font-semibold dark:text-white">
           Reviews and Ratings
         </h3>
@@ -72,15 +76,18 @@ const FilmReviews: FC<FilmReviewsProps> = ({
           Review
         </Button>
       </div>
-      <div className="w-full rounded-lg shadow-sm border dark:border-white/30 flex flex-col md:flex-row justify-center md:justify-between md:items-center overflow-x-auto md:h-28 md:gap-3">
-        <div className="h-[6.5rem] w-full md:w-48 flex-shrink-0">
-          <div className="p-4 flex flex-row items-center justify-between space-y-0 pb-1">
-            <h3 className="tracking-tight text-sm font-medium dark:text-white">
+      <div
+        className={tw(`flex w-full flex-col justify-center overflow-x-auto rounded-lg border shadow-sm 
+        dark:border-white/30 md:h-28 md:flex-row md:items-center md:justify-between md:gap-3`)}
+      >
+        <div className="h-[6.5rem] w-full flex-shrink-0 md:w-48">
+          <div className="flex flex-row items-center justify-between space-y-0 p-4 pb-1">
+            <h3 className="text-sm font-medium tracking-tight dark:text-white">
               Rating
             </h3>
           </div>
           <div className="p-4 pt-0">
-            <div className="text-xl max-w-full truncate font-bold dark:text-white">
+            <div className="max-w-full truncate text-xl font-bold dark:text-white">
               {reviews === 0 ? (
                 "N/A"
               ) : (
@@ -89,14 +96,14 @@ const FilmReviews: FC<FilmReviewsProps> = ({
                 </>
               )}
             </div>
-            <p className="text-xs text-muted-foreground dark:text-white">
+            <p className="text-muted-foreground text-xs dark:text-white">
               from {reviews} review(s)
             </p>
           </div>
         </div>
 
         <div className="relative">
-          <div className="flex h-[6.5rem] pb-2 md:py-2 mx-4 gap-1 items-end justify-start">
+          <div className="mx-4 flex h-[6.5rem] items-end justify-start gap-1 pb-2 md:py-2">
             {reviews > 0 ? (
               recentReviews.map(({ reviewerId, rating }) => (
                 <ChartBar
@@ -117,7 +124,7 @@ const FilmReviews: FC<FilmReviewsProps> = ({
             )}
           </div>
           {reviews <= 0 ? (
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-sm dark:text-white font-medium">
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-sm font-medium dark:text-white">
               No reviews yet
             </div>
           ) : null}

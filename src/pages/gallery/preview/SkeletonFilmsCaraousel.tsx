@@ -7,13 +7,13 @@ type SkeletonFilmsCaraouselProps = {
 
 const SkeletonFilmsCaraousel: FC<SkeletonFilmsCaraouselProps> = ({ title }) => {
   return (
-    <div className="w-full relative max-w-3xl max-h-max bg-white dark:bg-zinc-900 flex flex-col rounded-lg p-6 md:p-8">
-      <section className="w-full flex items-center justify-between">
-        <h2 className="font-semibold text-xl md:text-2xl dark:text-white">
+    <div className="relative flex max-h-max w-full max-w-3xl flex-col rounded-lg bg-white p-6 dark:bg-zinc-900 md:p-8">
+      <section className="flex w-full items-center justify-between">
+        <h2 className="text-xl font-semibold dark:text-white md:text-2xl">
           {title}
         </h2>
       </section>
-      <section className="w-full flex items-center h-max justify-start gap-3 my-2 p-1 overflow-x-auto">
+      <section className="my-2 flex h-max w-full items-center justify-start gap-3 overflow-x-auto p-1">
         {Array.from({ length: 5 }).map((_, i) => (
           <SkeletonFilmPreview key={i} />
         ))}

@@ -6,6 +6,7 @@ import { useGenres } from "../../common/context/genre/useGenres";
 import { useToggle } from "../../common/hooks/useToggle";
 import { ageRatingToColor } from "../../common/utils/color";
 import { ageRatings } from "../../common/utils/constants";
+import { tw } from "../../common/utils/tailwind";
 import { type FilmDetail } from "../../types/film";
 import FilmPosterDialog from "./FilmPosterDialog";
 
@@ -15,7 +16,7 @@ const FilmDetails: FC<FilmDetail> = (data) => {
   const [show, { open, close }] = useToggle();
 
   return (
-    <div className="w-full max-w-3xl h-max bg-white dark:bg-zinc-900 flex overflow-hidden flex-col rounded-lg">
+    <div className="flex h-max w-full max-w-3xl flex-col overflow-hidden rounded-lg bg-white dark:bg-zinc-900">
       <FilmPosterDialog
         previewing={show}
         filmId={data.filmId}
@@ -24,39 +25,41 @@ const FilmDetails: FC<FilmDetail> = (data) => {
       />
       <button className="w-full" onClick={open}>
         <Img
-          className="w-full h-48 md:h-72 object-cover"
+          className="h-48 w-full object-cover md:h-72"
           src={`${api}/films/${data.filmId}/image?${stamp}`}
           fallback={data.title}
           alt={data.title}
         />
       </button>
       <div className="flex w-full flex-col p-6 md:p-8">
-        <div className="w-full flex flex-row justify-between">
-          <h3 className="text-xl max-w-[60%] truncate font-semibold dark:text-white">
+        <div className="flex w-full flex-row justify-between">
+          <h3 className="max-w-[60%] truncate text-xl font-semibold dark:text-white">
             {data.title}
           </h3>
-          <h4 className="text-xs md:text-sm font-light">
-            <span className="hidden md:inline-block dark:text-white">
+          <h4 className="text-xs font-light md:text-sm">
+            <span className="hidden dark:text-white md:inline-block">
               {data.releaseDate.toLocaleString("en-NZ")}
             </span>
-            <span className="md:hidden dark:text-white">
+            <span className="dark:text-white md:hidden">
               {data.releaseDate.toLocaleDateString("en-NZ")}
             </span>
           </h4>
         </div>
-        <div className="flex flex-row w-full justify-start gap-3 my-2 text-xs">
-          <span className="px-3 py-1 rounded-lg bg-zinc-200 text-zinc-900">
+        <div className="my-2 flex w-full flex-row justify-start gap-3 text-xs">
+          <span className="rounded-lg bg-zinc-200 px-3 py-1 text-zinc-900">
             {genres.get(data.genreId)?.name ?? "Unknown"}
           </span>
           <span
-            className={`px-3 py-1 rounded-lg
-            ${ageRatingToColor(data.ageRating).bg} 
-            ${ageRatingToColor(data.ageRating).text}`}
+            className={tw(
+              "rounded-lg px-3 py-1",
+              ageRatingToColor(data.ageRating).bg,
+              ageRatingToColor(data.ageRating).text
+            )}
           >
             {ageRatings[data.ageRating as keyof typeof ageRatings]}
           </span>
         </div>
-        <div className="flex flex-wrap break-words text-sm my-2 text-zinc-600 dark:text-zinc-400">
+        <div className="my-2 flex flex-wrap break-words text-sm text-zinc-600 dark:text-zinc-400">
           {data.description ? (
             data.description
           ) : (

@@ -20,6 +20,7 @@ import { useNotification } from "../../common/context/notification/useNotificati
 import { useForm } from "../../common/hooks/useForm";
 import { maybeInt } from "../../common/utils/coerce";
 import { ageRatings } from "../../common/utils/constants";
+import { tw } from "../../common/utils/tailwind";
 import { EditFilm } from "../../types/film";
 import EditFilmImage from "./EditFilmImage";
 type FilmEditProps = {
@@ -115,8 +116,8 @@ const FilmEdit: FC<FilmEditProps> = ({
             >
               <Dialog.Panel
                 as="form"
-                className="w-full max-w-md z-40 transform rounded-md bg-white 
-                p-6 text-left align-middle shadow-xl transition-all dark:bg-zinc-900"
+                className={tw(`z-40 w-full max-w-md transform rounded-md bg-white 
+                p-6 text-left align-middle shadow-xl transition-all dark:bg-zinc-900`)}
                 onSubmit={(e) => {
                   e.preventDefault();
                   submit();
@@ -124,14 +125,14 @@ const FilmEdit: FC<FilmEditProps> = ({
               >
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 max-w-full truncate text-gray-900 dark:text-gray-100"
+                  className="max-w-full truncate text-lg font-medium leading-6 text-gray-900 dark:text-gray-100"
                 >
                   Edit {values.title}
                 </Dialog.Title>
-                <div className="mt-4 flex flex-col w-full min-h-max transition-all">
+                <div className="mt-4 flex min-h-max w-full flex-col transition-all">
                   <div className="flex w-full items-end justify-start">
                     <Img
-                      className="w-20 md:w-24 h-20 md:h-24 object-cover rounded-lg"
+                      className="h-20 w-20 rounded-lg object-cover md:h-24 md:w-24"
                       src={preview}
                       fallback={values.title}
                       alt="avatar"
@@ -154,7 +155,7 @@ const FilmEdit: FC<FilmEditProps> = ({
                     />
                   </div>
 
-                  <div className="flex relative flex-col items-start justify-center w-full mt-4 gap-1">
+                  <div className="relative mt-4 flex w-full flex-col items-start justify-center gap-1">
                     <InputField
                       label="Title"
                       error={
@@ -245,7 +246,7 @@ const FilmEdit: FC<FilmEditProps> = ({
                   </div>
                 </div>
 
-                <div className="mt-4 flex justify-between z-60">
+                <div className="z-60 mt-4 flex justify-between">
                   <Button
                     type="button"
                     className="dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700 dark:active:bg-zinc-700"

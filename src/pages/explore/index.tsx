@@ -138,7 +138,7 @@ const ExplorePage: FC = () => {
 
   return (
     <Layout route="Explore" heading="Discover films">
-      <div className="w-full flex flex-col justify-start items-center gap-3">
+      <div className="flex w-full flex-col items-center justify-start gap-3">
         <FilmSearchBar
           value={q}
           onUpdate={setSearch}
@@ -175,31 +175,31 @@ const ExplorePage: FC = () => {
           }
         />
 
-        <div className="w-full max-h-max bg-white dark:bg-zinc-900 flex items-center flex-col rounded-lg p-6 md:p-8 max-w-3xl">
+        <div className="flex max-h-max w-full max-w-3xl flex-col items-center rounded-lg bg-white p-6 dark:bg-zinc-900 md:p-8">
           {data?.films?.length ? (
             mode === "list" ? (
-              <div className="w-full flex flex-col items-center gap-2">
+              <div className="flex w-full flex-col items-center gap-2">
                 {data?.films.map((film) => (
                   <ListFilmPreview key={film.filmId} {...film} />
                 ))}
               </div>
             ) : (
-              <div className="w-full grid grid-cols-1 sm:grid-cols-2 place-items-center gap-2">
+              <div className="grid w-full grid-cols-1 place-items-center gap-2 sm:grid-cols-2">
                 {data?.films.map((film) => (
                   <FlexibleFilmPreview key={film.filmId} {...film} />
                 ))}
               </div>
             )
           ) : isValidating ? (
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 place-items-center gap-2">
+            <div className="grid w-full grid-cols-1 place-items-center gap-2 sm:grid-cols-2">
               {[1, 2, 3, 4, 5, 6].map((i) => (
                 <SkeletonFlexibleFilmPreview key={i} />
               ))}
             </div>
           ) : (
-            <div className="w-full h-full flex flex-col items-center justify-center pt-6 pb-4">
-              <h3 className="font-bold text-base">No films here</h3>
-              <span className="text-sm mt-2 text-zinc-500">
+            <div className="flex h-full w-full flex-col items-center justify-center pb-4 pt-6">
+              <h3 className="text-base font-bold">No films here</h3>
+              <span className="mt-2 text-sm text-zinc-500">
                 {hasFilters
                   ? "Your search did not match any films"
                   : "No films have been added yet"}
@@ -208,7 +208,7 @@ const ExplorePage: FC = () => {
           )}
         </div>
 
-        <div className="w-full max-w-3xl max-h-max bg-white dark:bg-zinc-900 flex items-center flex-col rounded-lg p-2">
+        <div className="flex max-h-max w-full max-w-3xl flex-col items-center rounded-lg bg-white p-2 dark:bg-zinc-900">
           <PageControls
             current={page}
             last={data ? finalPage : page}

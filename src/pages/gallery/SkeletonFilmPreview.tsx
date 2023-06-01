@@ -2,31 +2,31 @@ import { type FC } from "react";
 
 const SkeletonFilmPreview: FC = () => {
   return (
-    <div className="flex flex-col w-64 flex-shrink-0 h-full overflow-hidden bg-white dark:bg-zinc-900 rounded group">
-      <div className="object-cover w-64 h-48 bg-zinc-200 dark:bg-zinc-800 animate-pulse rounded overflow-hidden" />
-      <div className="flex flex-col w-full gap-1 py-2">
-        <h3 className="max-w-[90%] font-semibold truncate text-sm bg-zinc-200 dark:bg-zinc-800 rounded text-transparent animate-pulse">
+    <div className="group flex h-full w-64 flex-shrink-0 flex-col overflow-hidden rounded bg-white dark:bg-zinc-900">
+      <div className="h-48 w-64 animate-pulse overflow-hidden rounded bg-zinc-200 object-cover dark:bg-zinc-800" />
+      <div className="flex w-full flex-col gap-1 py-2">
+        <h3 className="max-w-[90%] animate-pulse truncate rounded bg-zinc-200 text-sm font-semibold text-transparent dark:bg-zinc-800">
           Something
         </h3>
-        <div className="flex flex-row justify-between gap-3 text-zinc-500 text-xs">
-          <div className="w-4 h-4 rounded-full mr-1 bg-zinc-200 dark:bg-zinc-800 animate-pulse" />
-          <span className="max-w-[32rem] bg-zinc-200 dark:bg-zinc-800 rounded text-transparent animate-pulse">
+        <div className="flex flex-row justify-between gap-3 text-xs text-zinc-500">
+          <div className="mr-1 h-4 w-4 animate-pulse rounded-full bg-zinc-200 dark:bg-zinc-800" />
+          <span className="max-w-[32rem] animate-pulse rounded bg-zinc-200 text-transparent dark:bg-zinc-800">
             John Doe
           </span>
         </div>
-        <div className="flex flex-row justify-between text-zinc-400 h-max gap-3 pr-1 text-xs">
-          <span className="px-1 rounded bg-zinc-100 dark:bg-zinc-800 text-transparent animate-pulse">
+        <div className="flex h-max flex-row justify-between gap-3 pr-1 text-xs text-zinc-400">
+          <span className="animate-pulse rounded bg-zinc-100 px-1 text-transparent dark:bg-zinc-800">
             Unknown
           </span>
-          <span className="px-1 rounded bg-zinc-100">TBC</span>
+          <span className="rounded bg-zinc-100 px-1">TBC</span>
         </div>
-        <div className="flex flex-row justify-between text-zinc-400 gap-3 pr-1 text-xs">
-          <span className="rounded bg-zinc-200 dark:bg-zinc-800 animate-pulse text-transparent">
+        <div className="flex flex-row justify-between gap-3 pr-1 text-xs text-zinc-400">
+          <span className="animate-pulse rounded bg-zinc-200 text-transparent dark:bg-zinc-800">
             {new Date().toLocaleString("en-NZ")}
           </span>
           <span className="flex items-center">
-            <img className="w-3 h-3 mr-[.125rem]" src="/icons/star.svg" />
-            <span className="rounded bg-zinc-200 dark:bg-zinc-800 animate-pulse text-transparent">
+            <img className="mr-[.125rem] h-3 w-3" src="/icons/star.svg" />
+            <span className="animate-pulse rounded bg-zinc-200 text-transparent dark:bg-zinc-800">
               {(0).toFixed(2)}
             </span>
           </span>

@@ -7,6 +7,7 @@ import Button from "../../common/components/Button";
 import LoadingIndicator from "../../common/components/LoadingIndicator";
 import { useSearchParam } from "../../common/hooks/useSearchParam";
 import { useToggle } from "../../common/hooks/useToggle";
+import { tw } from "../../common/utils/tailwind";
 import Layout from "../layout";
 import CreateFilmDialog from "./CreateFilmDialog";
 import FilmsCaraousel from "./FilmsCaraousel";
@@ -44,11 +45,13 @@ const GalleryPage: FC = () => {
 
   return (
     <Layout heading="Your gallery" route="Gallery">
-      <div className="w-full flex flex-col justify-start items-center gap-3">
+      <div className="flex w-full flex-col items-center justify-start gap-3">
         <Button
-          className="absolute -top-[4.5rem] right-2 hover:text-zinc-900 active:text-zinc-900 ring-1 ring-zinc-900
-          dark:bg-zinc-100 dark:text-zinc-950 dark:hover:bg-zinc-950 dark:active:bg-zinc-950 dark:ring-zinc-100
-          dark:hover:text-zinc-100 dark:active:text-zinc-100 transition-all"
+          className={tw(`absolute -top-[4.5rem] right-2 ring-1 ring-zinc-900 
+          transition-all hover:text-zinc-900 active:text-zinc-900 
+          dark:bg-zinc-100 dark:text-zinc-950 dark:ring-zinc-100 
+          dark:hover:bg-zinc-950 dark:hover:text-zinc-100 
+          dark:active:bg-zinc-950 dark:active:text-zinc-100`)}
           color={{
             bg: "bg-zinc-900",
             text: "text-zinc-50",

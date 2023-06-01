@@ -5,6 +5,7 @@ import Img from "../../common/components/Image";
 import { useCacheControl } from "../../common/context/cache/useCacheControl";
 import { useGenres } from "../../common/context/genre/useGenres";
 import { ageRatingToColor } from "../../common/utils/color";
+import { tw } from "../../common/utils/tailwind";
 import { type FilmSearch } from "../../types/film";
 
 type FlexibleFilmPreviewProps = FilmSearch["films"][number];
@@ -26,42 +27,46 @@ const ListFilmPreview: FC<FlexibleFilmPreviewProps> = ({
     <Link
       key={filmId}
       to={`/film?id=${filmId}`}
-      className="flex flex-row w-full items-center flex-shrink-0 overflow-hidden gap-2 bg-white dark:bg-zinc-900 rounded group 
-      border border-zinc-500/10 hover:border-zinc-500/25"
+      className={tw(`group flex w-full flex-shrink-0 flex-row items-center 
+      gap-2 overflow-hidden rounded border border-zinc-500/10 
+      bg-white hover:border-zinc-500/25 dark:bg-zinc-900`)}
     >
-      <div className="object-cover h-28 md:h-32 w-24 md:w-[unset] md:aspect-square rounded-l overflow-hidden">
+      <div className="h-28 w-24 overflow-hidden rounded-l object-cover md:aspect-square md:h-32 md:w-[unset]">
         <Img
-          className="object-cover h-28 md:h-32 w-24 md:w-[unset] md:aspect-square rounded-l transition-all group-hover:scale-110"
+          className="h-28 w-24 rounded-l object-cover transition-all group-hover:scale-110 md:aspect-square md:h-32 md:w-[unset]"
           src={`${api}/films/${filmId}/image?${stamp}`}
           fallback={title}
           alt={title}
         />
       </div>
-      <div className="flex flex-col h-full justify-around w-full gap-1 py-2 px-2">
-        <h3 className="max-w-[90%] dark:text-white font-semibold group-hover:text-zinc-500 group-hover:underline truncate text-sm md:text-base">
+      <div className="flex h-full w-full flex-col justify-around gap-1 px-2 py-2">
+        <h3
+          className={tw(`max-w-[90%] truncate text-sm font-semibold 
+          group-hover:text-zinc-500 group-hover:underline dark:text-white md:text-base`)}
+        >
           {title}
         </h3>
 
-        <div className="flex flex-row w-full items-center justify-start">
+        <div className="flex w-full flex-row items-center justify-start">
           <Img
-            className="w-4 h-4 md:w-5 md:h-5 rounded-full mr-1"
+            className="mr-1 h-4 w-4 rounded-full md:h-5 md:w-5"
             src={`${api}/users/${directorId}/image?${user}`}
             fallback={`${directorFirstName}${directorLastName}`}
             alt={`${directorFirstName}${directorLastName}`}
           />
-          <div className="flex flex-row justify-start gap-3 text-zinc-500 text-xs md:text-sm">
+          <div className="flex flex-row justify-start gap-3 text-xs text-zinc-500 md:text-sm">
             <span className="max-w-[28rem] truncate">
               {directorFirstName} {directorLastName}
             </span>
           </div>
         </div>
-        <div className="flex flex-row justify-between text-zinc-400 h-max gap-3 pr-1 text-xs">
-          <div className="flex items-center justify-end text-xs gap-2">
-            <span className="px-1 rounded bg-zinc-200 text-zinc-900">
+        <div className="flex h-max flex-row justify-between gap-3 pr-1 text-xs text-zinc-400">
+          <div className="flex items-center justify-end gap-2 text-xs">
+            <span className="rounded bg-zinc-200 px-1 text-zinc-900">
               {genres.get(genreId)?.name ?? "Unknown"}
             </span>
             <span
-              className={`px-1 rounded
+              className={`rounded px-1
               ${ageRatingToColor(ageRating).bg} 
               ${ageRatingToColor(ageRating).text}`}
             >
@@ -69,7 +74,7 @@ const ListFilmPreview: FC<FlexibleFilmPreviewProps> = ({
             </span>
           </div>
         </div>
-        <div className="flex flex-row justify-between text-zinc-400 gap-3 pr-1 text-xs">
+        <div className="flex flex-row justify-between gap-3 pr-1 text-xs text-zinc-400">
           <span className="md:hidden">
             {releaseDate.toLocaleDateString("en-NZ")}
           </span>
@@ -78,7 +83,7 @@ const ListFilmPreview: FC<FlexibleFilmPreviewProps> = ({
           </span>
           <span className="flex items-center">
             <img
-              className="w-3 h-3 mr-[.125rem] dark:content-[url('/icons/star-selected.svg')]"
+              className="mr-[.125rem] h-3 w-3 dark:content-[url('/icons/star-selected.svg')]"
               src="/icons/star.svg"
             />
             {rating <= 0 ? "N/A" : rating.toFixed(2)}

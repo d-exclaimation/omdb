@@ -5,6 +5,7 @@ import {
   type FC,
   type SetStateAction,
 } from "react";
+import { tw } from "../../common/utils/tailwind";
 
 type PageControlsProps = {
   current: number;
@@ -28,89 +29,85 @@ const PageControls: FC<PageControlsProps> = ({ current, setPage, last }) => {
   );
 
   return (
-    <div className="flex w-max font-light flex-row items-center justify-center gap-3">
+    <div className="flex w-max flex-row items-center justify-center gap-3 font-light">
       <button
         type="button"
-        className="flex items-center justify-center rounded-full 
-       hover:bg-slate-100 active:bg-slate-100 p-2 transition-all
-        disabled:opacity-0 disabled:hover:bg-transparent
-        disabled:translate-x-12 disabled:active:bg-transparent
-        dark:hover:bg-zinc-800 dark:active:bg-zinc-800"
+        className={tw(`flex items-center justify-center rounded-full 
+        p-2 transition-all hover:bg-slate-100 active:bg-slate-100
+        disabled:translate-x-12 disabled:opacity-0 disabled:hover:bg-transparent 
+        disabled:active:bg-transparent dark:hover:bg-zinc-800 dark:active:bg-zinc-800`)}
         disabled={current === 1}
         onClick={() => {
           change(1);
         }}
       >
         <img
-          className="w-5 h-5 dark:dark:content-[url('/icons/start-selected.svg')]"
+          className="h-5 w-5 dark:dark:content-[url('/icons/start-selected.svg')]"
           src="/icons/start.svg"
         />
       </button>
 
       <button
         type="button"
-        className="flex items-center justify-center rounded-full
-       hover:bg-slate-100 active:bg-slate-100 p-2 transition-all
-        disabled:opacity-0 disabled:hover:bg-transparent
-        disabled:translate-x-12 disabled:active:bg-transparent
-        dark:hover:bg-zinc-800 dark:active:bg-zinc-800"
+        className={tw(`flex items-center justify-center rounded-full 
+        p-2 transition-all hover:bg-slate-100 active:bg-slate-100
+        disabled:translate-x-12 disabled:opacity-0 disabled:hover:bg-transparent 
+        disabled:active:bg-transparent dark:hover:bg-zinc-800 dark:active:bg-zinc-800`)}
         disabled={current === 1}
         onClick={() => {
           change((prev) => Math.max(prev - 1, 1));
         }}
       >
         <img
-          className="w-5 h-5 dark:content-[url('/icons/arrow-left-selected.svg')]"
+          className="h-5 w-5 dark:content-[url('/icons/arrow-left-selected.svg')]"
           src="/icons/arrow-left.svg"
         />
       </button>
 
-      <div className="flex flex-row justify-end gap-1 items-end min-w-12 w-max mx-2">
+      <div className="min-w-12 mx-2 flex w-max flex-row items-end justify-end gap-1">
         <span
-          className="-translate-y-1 text-2xl font-semibold hover:underline
+          className={tw(`-translate-y-1 text-2xl font-semibold transition-all
+          duration-0 hover:underline data-[animating='true']:translate-y-1 
           data-[animating='true']:opacity-0 data-[animating='false']:duration-400
-          data-[animating='true']:translate-y-1 transition-all duration-0
-          dark:text-white"
+          dark:text-white`)}
           data-animating={animating}
         >
           {current}
         </span>
-        <span className="h-6 ml-1 mr-[0.125rem] w-[1px] bg-black dark:bg-white rotate-[30deg]"></span>
-        <span className="text-sm dark:text-white hover:underline"> {last}</span>
+        <span className="ml-1 mr-[0.125rem] h-6 w-[1px] rotate-[30deg] bg-black dark:bg-white"></span>
+        <span className="text-sm hover:underline dark:text-white"> {last}</span>
       </div>
 
       <button
         type="button"
-        className="flex items-center justify-center rounded-full
-        hover:bg-slate-100 active:bg-slate-100 p-2 transition-all
-        disabled:opacity-0 disabled:hover:bg-transparent
-        disabled:-translate-x-12 disabled:active:bg-transparent
-        dark:hover:bg-zinc-800 dark:active:bg-zinc-800"
+        className={tw(`flex items-center justify-center rounded-full
+        p-2 transition-all hover:bg-slate-100 active:bg-slate-100
+        disabled:-translate-x-12 disabled:opacity-0 disabled:hover:bg-transparent 
+        disabled:active:bg-transparent dark:hover:bg-zinc-800 dark:active:bg-zinc-800`)}
         disabled={current === last}
         onClick={() => {
           change((prev) => Math.min(prev + 1, last));
         }}
       >
         <img
-          className="w-5 h-5 dark:content-[url('/icons/arrow-right-selected.svg')]"
+          className="h-5 w-5 dark:content-[url('/icons/arrow-right-selected.svg')]"
           src="/icons/arrow-right.svg"
         />
       </button>
 
       <button
         type="button"
-        className="flex items-center justify-center rounded-full
-      hover:bg-slate-100 active:bg-slate-100 p-2 transition-all
-        disabled:opacity-0 disabled:hover:bg-transparent
-        disabled:-translate-x-12 disabled:active:bg-transparent
-        dark:hover:bg-zinc-800 dark:active:bg-zinc-800"
+        className={tw(`flex items-center justify-center rounded-full
+        p-2 transition-all hover:bg-slate-100 active:bg-slate-100
+        disabled:-translate-x-12 disabled:opacity-0 disabled:hover:bg-transparent 
+        disabled:active:bg-transparent dark:hover:bg-zinc-800 dark:active:bg-zinc-800`)}
         disabled={current === last}
         onClick={() => {
           change(last);
         }}
       >
         <img
-          className="w-5 h-5 dark:content-[url('/icons/end-selected.svg')]"
+          className="h-5 w-5 dark:content-[url('/icons/end-selected.svg')]"
           src="/icons/end.svg"
         />
       </button>

@@ -5,6 +5,7 @@ import Img from "../../common/components/Image";
 import { useCacheControl } from "../../common/context/cache/useCacheControl";
 import { useGenres } from "../../common/context/genre/useGenres";
 import { ageRatingToColor } from "../../common/utils/color";
+import { tw } from "../../common/utils/tailwind";
 import { type FilmSearch } from "../../types/film";
 
 type FlexibleFilmPreviewProps = FilmSearch["films"][number];
@@ -26,50 +27,55 @@ const FlexibleFilmPreview: FC<FlexibleFilmPreviewProps> = ({
     <Link
       key={filmId}
       to={`/film?id=${filmId}`}
-      className="flex flex-col w-full flex-shrink-0 h-full overflow-hidden bg-white dark:bg-zinc-900 rounded group"
+      className="group flex h-full w-full flex-shrink-0 flex-col overflow-hidden rounded bg-white dark:bg-zinc-900"
     >
-      <div className="object-cover w-full aspect-video rounded overflow-hidden">
+      <div className="aspect-video w-full overflow-hidden rounded object-cover">
         <Img
-          className="object-cover w-full aspect-video rounded transition-all group-hover:scale-110"
+          className="aspect-video w-full rounded object-cover transition-all group-hover:scale-110"
           src={`${api}/films/${filmId}/image?${stamp}`}
           fallback={title}
           alt={title}
         />
       </div>
-      <div className="flex flex-col w-full gap-1 py-2">
-        <h3 className="max-w-[90%] dark:text-white font-semibold group-hover:text-zinc-500 group-hover:underline truncate text-sm">
+      <div className="flex w-full flex-col gap-1 py-2">
+        <h3
+          className={tw(`max-w-[90%] truncate text-sm font-semibold 
+          group-hover:text-zinc-500 group-hover:underline dark:text-white`)}
+        >
           {title}
         </h3>
-        <div className="flex flex-row w-full items-center justify-start">
+        <div className="flex w-full flex-row items-center justify-start">
           <Img
-            className="w-4 h-4 rounded-full mr-1"
+            className="mr-1 h-4 w-4 rounded-full"
             src={`${api}/users/${directorId}/image?${user}`}
             fallback={`${directorFirstName}${directorLastName}`}
             alt={`${directorFirstName}${directorLastName}`}
           />
-          <div className="flex flex-row justify-start gap-3 text-zinc-500 text-xs">
+          <div className="flex flex-row justify-start gap-3 text-xs text-zinc-500">
             <span className="max-w-[28rem] truncate">
               {directorFirstName} {directorLastName}
             </span>
           </div>
         </div>
-        <div className="flex flex-row justify-between text-zinc-400 h-max gap-3 pr-1 text-xs">
-          <span className="px-1 rounded bg-zinc-200 text-zinc-900">
+        <div className="flex h-max flex-row justify-between gap-3 pr-1 text-xs text-zinc-400">
+          <span className="rounded bg-zinc-200 px-1 text-zinc-900">
             {genres.get(genreId)?.name ?? "Unknown"}
           </span>
           <span
-            className={`px-1 rounded 
-            ${ageRatingToColor(ageRating).bg} 
-            ${ageRatingToColor(ageRating).text}`}
+            className={tw(
+              "rounded px-1",
+              ageRatingToColor(ageRating).bg,
+              ageRatingToColor(ageRating).text
+            )}
           >
             {ageRating}
           </span>
         </div>
-        <div className="flex flex-row justify-between text-zinc-400 gap-3 pr-1 text-xs">
+        <div className="flex flex-row justify-between gap-3 pr-1 text-xs text-zinc-400">
           <span>{releaseDate.toLocaleString("en-NZ")}</span>
           <span className="flex items-center">
             <img
-              className="w-3 h-3 mr-[.125rem] dark:content-[url('/icons/star-selected.svg')]"
+              className="mr-[.125rem] h-3 w-3 dark:content-[url('/icons/star-selected.svg')]"
               src="/icons/star.svg"
             />
             {rating <= 0 ? "N/A" : rating.toFixed(2)}

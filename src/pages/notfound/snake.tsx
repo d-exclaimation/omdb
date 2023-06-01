@@ -1,5 +1,6 @@
 import { match, type Union } from "@d-exclaimation/common/union";
 import { useEffect, useReducer, type FC } from "react";
+import { tw } from "../../common/utils/tailwind";
 
 type Vec2 = {
   x: number;
@@ -133,11 +134,11 @@ const SnakePage: FC = () => {
           Array.from({ length: MAX_X }).map((_, x) => (
             <div
               key={`${x}-${y}`}
-              className="w-4 h-4 border transition-all duration-100 border-gray-500/20 
-              data-[snake=false]:data-[food=true]:bg-chart data-[dead=true]:duration-500
-              data-[snake=true]:bg-zinc-950 data-[snake=true]:data-[dead=true]:!bg-red-500
+              className={tw(`h-4 w-4 border border-gray-500/20 transition-all duration-100 
+              data-[snake=false]:data-[food=true]:bg-chart data-[snake=true]:bg-zinc-950
+              data-[snake=true]:data-[dead=true]:!bg-red-500 data-[dead=true]:duration-500
               dark:data-[snake=false]:data-[food=true]:bg-chart-dark
-              dark:data-[snake=true]:bg-zinc-50"
+              dark:data-[snake=true]:bg-zinc-500`)}
               data-snake={snake.snake.some((vec) => vec.x === x && vec.y === y)}
               data-food={snake.food.x === x && snake.food.y === y}
               data-dead={snake.dead}
@@ -145,32 +146,32 @@ const SnakePage: FC = () => {
           ))
         )}
       </div>
-      <div className="md:hidden flex flex-col my-4 items-center w-56 h-40 gap-1 justify-center">
+      <div className="my-4 flex h-40 w-56 flex-col items-center justify-center gap-1 md:hidden">
         <button
-          className="bg-zinc-50 text-black dark:bg-zinc-950 dark:text-white text-xl py-2 px-4 rounded-md shadow active:scale-95"
+          className="rounded-md bg-zinc-50 px-4 py-2 text-xl text-black shadow active:scale-95 dark:bg-zinc-950 dark:text-white"
           onClick={() => dispatch({ kind: "change", direction: "up" })}
         >
           &uarr;
         </button>
-        <div className="flex flex-row items-center w-full gap-1 justify-center">
+        <div className="flex w-full flex-row items-center justify-center gap-1">
           <button
-            className="bg-zinc-50 text-black dark:bg-zinc-950 dark:text-white text-xl py-2 px-4 rounded-md shadow active:scale-95"
+            className="rounded-md bg-zinc-50 px-4 py-2 text-xl text-black shadow active:scale-95 dark:bg-zinc-950 dark:text-white"
             onClick={() => dispatch({ kind: "change", direction: "left" })}
           >
             &larr;
           </button>
-          <button className="bg-transparent text-transparent text-xl py-3 px-5">
+          <button className="bg-transparent px-5 py-3 text-xl text-transparent">
             _
           </button>
           <button
-            className="bg-zinc-50 text-black dark:bg-zinc-950 dark:text-white text-xl py-2 px-4 rounded-md shadow active:scale-95"
+            className="rounded-md bg-zinc-50 px-4 py-2 text-xl text-black shadow active:scale-95 dark:bg-zinc-950 dark:text-white"
             onClick={() => dispatch({ kind: "change", direction: "right" })}
           >
             &rarr;
           </button>
         </div>
         <button
-          className="bg-zinc-50 text-black dark:bg-zinc-950 dark:text-white text-xl py-2 px-4 rounded-md shadow active:scale-95"
+          className="rounded-md bg-zinc-50 px-4 py-2 text-xl text-black shadow active:scale-95 dark:bg-zinc-950 dark:text-white"
           onClick={() => dispatch({ kind: "change", direction: "down" })}
         >
           &darr;

@@ -1,6 +1,7 @@
 import { Listbox, Transition } from "@headlessui/react";
 import { Fragment, type FC } from "react";
 import { sortings } from "../../common/utils/constants";
+import { tw } from "../../common/utils/tailwind";
 import { type Sorting } from "../../types/constants";
 
 const ALL_SORTINGS = [
@@ -21,14 +22,14 @@ const FilmSort: FC<FilmSortProps> = ({ sort, onSortChange }) => {
   return (
     <Listbox
       as="div"
-      className="relative inline-block text-left w-max flex-shrink-0"
+      className="relative inline-block w-max flex-shrink-0 text-left"
       value={sort}
       onChange={onSortChange}
     >
       <Listbox.Button
-        className="px-4 py-2 rounded text-start font-medium text-sm bg-white w-max 
-        flex-shrink-0 text-zinc-800 hover:bg-zinc-50 active:bg-zinc-50 flex items-center
-        dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800 dark:active:bg-zinc-800"
+        className={tw(`flex w-max flex-shrink-0 items-center rounded bg-white px-4 py-2 
+        text-start text-sm font-medium text-zinc-800 hover:bg-zinc-50 active:bg-zinc-50
+        dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800 dark:active:bg-zinc-800`)}
       >
         {sortings[sort]}
       </Listbox.Button>
@@ -42,19 +43,20 @@ const FilmSort: FC<FilmSortProps> = ({ sort, onSortChange }) => {
         leaveTo="transform opacity-0 scale-95"
       >
         <Listbox.Options
-          className="absolute p-1 z-10 left-0 origin-top-left rounded mt-2 w-36 bg-white shadow-lg ring-1 ring-black/5 
-          focus:outline-none dark:bg-zinc-800 dark:ring-white/5"
+          className={tw(`absolute left-0 z-10 mt-2 w-36 origin-top-left 
+          rounded bg-white p-1 shadow-lg ring-1 ring-black/5 
+          focus:outline-none dark:bg-zinc-800 dark:ring-white/5`)}
         >
           {ALL_SORTINGS.map((sort) => (
             <Listbox.Option
               key={sort}
               className={({ active }) =>
-                `flex w-full items-center rounded px-2 py-2 text-sm 
-                ${
+                tw(
+                  "flex w-full items-center rounded px-2 py-2 text-sm",
                   active
                     ? "bg-zinc-800 text-white dark:bg-zinc-200 dark:text-black"
                     : "dark:text-white"
-                }`
+                )
               }
               value={sort}
             >
