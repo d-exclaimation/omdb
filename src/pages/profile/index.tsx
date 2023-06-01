@@ -36,7 +36,7 @@ const ProfilePage: FC = () => {
 
   return (
     <Layout key={user.id} heading="Your profile" route="Profile">
-      <div className="w-full flex flex-col items-center gap-3 justify-start">
+      <div className="flex w-full flex-col items-center justify-start gap-3">
         <Profile
           user={user}
           filmsDirected={gallery?.count ?? 0}

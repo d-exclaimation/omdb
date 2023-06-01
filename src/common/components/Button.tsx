@@ -1,5 +1,6 @@
 import { type Palette } from "@d-exclaimation/common/tailwind";
 import { type FC, type ReactNode } from "react";
+import { tw } from "../utils/tailwind";
 
 type ButtonProps = {
   className?: string;
@@ -26,12 +27,17 @@ const Button: FC<ButtonProps> = ({
 }) => {
   return (
     <button
-      className={`inline-flex justify-center rounded border border-transparent 
-      ${color.bg} px-4 py-2 text-sm font-medium ${color.text} 
-      ${color.hover} ${color.active} disabled:cursor-not-allowed
-      focus:outline-none focus-visible:ring-2 
-      ${color.border} focus-visible:ring-offset-2
-      ${className ?? ""} disabled:opacity-50`}
+      className={tw(
+        `inline-flex justify-center rounded border border-transparent
+        px-4 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2
+        focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50`,
+        color.bg,
+        color.text,
+        color.hover,
+        color.active,
+        color.border,
+        className
+      )}
       onClick={onClick}
       disabled={disabled}
       type={type}

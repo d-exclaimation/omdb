@@ -40,39 +40,39 @@ const Account: FC<AccountProps> = ({
     },
   });
   return (
-    <div className="w-full h-full flex-shrink-0 flex flex-col">
-      <section className="w-full flex items-start justify-between">
+    <div className="flex h-full w-full flex-shrink-0 flex-col">
+      <section className="flex w-full items-start justify-between">
         <Img
-          className="w-16 md:w-20 h-16 md:h-20 object-cover rounded-full"
+          className="h-16 w-16 rounded-full object-cover md:h-20 md:w-20"
           src={`${api}/users/${id}/image?${stamp}`}
           fallback={`${firstName}${lastName}`}
           alt="avatar"
         />
         <Settings onEdit={onEdit} onLogout={trigger} />
       </section>
-      <section className="flex flex-col items-start justify-center w-full my-2">
-        <h2 className="font-semibold text-lg md:text-xl max-w-full dark:text-white truncate">
+      <section className="my-2 flex w-full flex-col items-start justify-center">
+        <h2 className="max-w-full truncate text-lg font-semibold dark:text-white md:text-xl">
           {firstName} {lastName}
         </h2>
-        <h4 className="font-medium text-base text-zinc-400 dark:text-zinc-500 max-w-full truncate">
+        <h4 className="max-w-full truncate text-base font-medium text-zinc-400 dark:text-zinc-500">
           @{email.split("@")[0]}
         </h4>
       </section>
-      <section className="flex flex-col items-start justify-center w-full gap-3 my-2">
+      <section className="my-2 flex w-full flex-col items-start justify-center gap-3">
         <div className="flex items-center text-zinc-500">
-          <img className="w-5 h-5 mr-1" src="/icons/case.svg" alt="email" />
+          <img className="mr-1 h-5 w-5" src="/icons/case.svg" alt="email" />
           <a
-            className="hover:underline active:underline decoration-sky-500 text-sky-500"
+            className="text-sky-500 decoration-sky-500 hover:underline active:underline"
             href={`mailto:${email}`}
           >
             {email}
           </a>
         </div>
-        <div className="flex flex-col md:flex-row w-full md:items-center gap-1 md:gap-5 flex-wrap">
+        <div className="flex w-full flex-col flex-wrap gap-1 md:flex-row md:items-center md:gap-5">
           <div className="flex items-center text-zinc-500">
-            <img className="w-5 h-5 mr-1" src="/icons/film.svg" alt="films" />
+            <img className="mr-1 h-5 w-5" src="/icons/film.svg" alt="films" />
             <span>
-              <span className="text-black dark:text-white font-semibold">
+              <span className="font-semibold text-black dark:text-white">
                 {filmsDirected}
               </span>{" "}
               films directed
@@ -80,9 +80,9 @@ const Account: FC<AccountProps> = ({
           </div>
 
           <div className="flex items-center text-zinc-500">
-            <img className="w-5 h-5 mr-1" src="/icons/review.svg" alt="films" />
+            <img className="mr-1 h-5 w-5" src="/icons/review.svg" alt="films" />
             <span>
-              <span className="text-black dark:text-white font-semibold">
+              <span className="font-semibold text-black dark:text-white">
                 {filmsReviewed}
               </span>{" "}
               films reviewed

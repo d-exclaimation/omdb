@@ -1,5 +1,6 @@
 import { Transition } from "@headlessui/react";
 import { Fragment, type FC } from "react";
+import { tw } from "../utils/tailwind";
 
 type OverlayProps = {
   className?: string;
@@ -8,8 +9,10 @@ type OverlayProps = {
 const OverlayRoot: FC<OverlayProps> = ({ className }) => {
   return (
     <div
-      className={`fixed inset-0 bg-black/25 dark:bg-zinc-900/50 backdrop-blur-sm
-        ${className ?? ""}`}
+      className={tw(
+        `fixed inset-0 bg-black/25 backdrop-blur-sm dark:bg-zinc-900/50`,
+        className
+      )}
     />
   );
 };
@@ -26,8 +29,10 @@ const OverlayChild: FC<OverlayProps> = ({ className }) => {
       leaveTo="opacity-0"
     >
       <div
-        className={`fixed inset-0 bg-black/25 dark:bg-zinc-900/50 backdrop-blur-sm
-      ${className ?? ""}`}
+        className={tw(
+          `fixed inset-0 bg-black/25 backdrop-blur-sm dark:bg-zinc-900/50`,
+          className
+        )}
       />
     </Transition.Child>
   );

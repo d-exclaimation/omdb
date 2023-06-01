@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState, type FC } from "react";
 import { useToggle } from "../hooks/useToggle";
+import { tw } from "../utils/tailwind";
 
 type ImageProps = {
   className?: string;
@@ -28,10 +29,10 @@ const Img: FC<ImageProps> = ({ src, fallback, alt, className }) => {
 
   return (
     <img
-      className={`data-[loading='true']:bg-zinc-200 
-      data-[loading='true']:animate-pulse
-      dark:data-[loading='true']:bg-zinc-800 
-      ${className ?? ""}`}
+      className={tw(
+        "data-[loading='true']:animate-pulse data-[loading='true']:bg-zinc-200 dark:data-[loading='true']:bg-zinc-800",
+        className
+      )}
       src={href}
       loading="lazy"
       data-loading={loading}

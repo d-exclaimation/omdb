@@ -3,6 +3,7 @@ import { useEffect, useRef, useState, type FC } from "react";
 import { preload } from "swr";
 import { filmGallery } from "../api/film";
 import Signature from "../common/components/Signature";
+import { tw } from "../common/utils/tailwind";
 
 const SIZES = [
   { sm: "text-5xl", md: "md:text-7xl", lg: "lg:text-8xl" },
@@ -39,8 +40,8 @@ const HomePage: FC = () => {
   return (
     <>
       <div
-        className="max-w-3xl px-5 h-max flex-col items-center justify-center 
-        pb-20 backdrop-blur-sm min-h-screen w-full flex p-4"
+        className={tw(`flex h-max min-h-screen w-full max-w-3xl flex-col 
+        items-center justify-center p-4 px-5 pb-20 backdrop-blur-sm`)}
         onClick={() => {
           clearTimeout(timeoutRef.current);
           setShow(false);
@@ -58,9 +59,12 @@ const HomePage: FC = () => {
           show={show}
         >
           <h1
-            className={`flex flex-row gap-2 md:gap-3 font-semibold dark:text-white
-            ${SIZES[messageIndex].sm} ${SIZES[messageIndex].md}
-            ${SIZES[messageIndex].lg}`}
+            className={tw(
+              `flex flex-row gap-2 font-semibold dark:text-white md:gap-3`,
+              SIZES[messageIndex].sm,
+              SIZES[messageIndex].md,
+              SIZES[messageIndex].lg
+            )}
           >
             {MESSAGES[messageIndex].map((word, index) => {
               const delay =
@@ -79,7 +83,7 @@ const HomePage: FC = () => {
                 <Transition.Child
                   key={`home-page-title-${index}`}
                   as="span"
-                  enter={`transition-all duration-500 ${delay}`}
+                  enter={tw("transition-all duration-500", delay)}
                   enterFrom={
                     index % 2 === 0
                       ? messageIndex % 2 === 0

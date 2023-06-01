@@ -1,5 +1,6 @@
-import { Opacity } from "@d-exclaimation/common/tailwind";
+import { type Opacity } from "@d-exclaimation/common/tailwind";
 import { useMemo, type FC } from "react";
+import { tw } from "../utils/tailwind";
 
 type ChartBarProps = {
   percentage: number;
@@ -21,7 +22,7 @@ const ChartBar: FC<ChartBarProps> = ({ percentage, inactive }) => {
 
   return (
     <svg
-      className={`rotate-180 data-[inactive='true']:blur ${color}`}
+      className={tw("rotate-180 data-[inactive='true']:blur", color)}
       data-inactive={inactive}
       width="32"
       height="80"

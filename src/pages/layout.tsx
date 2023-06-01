@@ -9,10 +9,10 @@ type LayoutProps = {
 
 const Layout: FC<LayoutProps> = ({ route, heading, children }) => {
   return (
-    <div className="min-h-screen w-full max-w-3xl px-5 h-max flex flex-col items-center gap-4 justify-center pt-2 pb-20">
+    <div className="flex h-max min-h-screen w-full max-w-3xl flex-col items-center justify-center gap-4 px-5 pb-20 pt-2">
       <Transition
         as="div"
-        className="w-full flex flex-col"
+        className="flex w-full flex-col"
         key={`${route}-header`}
         appear
         show
@@ -23,16 +23,16 @@ const Layout: FC<LayoutProps> = ({ route, heading, children }) => {
         leaveFrom="opacity-100 translate-y-0"
         leaveTo="opacity-0 -translate-y-10"
       >
-        <h3 className="font-medium text-black/60 dark:text-white/60 py-3">
+        <h3 className="py-3 font-medium text-black/60 dark:text-white/60">
           {route}
         </h3>
-        <h1 className="text-3xl font-medium max-w-[80%] truncate text-black dark:text-white py-5">
+        <h1 className="max-w-[80%] truncate py-5 text-3xl font-medium text-black dark:text-white">
           {heading}
         </h1>
       </Transition>
       <Transition
         as="div"
-        className="flex-1 w-full min-h-full h-max flex"
+        className="flex h-max min-h-full w-full flex-1"
         key={`${route}-content`}
         appear
         show

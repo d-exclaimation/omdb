@@ -1,6 +1,7 @@
 import { useMemo, type FC } from "react";
 import ChartBar from "../../common/components/ChartBar";
 import { ratingToColor } from "../../common/utils/color";
+import { tw } from "../../common/utils/tailwind";
 import { type FilmSearch } from "../../types/film";
 
 type RatingOverviewProps = {
@@ -27,19 +28,27 @@ const RatingOverview: FC<RatingOverviewProps> = ({ data }) => {
   );
 
   return (
-    <div className="w-full max-w-3xl min-h-max gap-2 bg-white dark:bg-zinc-900 dark:text-white flex flex-col items-start overflow-x-hidden rounded-lg p-6 md:p-8">
-      <div className="flex flex-row items-center justify-start w-full mb-2">
-        <h3 className="font-semibold text-xl">Recent performance</h3>
+    <div
+      className={tw(`flex min-h-max w-full max-w-3xl flex-col 
+      items-start gap-2 overflow-x-hidden rounded-lg bg-white 
+      p-6 dark:bg-zinc-900 dark:text-white md:p-8`)}
+    >
+      <div className="mb-2 flex w-full flex-row items-center justify-start">
+        <h3 className="text-xl font-semibold">Recent performance</h3>
       </div>
-      <div className="w-full rounded-lg shadow-sm border dark:border-white/30 flex flex-col md:flex-row justify-center md:justify-between md:items-center overflow-x-auto md:h-28 md:gap-3">
-        <div className="h-[6.5rem] w-full md:w-48 flex-shrink-0">
-          <div className="p-4 flex flex-row items-center justify-between space-y-0 pb-1">
-            <h3 className="tracking-tight text-sm font-medium">
+      <div
+        className={tw(`flex w-full flex-col justify-center overflow-x-auto 
+        rounded-lg border shadow-sm dark:border-white/30 md:h-28 
+        md:flex-row md:items-center md:justify-between md:gap-3`)}
+      >
+        <div className="h-[6.5rem] w-full flex-shrink-0 md:w-48">
+          <div className="flex flex-row items-center justify-between space-y-0 p-4 pb-1">
+            <h3 className="text-sm font-medium tracking-tight">
               Average rating
             </h3>
           </div>
           <div className="p-4 pt-0">
-            <div className="text-xl max-w-full truncate font-bold">
+            <div className="max-w-full truncate text-xl font-bold">
               {recentRatings.length === 0 ? (
                 "N/A"
               ) : (
@@ -51,13 +60,13 @@ const RatingOverview: FC<RatingOverviewProps> = ({ data }) => {
                 </>
               )}
             </div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-muted-foreground text-xs">
               for the recent {recentRatings.length} films
             </p>
           </div>
         </div>
         <div className="relative">
-          <div className="flex h-[6.5rem] pb-2 md:py-2 mx-4 gap-1 items-end flex-row justify-start">
+          <div className="mx-4 flex h-[6.5rem] flex-row items-end justify-start gap-1 pb-2 md:py-2">
             {recentRatings.length > 0 ? (
               recentRatings.map(({ rating, filmId }) => (
                 <ChartBar key={`chart-f-${filmId}`} percentage={rating / 10} />
@@ -75,7 +84,7 @@ const RatingOverview: FC<RatingOverviewProps> = ({ data }) => {
             )}
           </div>
           {recentRatings.length <= 0 ? (
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-sm font-medium">
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-sm font-medium">
               No reviews yet
             </div>
           ) : null}

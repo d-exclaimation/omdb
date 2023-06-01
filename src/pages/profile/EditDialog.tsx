@@ -11,6 +11,7 @@ import InputField from "../../common/components/InputField";
 import Overlay from "../../common/components/Overlay";
 import { useNotification } from "../../common/context/notification/useNotification";
 import { useForm } from "../../common/hooks/useForm";
+import { tw } from "../../common/utils/tailwind";
 import { EditUser } from "../../types/user";
 import EditImage from "./EditImage";
 type EditDialogProps = {
@@ -93,8 +94,9 @@ const EditDialog: FC<EditDialogProps> = ({ editing, close, ...user }) => {
             >
               <Dialog.Panel
                 as="form"
-                className="w-full max-w-md z-40 transform overflow-hidden rounded-md bg-white 
-                p-6 text-left align-middle shadow-xl transition-all dark:bg-zinc-900"
+                className={tw(`z-40 w-full max-w-md transform 
+                overflow-hidden rounded-md bg-white p-6 text-left 
+                align-middle shadow-xl transition-all dark:bg-zinc-900`)}
                 onSubmit={(e) => {
                   e.preventDefault();
                   onSubmit();
@@ -106,10 +108,10 @@ const EditDialog: FC<EditDialogProps> = ({ editing, close, ...user }) => {
                 >
                   Edit profile
                 </Dialog.Title>
-                <div className="mt-4 flex flex-col w-full min-h-max transition-all">
+                <div className="mt-4 flex min-h-max w-full flex-col transition-all">
                   <div className="flex w-full items-end justify-start">
                     <Img
-                      className="w-20 md:w-24 h-20 md:h-24 object-cover rounded-full"
+                      className="h-20 w-20 rounded-full object-cover md:h-24 md:w-24"
                       src={preview}
                       fallback={`${user.firstName}${user.lastName}`}
                       alt="avatar"
@@ -135,7 +137,7 @@ const EditDialog: FC<EditDialogProps> = ({ editing, close, ...user }) => {
                     />
                   </div>
 
-                  <div className="flex flex-col items-start justify-center w-full mt-4 gap-1">
+                  <div className="mt-4 flex w-full flex-col items-start justify-center gap-1">
                     <InputField
                       label="First name"
                       error={errors.firstName}
@@ -169,10 +171,12 @@ const EditDialog: FC<EditDialogProps> = ({ editing, close, ...user }) => {
                       {({ open }) => (
                         <>
                           <Disclosure.Button
-                            className="mt-1 flex w-full justify-between rounded-md bg-zinc-100 dark:bg-zinc-800
-                            px-4 py-2 text-left text-sm font-medium text-zinc-900 dark:text-zinc-100
-                           hover:bg-zinc-200 focus:outline-none focus-visible:ring dark:hover:bg-zinc-700
-                           focus-visible:ring-zinc-500 focus-visible:ring-opacity-75"
+                            className={tw(`mt-1 flex w-full justify-between rounded-md 
+                            bg-zinc-100 px-4 py-2 text-left text-sm font-medium 
+                            text-zinc-900 hover:bg-zinc-200 focus:outline-none
+                            focus-visible:ring focus-visible:ring-zinc-500 
+                            focus-visible:ring-opacity-75 dark:bg-zinc-800
+                           dark:text-zinc-100 dark:hover:bg-zinc-700`)}
                           >
                             {open ? "Hide" : "Update password"}
                           </Disclosure.Button>
@@ -194,7 +198,7 @@ const EditDialog: FC<EditDialogProps> = ({ editing, close, ...user }) => {
                               }));
                             }}
                           >
-                            <Disclosure.Panel className="w-full flex flex-col gap-1">
+                            <Disclosure.Panel className="flex w-full flex-col gap-1">
                               <InputField
                                 type="password"
                                 label="Password"
@@ -231,7 +235,7 @@ const EditDialog: FC<EditDialogProps> = ({ editing, close, ...user }) => {
                   </div>
                 </div>
 
-                <div className="mt-4 flex justify-between z-60">
+                <div className="z-60 mt-4 flex justify-between">
                   <Button
                     type="button"
                     className="dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700 dark:active:bg-zinc-700"

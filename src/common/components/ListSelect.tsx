@@ -1,5 +1,6 @@
 import { Listbox, Transition } from "@headlessui/react";
 import { Fragment } from "react";
+import { tw } from "../utils/tailwind";
 
 type ListSelectProps<T extends string | number> = {
   label: string;
@@ -17,18 +18,18 @@ const ListSelect = <T extends string | number>({
   setSelected,
 }: ListSelectProps<T>) => {
   return (
-    <div className="flex relative flex-col items-start justify-center text-zinc-500 w-full">
-      <label className="flex w-full group" data-error={!!error}>
+    <div className="relative flex w-full flex-col items-start justify-center text-zinc-500">
+      <label className="group flex w-full" data-error={!!error}>
         <span
-          className="text-sm p-1 font-medium transition-all group-data-[error='true']:translate-y-full 
-          group-data-[error='true']:-z-10 group-data-[error='true']:opacity-0"
+          className={tw(`p-1 text-sm font-medium transition-all group-data-[error='true']:-z-10 
+          group-data-[error='true']:translate-y-full group-data-[error='true']:opacity-0`)}
         >
           {label}
         </span>
         <span
-          className="absolute w-full text-red-700 p-1 font-medium text-xs
-          transition-all translate-y-full -z-10 opacity-0 group-data-[error='true']:translate-y-0 
-          group-data-[error='true']:-z-0 group-data-[error='true']:opacity-100"
+          className={tw(`absolute -z-10 w-full translate-y-full p-1 text-xs
+          font-medium text-red-700 opacity-0 transition-all group-data-[error='true']:-z-0 
+          group-data-[error='true']:translate-y-0 group-data-[error='true']:opacity-100`)}
         >
           {error}
         </span>
@@ -36,12 +37,11 @@ const ListSelect = <T extends string | number>({
       <Listbox value={selected} onChange={setSelected}>
         <div className="w-full">
           <Listbox.Button
-            className="w-full py-3 placeholder:text-slate-400 text-sm
-            focus:outline-none disabled:cursor-not-allowed text-start
-            disabled:opacity-50 rounded border border-slate-300 bg-transparent 
-            px-3 data-[error='true']:border-red-700 truncate
-            dark:border-slate-600 dark:text-white 
-            dark:data-[error='true']:border-red-300"
+            className={tw(`borderborder-slate-300 w-full truncate rounded 
+            bg-transparent px-3 py-3 text-start text-sm placeholder:text-slate-400 
+            focus:outline-none disabled:cursor-not-allowed disabled:opacity-50
+            data-[error='true']:border-red-700 dark:border-slate-600 dark:text-white 
+            dark:data-[error='true']:border-red-300`)}
           >
             {selected.name}
           </Listbox.Button>
@@ -51,28 +51,40 @@ const ListSelect = <T extends string | number>({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="absolute mt-1 h-max w-full z-50 max-w-md overflow-hidden rounded bg-white dark:bg-zinc-800 shadow-lg ring-1 ring-black/5 dark:ring-white/5">
-              <Listbox.Options className="mt-1 max-h-24 md:max-h-32 z-50 w-full overflow-auto rounded bg-white dark:bg-zinc-800 py-1 text-base focus:outline-none sm:text-sm">
+            <div
+              className={tw(
+                `absolute z-50 mt-1 h-max w-full max-w-md overflow-hidden rounded bg-white 
+                shadow-lg ring-1 ring-black/5 dark:bg-zinc-800 dark:ring-white/5`
+              )}
+            >
+              <Listbox.Options
+                className={tw(
+                  `z-50 mt-1 max-h-24 w-full overflow-auto rounded bg-white py-1 
+                  text-base focus:outline-none dark:bg-zinc-800 sm:text-sm md:max-h-32`
+                )}
+              >
                 {options.map((option) => (
                   <Listbox.Option
                     key={option.value}
                     className={({ active }) =>
-                      `relative cursor-default select-none py-2 pl-10 ${
+                      tw(
+                        `relative cursor-default select-none py-2 pl-10`,
                         selected.value === option.value
                           ? "bg-zinc-200 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200"
                           : active
                           ? "bg-zinc-100 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100"
                           : "text-gray-900 dark:text-gray-100"
-                      }`
+                      )
                     }
                     value={option}
                   >
                     <span
-                      className={`block truncate text-sm ${
+                      className={tw(
+                        `block truncate text-sm`,
                         selected.value === option.value
                           ? "font-medium"
                           : "font-normal"
-                      }`}
+                      )}
                     >
                       {option.name}
                     </span>

@@ -13,6 +13,7 @@ import { useNotification } from "../../common/context/notification/useNotificati
 import { useForm } from "../../common/hooks/useForm";
 import { useSearchParam } from "../../common/hooks/useSearchParam";
 import { useToggle } from "../../common/hooks/useToggle";
+import { tw } from "../../common/utils/tailwind";
 import { RegisterUser } from "../../types/user";
 import AddImage from "./AddImage";
 
@@ -90,10 +91,14 @@ const SignupPage: FC = () => {
   }
 
   return (
-    <div className="min-h-screen w-full max-w-3xl px-5 h-max flex flex-col overflow-x-hidden items-center gap-4 justify-center pt-2 pb-20">
+    <div
+      className={tw(`flex h-max min-h-screen w-full 
+      max-w-3xl flex-col items-center justify-center 
+      gap-4 overflow-x-hidden px-5 pb-20 pt-2`)}
+    >
       <Transition
         as="div"
-        className="flex-1 w-full min-h-full h-max flex justify-center items-center"
+        className="flex h-max min-h-full w-full flex-1 items-center justify-center"
         key="login-page"
         appear
         show
@@ -105,23 +110,23 @@ const SignupPage: FC = () => {
         leaveTo="opacity-0 translate-y-10"
       >
         <form
-          className="w-full max-w-md overflow-hidden flex flex-col items-start p-6 gap-2"
+          className="flex w-full max-w-md flex-col items-start gap-2 overflow-hidden p-6"
           onSubmit={(e) => {
             e.preventDefault();
             submit();
           }}
         >
-          <div className="w-full flex flex-col justify-center items-center mb-2">
-            <h2 className="font-bold text-xl md:text-2xl dark:text-white">
+          <div className="mb-2 flex w-full flex-col items-center justify-center">
+            <h2 className="text-xl font-bold dark:text-white md:text-2xl">
               Create Your OMDb Account
             </h2>
           </div>
 
-          <div className="w-full flex flex-col justify-center items-center mb-2">
+          <div className="mb-2 flex w-full flex-col items-center justify-center">
             <Img
               src={preview}
               alt="Avatar"
-              className="rounded-full w-20 h-20"
+              className="h-20 w-20 rounded-full"
               fallback="cookie"
             />
             <AddImage
@@ -175,19 +180,20 @@ const SignupPage: FC = () => {
           >
             <button
               type="button"
-              className="absolute right-1 bottom-2 text-sm px-2 py-1 
-             bg-zinc-200 rounded z-10 active:bg-zinc-300 hover:bg-zinc-300
-              disabled:opacity-50 disabled:cursor-not-allowed
-              dark:bg-zinc-800 dark:text-white dark:active:bg-zinc-700 dark:hover:bg-zinc-700"
+              className={tw(`disabled:opacity-50dark:bg-zinc-800 absolute bottom-2
+              right-1 z-10 rounded bg-zinc-200 px-2 py-1 text-sm
+              hover:bg-zinc-300 active:bg-zinc-300 disabled:cursor-not-allowed 
+              dark:text-white dark:hover:bg-zinc-700 dark:active:bg-zinc-700`)}
               onClick={toggle}
             >
               {showPassword ? "Hide" : "Show"}
             </button>
           </InputField>
           <Button
-            className="w-full hover:text-zinc-900 active:text-zinc-900 ring-1 ring-zinc-900
-            dark:bg-zinc-100 dark:text-zinc-950 dark:hover:text-zinc-100 dark:active:text-zinc-100
-            dark:ring-zinc-100 dark:hover:bg-zinc-950 dark:active:bg-zinc-950 dark:focus-visible:ring-zinc-400"
+            className={tw(`w-full ring-1 ring-zinc-900 hover:text-zinc-900 
+            active:text-zinc-900 dark:bg-zinc-100 dark:text-zinc-950
+            dark:ring-zinc-100 dark:hover:bg-zinc-950 dark:hover:text-zinc-100
+            dark:focus-visible:ring-zinc-400 dark:active:bg-zinc-950 dark:active:text-zinc-100`)}
             color={{
               bg: "bg-zinc-900",
               text: "text-zinc-50",
@@ -200,11 +206,11 @@ const SignupPage: FC = () => {
             Continue with email
           </Button>
 
-          <div className="w-full text-center text-xs py-2 text-zinc-800 dark:text-zinc-200">
+          <div className="w-full py-2 text-center text-xs text-zinc-800 dark:text-zinc-200">
             Already have an account?{" "}
             <Link
-              className="text-zinc-500 hover:underline active:underline decoration-zinc-500
-              dark:text-zinc-400 dark:decoration-zinc-400"
+              className={tw(`text-zinc-500 decoration-zinc-500 hover:underline
+              active:underline dark:text-zinc-400 dark:decoration-zinc-400`)}
               to={
                 redirect
                   ? `/login?redirect=${encodeURIComponent(redirect)}`

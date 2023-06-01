@@ -2,6 +2,7 @@ import { Tab } from "@headlessui/react";
 import { useMemo, type FC } from "react";
 import { useLocation } from "react-router-dom";
 import { useAuth } from "../auth/useAuth";
+import { tw } from "../common/utils/tailwind";
 import NavTab from "./NavTab";
 
 const PATHS_INDEX = {
@@ -27,12 +28,11 @@ const NavBar: FC = () => {
     <Tab.Group selectedIndex={pathIndex}>
       <Tab.List
         as="nav"
-        className="z-30 fixed bottom-4 mx-auto 
-        flex flex-row items-center justify-center
-        w-max p-1 rounded-full backdrop-blur-sm 
-        bg-white gap-1 shadow-lg 
-        ring-1 ring-zinc-300/50 overflow-visible
-        dark:bg-zinc-900 dark:ring-zinc-700/50"
+        className={tw(`fixed bottom-4 z-30 mx-auto flex 
+        w-max flex-row items-center justify-center gap-1 
+        overflow-visible rounded-full bg-white p-1 shadow-lg 
+        ring-1 ring-zinc-300/50 backdrop-blur-sm
+        dark:bg-zinc-900 dark:ring-zinc-700/50`)}
       >
         <NavTab
           href="/"
@@ -41,7 +41,7 @@ const NavBar: FC = () => {
             selected: "/icons/omdb-selected.svg",
           }}
         />
-        <div className="h-4 w-[1px] mx-1 md:mx-2 bg-black/10 dark:bg-white/20"></div>
+        <div className="mx-1 h-4 w-[1px] bg-black/10 dark:bg-white/20 md:mx-2"></div>
 
         <NavTab
           href="/explore"
