@@ -1,4 +1,5 @@
 import { useRef, type FC } from "react";
+import { useNotification } from "../../common/context/notification/useNotification";
 import { tw } from "../../common/utils/tailwind";
 
 type EditFilmImageProps = {
@@ -12,6 +13,7 @@ const EditFilmImage: FC<EditFilmImageProps> = ({
   className,
   label,
 }) => {
+  const { notify } = useNotification();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   return (
     <div className={tw("z-50 min-w-max", className)}>
@@ -37,9 +39,29 @@ const EditFilmImage: FC<EditFilmImageProps> = ({
           ref={fileInputRef}
           onChange={(e) => {
             if (!e.target.files || !e.target.files.length) {
+              notify({
+                kind: "warning",
+                title: "No file selected",
+              });
               return;
             }
             const file = e.target.files[0];
+
+            if (!file.type.startsWith("image/")) {
+              notify({
+                kind: "warning",
+                title: "File must be an image",
+              });
+              return;
+            }
+
+            if (file.size > 2.5 * 1024 * 1024) {
+              notify({
+                kind: "warning",
+                title: "File size must be less than 2.5MB",
+              });
+              return;
+            }
             onUpload(file);
           }}
         />
