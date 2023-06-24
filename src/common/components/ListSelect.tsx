@@ -37,7 +37,7 @@ const ListSelect = <T extends string | number>({
       <Listbox value={selected} onChange={setSelected}>
         <div className="w-full">
           <Listbox.Button
-            className={tw(`borderborder-slate-300 w-full truncate rounded 
+            className={tw(`w-full truncate rounded border-slate-300 
             bg-transparent px-3 py-3 text-start text-sm placeholder:text-slate-400 
             focus:outline-none disabled:cursor-not-allowed disabled:opacity-50
             data-[error='true']:border-red-700 dark:border-slate-600 dark:text-white 
