@@ -1,5 +1,7 @@
 import { type FC } from "react";
 import { Link } from "react-router-dom";
+import { preload } from "swr";
+import { film } from "../../api/film";
 import { api } from "../../api/url";
 import Img from "../../common/components/Image";
 import { useCacheControl } from "../../common/context/cache/useCacheControl";
@@ -28,6 +30,12 @@ const FlexibleFilmPreview: FC<FlexibleFilmPreviewProps> = ({
       key={filmId}
       to={`/film?id=${filmId}`}
       className="group flex h-full w-full flex-shrink-0 flex-col overflow-hidden rounded bg-white dark:bg-zinc-900"
+      onMouseOver={() => {
+        preload(film.keys([`${filmId}`]), film.fn);
+      }}
+      onTouchStart={() => {
+        preload(film.keys([`${filmId}`]), film.fn);
+      }}
     >
       <div className="aspect-video w-full overflow-hidden rounded object-cover">
         <Img

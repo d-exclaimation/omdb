@@ -28,7 +28,7 @@ const ExplorePage: FC = () => {
   );
   const page = useMemo(() => maybeInt.parse(params.get("page")) ?? 1, [params]);
   const sort = useMemo<Sorting>(
-    () => (params.get("sort") as Sorting) ?? "RELEASED_DESC",
+    () => (params.get("sort") as Sorting) ?? "RATING_DESC",
     [params]
   );
   const genreIds = useMemo(

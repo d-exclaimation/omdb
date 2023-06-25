@@ -10,7 +10,7 @@ const OverlayRoot: FC<OverlayProps> = ({ className }) => {
   return (
     <div
       className={tw(
-        `fixed inset-0 bg-black/25 backdrop-blur-sm dark:bg-zinc-900/50`,
+        `fixed inset-0 bg-black/25 backdrop-blur-sm dark:dark:bg-white/[.15]`,
         className
       )}
     />
@@ -30,7 +30,7 @@ const OverlayChild: FC<OverlayProps> = ({ className }) => {
     >
       <div
         className={tw(
-          `fixed inset-0 bg-black/25 backdrop-blur-sm dark:bg-zinc-900/50`,
+          `fixed inset-0 bg-black/25 backdrop-blur-sm dark:dark:bg-white/[.15]`,
           className
         )}
       />
