@@ -53,7 +53,7 @@ const ReviewCaraousel: FC<ReviewCaraouselProps> = ({ reviews, isLoading }) => {
             </div>
             <div className="mt-auto flex w-full flex-wrap items-center justify-end truncate break-words px-2 py-1 text-xs dark:text-white">
               <img
-                className="mr-[.125rem] h-3 w-3 content-[url('/icons/star-selected.svg')]"
+                className="mr-[.125rem] h-3 w-3 dark:content-[url('/icons/star-selected.svg')]"
                 src="/icons/star.svg"
               />
               {rating.toFixed(2)}

@@ -103,9 +103,9 @@ export type ReviewFilm = z.infer<typeof ReviewFilm>;
 export const ReviewFilm = z.object({
   review: z
     .string()
-    .min(1, "Must be at least 1 character long")
     .max(512, "Must be at most 512 characters long")
-    .optional(),
+    .optional()
+    .transform((value) => (!!value ? value : undefined)),
   rating: z
     .number()
     .int()
