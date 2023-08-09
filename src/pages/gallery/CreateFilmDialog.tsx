@@ -18,9 +18,9 @@ import { useNotification } from "../../common/context/notification/useNotificati
 import { useForm } from "../../common/hooks/useForm";
 import { maybeInt } from "../../common/utils/coerce";
 import { ageRatings } from "../../common/utils/constants";
+import { tw } from "../../common/utils/tailwind";
 import { CreateFilm } from "../../types/film";
 import EditFilmImage from "../film/EditFilmImage";
-import { tw } from "../../common/utils/tailwind";
 
 type CreateFilmDialogProps = {
   creating: boolean;
@@ -84,14 +84,18 @@ const CreateFilmDialog: FC<CreateFilmDialogProps> = ({ creating, onClose }) => {
   });
 
   const submit = useCallback(() => {
-    if (!isValid || isInitial || isMutating) {
-      return;
-    }
-    if (!file) {
-      setTitleError("Image not provided");
-      return;
-    }
-    trigger({ ...values, file });
+    notify({
+      kind: "error",
+      title: "OMDb currently is on preview readonly mode",
+    });
+    // if (!isValid || isInitial || isMutating) {
+    //   return;
+    // }
+    // if (!file) {
+    //   setTitleError("Image not provided");
+    //   return;
+    // }
+    // trigger({ ...values, file });
   }, [trigger, values, file, isValid, isInitial, setTitleError]);
 
   // Make sure that it validates on mount
